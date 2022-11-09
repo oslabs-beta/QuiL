@@ -3,7 +3,12 @@ import React, { useState } from 'react';
 import Schema from './Schema';
 import Resolver from './Resolver';
 
-const VisualizeSchemaResolver = ({ displayMode, setDisplayMode }) => {
+const VisualizeSchemaResolver = ({
+  displayMode,
+  setDisplayMode,
+  uri,
+  setURI,
+}) => {
   const schemaGen = () => {
     console.log('inside the schemaGen');
     setDisplayMode('schemaMode');
@@ -25,7 +30,7 @@ const VisualizeSchemaResolver = ({ displayMode, setDisplayMode }) => {
             Resolver
           </button>
         </div>
-        <Schema />
+        <Schema uri={uri} />
       </div>
     );
   } else if (displayMode === 'resolverMode') {
@@ -39,7 +44,7 @@ const VisualizeSchemaResolver = ({ displayMode, setDisplayMode }) => {
             Resolver
           </button>
         </div>
-        <Resolver />
+        <Resolver uri={uri} />
       </div>
     );
   } else {
