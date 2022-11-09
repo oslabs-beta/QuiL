@@ -1,73 +1,48 @@
 // function to write statement for PostgresQL to grab table names/data types of tables, foreign keys, primary keys
+const dbInstance = require('./db/dbConnection');
 
-const db = require('./db/dbConnection');
+// test Quitr instance:
+// const db = new dbInstance('postgres://nsjouiot:4nVVHLiARTADoIiwArtQLG-HfkhQR03k@peanut.db.elephantsql.com/nsjouiot')
 
 // inputting a database URI will grab all table names
-const grabTables = async URI => {
-  const tables = [];
-  // if using postgresQL db:
-  if (URI.includes('postgres')) {
-    // query string to grab all tables
-    const tablesQuery = `
+grabTables = async (db) => {
+    const tables = [];
+    // if using postgresQL db:
+    if (db.dbType === 'PostgreSQL') {
+        // query string to grab all tables
+        const tablesQuery = `
         SELECT table_name
         FROM information_schema.tables
         WHERE table_schema='public'
         AND table_type='BASE TABLE';`;
-    let dbQuery = await db.query(tablesQuery);
-    // console.log(dbQuery);
-    // console.log(dbQuery.rows[0]);
-    // console.log(dbQuery.rows[0]['table_name']);
-    for (let i = 0; i < dbQuery.rows.length; i++) {
-      tables.push(dbQuery.rows[i]['table_name']);
-    }
-  }
-  return tables;
+        let dbQuery = await db.query(tablesQuery);
+        for (let i = 0; i < dbQuery.rows.length; i++) {
+            tables.push(dbQuery.rows[i]['table_name']);
+        };
+    };
+    // console.log(tables);
+    return tables;
 };
 
-// // test:
-// grabTables('postgres://eitysjmj:At82GArc1PcAD4nYgBoAODn0-XvBYo-A@peanut.db.elephantsql.com/eitysjmj');
-
-// inputting a table name will generate an array of key-value pairs: columnName: dataType
-// currently written or postgresQL only
-// const grabColumns = async (table) => {
-//     const columns = {};
-//     const columnsQuery = `
-//     SELECT column_name, data_type
-//     FROM information_schema.columns
-//     WHERE table_name = '${table}';
-//     `;
-//     let dbQuery = await db.query(columnsQuery);
-//     for (let i = 0; i < dbQuery.rows.length; i++) {
-//         let columnName = dbQuery.rows[i].column_name;
-//         let dataType = dbQuery.rows[i].data_type;
-//         columns[columnName] = dataType
-//     }
-//     return columns;
-// }
-
-const grabColumns = async table => {
-  const columnsQuery = `
+grabColumns = async (db, table) => {
+    const columnsQuery = `
     SELECT column_name, data_type
     FROM information_schema.columns
     WHERE table_name = '${table}';
     `;
-  let dbQuery = await db.query(columnsQuery);
-  const columns = dbQuery.rows.map(e => {
-    return { columnName: e.column_name, dataType: e.data_type };
-  });
-  // console.log(columns);
-  return columns;
-};
+    let dbQuery = await db.query(columnsQuery);
+    const columns = dbQuery.rows.map(e => {
+        return {columnName: e.column_name, dataType: e.data_type}
+    });
+    // console.log(columns);
+    return columns;
+}
 
-// test:
-// const testTables = 'planets';
-// grabColumns(testTables);
-
-// returns PKey of a given table within a databse (so that it grabs PKeys even if not named '_id')
-const grabPKey = async (URI, table) => {
-  if (!URI || !table) return undefined;
-  if (URI.includes('postgres')) {
-    const PKeyQuery = `
+// returns pKey of a given table within a databse (so that it grabs pKeys even if not named '_id')
+grabPKey = async (db, table) => {
+    if (!table) return undefined;
+    if (db.dbType === 'PostgreSQL') {
+        const pKeyQuery = `
         SELECT conrelid::regclass AS table_name,
         conname AS primary_key, 
         pg_get_constraintdef(oid) 
@@ -76,38 +51,35 @@ const grabPKey = async (URI, table) => {
         AND    connamespace = 'public'::regnamespace   
         ORDER  BY conrelid::regclass::text, contype DESC; 
         `;
-    const dbQuery = await db.query(PKeyQuery);
-    const primaryKeys = dbQuery.rows;
-    let unparsedPKey;
-    let PKey = '';
-    for (let i = 0; i < primaryKeys.length; i++) {
-      let el = primaryKeys[i];
-      if (el.table_name === table) {
-        unparsedPKey = el.pg_get_constraintdef;
-      }
-    }
-    let inParens = false;
-    for (let j = 0; j < unparsedPKey.length; j++) {
-      let char = unparsedPKey[j];
-      if (char === ')') inParens = false;
-      if (inParens === true) PKey += char;
-      if (char === '(') inParens = true;
-    }
-    // console.log(PKey);
-    return PKey;
-  }
-  // in case table is not found
-  return 'table not found';
+        const dbQuery = await db.query(pKeyQuery);
+        const primaryKeys = dbQuery.rows
+        let unparsedPKey;
+        let pKey = '';
+        for (let i = 0; i < primaryKeys.length; i++) {
+            let el = primaryKeys[i];
+            if (el.table_name === table) {
+                unparsedPKey = el.pg_get_constraintdef
+            }
+        }
+        let inParens = false;
+        for (let j = 0; j < unparsedPKey.length; j++) {
+            let char = unparsedPKey[j];
+            if (char === ')') inParens = false;
+            if (inParens === true) pKey += char;
+            if (char === '(') inParens = true;
+        }
+        // console.log(pKey);
+        return pKey;
+    };
+    // in case table is not found
+    return 'table not found';
 };
 
-// test:
-// console.log(grabPKey('postgres://eitysjmj:At82GArc1PcAD4nYgBoAODn0-XvBYo-A@peanut.db.elephantsql.com/eitysjmj', 'planets'));
-
 // given a table, returns foreign keys
-const grabFKeys = async (URI, table) => {
-  const foreignKeys = [];
-  if (URI.includes('postgres')) {
-    const FKeysQuery = `
+grabFKeys = async (db, table) => {
+    const foreignKeys = [];
+    if (db.dbType === 'PostgreSQL') {
+        const fKeysQuery = `
         SELECT conrelid::regclass AS table_name, 
         conname AS foreign_key, 
         pg_get_constraintdef(oid) 
@@ -116,88 +88,87 @@ const grabFKeys = async (URI, table) => {
         AND    connamespace = 'public'::regnamespace   
         ORDER  BY conrelid::regclass::text, contype DESC;
         `;
-    let dbQuery = await db.query(FKeysQuery);
-    const allFKeys = dbQuery.rows;
-    let tableFKeys = [];
-    for (let i = 0; i < allFKeys.length; i++) {
-      let el = allFKeys[i];
-      if (el.table_name === table) tableFKeys.push(el);
-    }
-    // console.log(tableFKeys);
-    for (let j = 0; j < tableFKeys.length; j++) {
-      const FKeyObj = {};
-      let unparsedFKey = tableFKeys[j].pg_get_constraintdef;
-      // parse out foreign key
-      let FKey = '';
-      let inFirstParens = false;
-      for (let k = 0; k < unparsedFKey.length; k++) {
-        let char = unparsedFKey[k];
-        if (char === ')') {
-          inFirstParens = false;
-          break;
+        let dbQuery = await db.query(fKeysQuery);
+        const allFKeys = dbQuery.rows;
+        let tableFKeys = [];
+        for (let i = 0; i < allFKeys.length; i++) {
+            let el = allFKeys[i];
+            if (el.table_name === table) tableFKeys.push(el); 
         }
-        if (inFirstParens === true) FKey += char;
-        if (char === '(') inFirstParens = true;
-      }
-      // parse out reference table
-      let keyword = 'REFERENCES ';
-      let escapeChar = '(';
-      let indexStartKeyword = unparsedFKey.indexOf(keyword);
-      let FKeyRefUnsliced = unparsedFKey.slice(
-        indexStartKeyword + keyword.length
-      );
-      let indexOfEscapeChar = FKeyRefUnsliced.indexOf(escapeChar);
-      let FKeyRef = FKeyRefUnsliced.slice(0, indexOfEscapeChar);
-      // FKeyObj[FKey] = FKeyRef;
-      FKeyObj.FKey = FKey;
-      FKeyObj.refTable = FKeyRef;
-      foreignKeys.push(FKeyObj);
-    }
-  }
-  // console.log(foreignKeys);
-  return foreignKeys;
+        // console.log(tableFKeys);
+        for (let j = 0; j < tableFKeys.length; j++) {
+            const fKeyObj = {};
+            let unparsedFKey = tableFKeys[j].pg_get_constraintdef;
+            // parse out foreign key
+            let fKey = '';
+            let inFirstParens = false;
+            for (let k = 0; k < unparsedFKey.length; k++) {
+                let char = unparsedFKey[k];
+                if (char ===')') {
+                    inFirstParens = false;
+                    break;
+                }
+                if (inFirstParens === true) fKey += char;
+                if (char === '(') inFirstParens = true;
+            }
+            // parse out reference table
+            let keyword = 'REFERENCES '
+            let escapeChar = '('
+            let indexStartKeyword = unparsedFKey.indexOf(keyword);
+            let fKeyRefUnsliced = unparsedFKey.slice(indexStartKeyword + keyword.length);
+            let indexOfEscapeChar = fKeyRefUnsliced.indexOf(escapeChar);
+            let fKeyRef = fKeyRefUnsliced.slice(0, indexOfEscapeChar);
+            // fKeyObj[fKey] = fKeyRef;
+            fKeyObj.fKey = fKey;
+            fKeyObj.refTable = fKeyRef;
+            foreignKeys.push(fKeyObj);
+        }
+    };
+    console.log(foreignKeys);
+    return foreignKeys;
 };
+
+makeNodes = async (db) => {
+    console.log('Calling Nodes');
+    const arrOfNodes = [];
+    if (db.dbType === 'PostgreSQL') {
+        console.log('entering if');
+        const tables = await grabTables(db);
+        for (let i = 0; i < tables.length; i++) {
+            const table = {name: `${tables[i]}`};
+            table.primaryKey = await grabPKey(db, table.name);
+            table.columns = await grabColumns(db, tables[i]); // this is for an array of objs with key-value column_id: data_type
+            // let FKeys = await grabFKeys(, table.name);
+            // const attributeArr = [];
+            // for (let j = 0; j < FKeys.length; j++) {
+            //     let obj = FKeys[j];
+            //     attributeArr.push(Object.keys(obj)[0]);
+            // }
+            // table.attributeNames = attributeArr;
+            // let attributeNames = await Object.keys(grabFKeys(, table.name));
+            // console.log(`these are attribute names: ${attributeNames}`);
+            table.edges = await grabFKeys(db, tables[i]);
+            // console.log(table);
+            arrOfNodes.push(table);
+        }
+    }
+    console.log(arrOfNodes);
+    // console.log(arrOfNodes[2]);
+    return { nodes: arrOfNodes };
+};
+
+// test instance with Quitr DB
+const db = new dbInstance('postgres://nsjouiot:4nVVHLiARTADoIiwArtQLG-HfkhQR03k@peanut.db.elephantsql.com/nsjouiot');
+console.log(db);
+console.log(db.dbType)
+makeNodes(db);
 
 // test:
-// grabFKeys('postgres://eitysjmj:At82GArc1PcAD4nYgBoAODn0-XvBYo-A@peanut.db.elephantsql.com/eitysjmj', 'people');
+// const swapiSpecificTable = 'planets';
+// grabTables();
+// grabColumns(swapiSpecificTable)
+// grabPKey(swapiSpecificTable);
+// grabFKeys(swapiSpecificTable);
+// makeNodes();
 
-const makeNodes = async URI => {
-  console.log('MAKE NODES CALLED');
-  const arrOfNodes = [];
-  if (URI.includes('postgres')) {
-    const tables = await grabTables(URI);
-    for (let i = 0; i < tables.length; i++) {
-      const table = { name: `${tables[i]}` };
-      table.primaryKey = await grabPKey(URI, table.name);
-      table.columns = await grabColumns(tables[i]); // this is for an array of objs with key-value column_id: data_type
-      // let FKeys = await grabFKeys(URI, table.name);
-      // const attributeArr = [];
-      // for (let j = 0; j < FKeys.length; j++) {
-      //     let obj = FKeys[j];
-      //     attributeArr.push(Object.keys(obj)[0]);
-      // }
-      // table.attributeNames = attributeArr;
-      // let attributeNames = await Object.keys(grabFKeys(URI, table.name));
-      // console.log(`these are attribute names: ${attributeNames}`);
-      table.edges = await grabFKeys(URI, tables[i]);
-      console.log(table);
-      arrOfNodes.push(table);
-    }
-  }
-  // console.log(arrOfNodes);
-
-  return { nodes: arrOfNodes };
-};
-
-// // test:
-// makeNodes(
-//   'postgres://qzgmgamk:kDF4IbSAjZRP8-iEWzT8rbRubbRyidpe@peanut.db.elephantsql.com/qzgmgamk'
-// );
-
-module.exports = {
-  grabTables,
-  grabColumns,
-  grabFKeys,
-  grabPKey,
-  makeNodes,
-};
+module.exports = makeNodes;
