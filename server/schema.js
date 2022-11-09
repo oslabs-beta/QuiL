@@ -42,17 +42,13 @@ const node3 = {
   ],
 };
 
-makeNodes(
-  'postgres://nsjouiot:4nVVHLiARTADoIiwArtQLG-HfkhQR03k@peanut.db.elephantsql.com/nsjouiot'
-);
+makeNodes();
 
 module.exports = {
   resolvers: {
     Query: {
       getGraph: () =>
-        makeNodes(
-          'postgres://nsjouiot:4nVVHLiARTADoIiwArtQLG-HfkhQR03k@peanut.db.elephantsql.com/nsjouiot'
-        ),
+        makeNodes(),
     },
   },
 
@@ -76,7 +72,7 @@ module.exports = {
     }
     
     type Edge {
-      FKey: String,
+      fKey: String,
       refTable: String
     }
     
