@@ -1,0 +1,141 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.NavBar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 70px;
+  list-style: none;
+  background: #142d4c;
+  color: #fff;
+}
+
+.NavBarList {
+  display: flex;
+  list-style: none;
+  margin: 10px 20px 10px 10px;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.MainContainer {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  background-color: white;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.VisualizeDB {
+  display: flex;
+  flex-direction: column;
+  height: 850px;
+  width: 1300px;
+  border: 1px solid;
+  border-color: white;
+  background-color: #142d4c;
+  border-radius: 15px;
+  padding-top: 30px;
+  align-items: center;
+}
+
+.VisualizeSchemaResolver {
+  display: flex;
+  flex-direction: column;
+  height: 850px;
+  width: 620px;
+  border: 1px solid;
+  border-radius: 15px;
+  border-color: white;
+  padding-top: 30px;
+  background-color: #142d4c;
+}
+
+.Chart {
+  padding: 10px 10px 10px 10px;
+  border: 1px solid;
+  border-radius: 15px;
+  height: 780px;
+  width: 1150px;
+  /* background-color: pink; */
+}
+
+.Schema {
+  padding: 10px 10px 10px 10px;
+  /* border: 1px solid; */
+  height: 780px;
+}
+
+.Resolver {
+  padding: 10px 10px 10px 10px;
+  /* border: 1px solid; */
+  height: 780px;
+}
+
+.SearchDB {
+  padding: 10px 10px 10px 10px;
+  /* border: 1px solid; */
+  height: 780px;
+}
+
+.Login {
+  display: flex;
+  justify-content: center;
+}
+
+.Register {
+  display: flex;
+  justify-content: center;
+}
+
+.About {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.mainButtons {
+  margin-left: 5px;
+}
+
+.searchURI {
+  display: flex;
+}
+
+button {
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.FirstPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    color: white;
+    /* background: black; */
+  }
+}
