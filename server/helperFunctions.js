@@ -158,10 +158,10 @@ makeNodes = async (db) => {
 };
 
 // test instance with Quitr DB
-const db = new dbInstance('postgres://nsjouiot:4nVVHLiARTADoIiwArtQLG-HfkhQR03k@peanut.db.elephantsql.com/nsjouiot');
-console.log(db);
-console.log(db.dbType)
-makeNodes(db);
+// const db = new dbInstance('postgres://nsjouiot:4nVVHLiARTADoIiwArtQLG-HfkhQR03k@peanut.db.elephantsql.com/nsjouiot');
+// console.log(db);
+// console.log(db.dbType)
+// makeNodes(db);
 
 // test:
 // const swapiSpecificTable = 'planets';
