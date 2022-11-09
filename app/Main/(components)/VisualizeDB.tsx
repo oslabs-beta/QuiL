@@ -1,19 +1,72 @@
+import nodeTest from 'node:test';
 import Chart from './Chart';
-const VisualizeDB = ({ uri, setURI, setDisplayMode }) => {
+const VisualizeDB = ({ uri, setURI, setDisplayMode, resQL, setResQL }) => {
   /*
-  they are inputting their uri and we need to fetch their db and run it through our database
-  */
+requirements for a grapghQL request:
+
+-needs to be sent using the POST method
+-query and variables need to be sent as a JSON object
+-send the right headers
+
+*/
+  // const uriLaunch = async (e) => {
+  //   e.preventDefault();
+  //   let data = await fetch('http://localhost:4000/graphql', {
+  //     method: 'POST',
+
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+
+  //     body: JSON.stringify({
+  //       query: `
+  //       query GetGraph {
+  //         getGraph {
+  //          nodes {
+  //            name,
+  //            primaryKey,
+  //            columns {
+  //              columnName,
+  //              dataType
+  //            },
+  //            edges {
+  //              FKey,
+  //              refTable
+  //            }
+  //          }
+  //         }
+  //       }
+  //     `,
+  //     }),
+  //   });
+  //   let res = await data.json();
+  //   console.log(res.data.getGraph.nodes, ' line 24');
+  // };
+  //    postgres://lkdxllvk:GTIkPygxpPOx0ZVNJ3luQHEfApEIJekP@heffalump.db.elephantsql.com/lkdxllvk
   const uriLaunch = async (e) => {
     e.preventDefault();
-    // console.log('inside uri working asdf');
-    const data = await fetch('http://localhost:4000/visualizer').then((res) => {
-      return res.json();
+    let data = await fetch('http://localhost:4000/graphql', {
+      method: 'POST',
+
+      headers: {
+        'Content-Type': 'application/json',
+      },
+
+      body: JSON.stringify({
+        query: `
+        query GetGraph {
+          getNodes(uri: ${uri})
+        }
+      `,
+      }),
     });
-    console.log(data);
+    let res = await data.json();
+    console.log(res, ' line 58');
   };
 
-  const handleUri = (e) => {
+  const handleUri = async (e) => {
     console.log('inside handle URI line 13');
+    setURI(e.target.value);
   };
   return (
     <div className="VisualizeDB">

@@ -1,5 +1,13 @@
-const Resolver = () => {
-  return <div className="Resolver">hi inside the resolver</div>;
+const Resolver = ({ uri }) => {
+  return (
+    <p className="Resolver">
+      <blockquote>
+        <pre>
+          <code>{uri} Testing code </code>
+        </pre>
+      </blockquote>
+    </p>
+  );
 };
 
 export default Resolver;

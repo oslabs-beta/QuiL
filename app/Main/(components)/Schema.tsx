@@ -1,8 +1,8 @@
-const Schema = () => {
+const Schema = ({ uri }) => {
   return (
-    <>
-      <div className="Schema">hi inside the schema</div>
-    </>
+    <p className="Schema">
+      <code>{uri} Schema Test </code>
+    </p>
   );
 };
 

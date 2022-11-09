@@ -8,6 +8,8 @@ const VisualizeSchemaResolver = ({
   setDisplayMode,
   uri,
   setURI,
+  resQL,
+  setResQL,
 }) => {
   const schemaGen = () => {
     console.log('inside the schemaGen');
