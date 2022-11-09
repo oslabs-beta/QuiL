@@ -1,0 +1,45 @@
+{
+  "name": "quil",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently \"next dev\" \"nodemon server/server.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oslabs-beta/QuiL.git"
+  },
+  "dependencies": {
+    "@apollo/server": "^4.1.1",
+    "axios": "^1.1.3",
+    "body-parser": "^1.20.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "eslint-config-next": "^13.0.2",
+    "express": "^4.18.2",
+    "graphql": "^16.6.0",
+    "graphql-type-json": "^0.3.2",
+    "next": "^13.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "reactflow": "^11.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "18.11.9",
+    "@types/react": "18.0.25",
+    "autoprefixer": "^10.4.13",
+    "concurrently": "^7.5.0",
+    "nodemon": "^2.0.20",
+    "postcss": "^8.4.18",
+    "tailwindcss": "^3.2.2"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oslabs-beta/QuiL/issues"
+  },
+  "homepage": "https://github.com/oslabs-beta/QuiL#readme"
+}
