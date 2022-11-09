@@ -4,6 +4,7 @@ import VisualizeDB from './VisualizeDB';
 import VisualizeSchemaResolver from './VisualizeSchemaResolver';
 const DisplayContainer = () => {
   const [displayMode, setDisplayMode] = useState('');
+  const [uri, setURI] = useState('');
 
   return (
     <>
@@ -11,8 +12,14 @@ const DisplayContainer = () => {
         <VisualizeSchemaResolver
           displayMode={displayMode}
           setDisplayMode={setDisplayMode}
+          uri={uri}
+          setURI={setURI}
         />
-        <VisualizeDB setDisplayMode={setDisplayMode} />
+        <VisualizeDB
+          setDisplayMode={setDisplayMode}
+          uri={uri}
+          setURI={setURI}
+        />
       </div>
     </>
   );
