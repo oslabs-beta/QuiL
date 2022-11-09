@@ -1,3 +1,5 @@
+const { makeNodes } = require('./helperFunctions');
+
 const node1 = {
   name: 'planets',
   primaryKey: '_id',
@@ -40,16 +42,17 @@ const node3 = {
   ],
 };
 
-const makeGraph = (x, y, z) => {
-  return {
-    nodes: [x, y, z],
-  };
-};
+makeNodes(
+  'postgres://nsjouiot:4nVVHLiARTADoIiwArtQLG-HfkhQR03k@peanut.db.elephantsql.com/nsjouiot'
+);
 
 module.exports = {
   resolvers: {
     Query: {
-      getGraph: () => makeGraph(node1, node2, node3),
+      getGraph: () =>
+        makeNodes(
+          'postgres://nsjouiot:4nVVHLiARTADoIiwArtQLG-HfkhQR03k@peanut.db.elephantsql.com/nsjouiot'
+        ),
     },
   },
 
@@ -61,9 +64,9 @@ module.exports = {
     }
 
     type Node {
-      id: String, 
+      name: String, 
       primaryKey: String,
-      attributeNames: [ColumnData],
+      columns: [ColumnData],
       edges: [Edge]
     }
 
@@ -73,7 +76,7 @@ module.exports = {
     }
     
     type Edge {
-      fKey: String,
+      FKey: String,
       refTable: String
     }
     
