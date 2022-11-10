@@ -1,5 +1,9 @@
-const Resolver = () => {
-  return <div className="Resolver">hi inside the resolver</div>;
+const Resolver = ({ uri, resQL }) => {
+  return (
+    <p className="Resolver">
+      <code>{JSON.stringify(uri)}</code>
+    </p>
+  );
 };
 
 export default Resolver;

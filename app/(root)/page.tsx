@@ -1,5 +1,6 @@
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { format } from 'path';
 
 export default function Page() {
   const submitForm = (e) => {
@@ -16,7 +17,7 @@ export default function Page() {
   return (
     <div>
       <h1>Welcome to the Root</h1>
-      <input type="text"></input>
+        <input type="text"></input>
       <form>
         <h3>Login here!</h3>
         <>
