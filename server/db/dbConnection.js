@@ -11,7 +11,7 @@ function dbInstance(inputURI) {
   // TODO (extension): write else statements for other db type identifiers
   this.pool = new Pool({ connectionString: inputURI });
   this.query = (text, params, callback) => {
-    console.log('executed query', text);
+    // console.log('executed query', text);
     return this.pool.query(text, params, callback);
   };
 }

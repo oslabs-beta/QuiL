@@ -1,5 +1,5 @@
 const { ApolloServer } = require('@apollo/server');
-const { typeDefs, resolvers } = require('./schema');
+// const { resolvers } = require('./graphql/models/resolvers/resolvers');
 const { expressMiddleware } = require('@apollo/server/express4');
 const {
   ApolloServerPluginDrainHttpServer,
@@ -8,6 +8,8 @@ const express = require('express');
 const http = require('http');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const { auth } = require('./middleware/authHandler');
+const { typeDefs, resolvers } = require('./graphql/modelsSetup');
 
 async function startApolloServer() {
   // Required logic for integrating with Express
@@ -44,19 +46,20 @@ async function startApolloServer() {
     '/graphql',
     cors(),
     bodyParser.json(),
-
+    auth,
     expressMiddleware(server, {
-      context: async ({ req }) => ({ token: req.headers.token }),
+      context: async ({ req, res }) => {
+        return { user: res.locals };
+      },
     })
   );
 
   app.get('/visualizer', (req, res) => {
-    console.log('in line 43 visualizer');
     res.status(200).json('Response');
   });
 
   // Modified server startup
-  await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
+  await new Promise(resolve => httpServer.listen({ port: 4000 }, resolve));
 
   console.log(`🪶 GraphQL server ready at http://localhost:4000/  🪶`);
 }
