@@ -18,7 +18,8 @@ const createNodes = (res) => {
     { x: 500, y: 2450 },
     { x: 0, y: 2450 },
   ];
-  // pass down an array of FKeys so that each row can check to see their dataType is a foreign key
+  // pass down an array of FKeys so that each row can check to see their dataType is a foreign key, 
+  // in 
   const arrFKeys = [];
   // array of tableNames that needs a handle. 'refTables will be passed down to each TableNode to
   // determine whether the TableNode needs a target <Handle />
