@@ -46,7 +46,7 @@ async function startApolloServer() {
     '/graphql',
     cors(),
     bodyParser.json(),
-    auth,
+
     expressMiddleware(server, {
       context: async ({ req, res }) => {
         return { user: res.locals };
