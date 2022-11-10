@@ -9,8 +9,10 @@ requirements for a grapghQL request:
 -send the right headers
 
 */
+
   const uriLaunch = async (e) => {
     e.preventDefault();
+    console.log('line 16,', uri);
     let data = await fetch('http://localhost:4000/graphql', {
       method: 'POST',
 
@@ -20,7 +22,7 @@ requirements for a grapghQL request:
 
       body: JSON.stringify({
         query: `query GetNodes {
-          getNodes(uri: ${uri}) {
+          getNodes(uri: "${uri}") {
             nodes {
               name,
               primaryKey,
@@ -38,8 +40,8 @@ requirements for a grapghQL request:
       }),
     });
     let res = await data.json();
-
-    console.log(res.errors, ' line 24');
+    setResQL(res);
+    console.log(res, ' line 24');
   };
   //    postgres://lkdxllvk:GTIkPygxpPOx0ZVNJ3luQHEfApEIJekP@heffalump.db.elephantsql.com/lkdxllvk
   // const uriLaunch = async (e) => {
@@ -76,7 +78,7 @@ requirements for a grapghQL request:
           Launch
         </button>
       </div>
-      <Chart />
+      <Chart resQL={resQL} />
     </div>
   );
 };

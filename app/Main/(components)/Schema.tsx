@@ -2,7 +2,7 @@ const Schema = ({ uri, resQL }) => {
   console.log('line 2 ,', resQL);
   return (
     <p className="Schema">
-      <code> asdf {resQL} </code>
+      <code>{JSON.stringify(uri)}</code>
     </p>
   );
 };

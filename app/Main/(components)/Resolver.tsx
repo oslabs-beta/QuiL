@@ -1,9 +1,7 @@
 const Resolver = ({ uri, resQL }) => {
   return (
     <p className="Resolver">
-      <code>
-        {uri} Testing code {resQL}
-      </code>
+      <code>{JSON.stringify(uri)}</code>
     </p>
   );
 };
