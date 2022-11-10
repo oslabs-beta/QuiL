@@ -1,0 +1,27 @@
+const createEdges = (res) => {
+  // edges array to be populated and sent to Flow to render
+  const edges = [];
+  // array of nodes from response
+  const nodes = res.data.getGraph.nodes;
+  // loop through each node from response
+  nodes.forEach((node, i) => {
+    // check to see if each node has any edges
+    if (node.edges.length !== 0) {
+      // if so, loop through edges of current node
+      node.edges.forEach((edge) => {
+        const newEdge = {
+          id: `${node.name}-${edge.refTable}`,
+          source: node.name,
+          sourceHandle: edge.FKey,
+          targetHandle: edge.refTable,
+          target: edge.refTable,
+        };
+        console.log(newEdge.sourceHandle);
+        edges.push(newEdge);
+      });
+    }
+  });
+  return edges;
+};
+
+export default createEdges;
