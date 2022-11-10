@@ -1,5 +1,5 @@
 const { ApolloServer } = require('@apollo/server');
-const { typeDefs, resolvers } = require('./schema');
+// const { resolvers } = require('./graphql/models/resolvers/resolvers');
 const { expressMiddleware } = require('@apollo/server/express4');
 const {
   ApolloServerPluginDrainHttpServer,
@@ -8,10 +8,23 @@ const express = require('express');
 const http = require('http');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const { auth } = require('./middleware/authHandler');
+const { typeDefs, resolvers } = require('./graphql/modelsSetup');
 
 async function startApolloServer() {
   // Required logic for integrating with Express
   const app = express();
+  app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT');
+    res.setHeader(
+      'Access-Control-Allow-Headers',
+      'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers'
+    );
+    res.status(200);
+    next();
+  });
   // Our httpServer handles incoming requests to our Express app.
   // Below, we tell Apollo Server to "drain" this httpServer,
   // enabling our servers to shut down gracefully.
@@ -33,9 +46,11 @@ async function startApolloServer() {
     '/graphql',
     cors(),
     bodyParser.json(),
-
+    auth,
     expressMiddleware(server, {
-      context: async ({ req }) => ({ token: req.headers.token }),
+      context: async ({ req, res }) => {
+        return { user: res.locals };
+      },
     })
   );
 

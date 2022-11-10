@@ -1,7 +1,10 @@
-// import React, { useState } from 'react';
-
-const Schema = () => {
-  return <div className="Schema">hi inside the schema</div>;
+const Schema = ({ uri, resQL }) => {
+  console.log('line 2 ,', resQL);
+  return (
+    <p className="Schema">
+      <code>{JSON.stringify(uri)}</code>
+    </p>
+  );
 };
 
 export default Schema;

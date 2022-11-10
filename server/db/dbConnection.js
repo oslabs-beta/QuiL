@@ -1,21 +1,32 @@
 require('dotenv').config();
 const { Pool } = require('pg');
 
-let inputURI =
-  'postgres://nsjouiot:4nVVHLiARTADoIiwArtQLG-HfkhQR03k@peanut.db.elephantsql.com/nsjouiot';
+// create a func that accepts URI input and exports/returns query obj that's being exported (line 21)
+// then export said func
+// since return value is query obj, we can import it into helperFuncs
 
-const PG_URI =
-  inputURI ||
-  'postgres://eitysjmj:At82GArc1PcAD4nYgBoAODn0-XvBYo-A@peanut.db.elephantsql.com/eitysjmj';
-
-const pool = new Pool({
-  connectionString: PG_URI,
-});
-
-module.exports = {
-  query: (text, params, callback) => {
+function dbInstance(inputURI) {
+  this.dbType;
+  if (inputURI.includes('postgres')) this.dbType = 'PostgreSQL';
+  // TODO (extension): write else statements for other db type identifiers
+  this.pool = new Pool({ connectionString: inputURI });
+  this.query = (text, params, callback) => {
     // console.log('executed query', text);
-    return pool.query(text, params, callback);
-  },
-};
-// fucntions that takes in the URI and returns the query object with the updated URI
+    return this.pool.query(text, params, callback);
+  };
+}
+// TODO: modularizing 1 step further
+// // return line 18 on helper functions
+// dbInstance.prototype.retrieveTables = () => {
+//   const tablesQuery = `
+//   SELECT table_name
+//   FROM information_schema.tables
+//   WHERE table_schema='public'
+//   AND table_type='BASE TABLE';`;
+//   const { rows } = this.query(tablesQuery);
+//   return rows;
+// }
+
+// then pass retrieveTables into parseTables (which takes evaluated result of retrieveTables)
+
+module.exports = dbInstance;
