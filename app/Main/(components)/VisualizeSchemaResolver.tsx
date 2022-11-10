@@ -8,6 +8,8 @@ const VisualizeSchemaResolver = ({
   setDisplayMode,
   uri,
   setURI,
+  resQL,
+  setResQL,
 }) => {
   const schemaGen = () => {
     console.log('inside the schemaGen');
@@ -30,7 +32,7 @@ const VisualizeSchemaResolver = ({
             Resolver
           </button>
         </div>
-        <Schema uri={uri} />
+        <Schema resQL={resQL} uri={uri} />
       </div>
     );
   } else if (displayMode === 'resolverMode') {
@@ -44,7 +46,7 @@ const VisualizeSchemaResolver = ({
             Resolver
           </button>
         </div>
-        <Resolver uri={uri} />
+        <Resolver resQL={resQL} uri={uri} />
       </div>
     );
   } else {

@@ -12,29 +12,17 @@ import ReactFlow, {
   Connection, // TS Generic
   addEdge,
 } from "reactflow";
+import TableNode from "./TableNode";
 import "reactflow/dist/style.css";
+import res from "./dummyRes";
+import createNodes from "./Nodes";
+import createEdges from "./Edges";
 
-const initialNodes = [
-  {
-    id: "1",
-    position: { x: 0, y: 0 },
-    data: { label: "Hello" },
-    type: "input",
-  },
-  {
-    id: "2",
-    position: { x: 100, y: 100 },
-    data: { label: "World" },
-  },
-];
+const initialNodes = createNodes(res);
 
-const initialEdges = [
-  { id: "1-2", source: "1", target: "2", label: "to the", type: "step" },
-];
-
-// const initialEdges = []; -
-
-// const nodeTypes = { table: tableNode} -you can pass nodeTypes down as a prop to ReactFlow
+// const initialEdges = createEdges(res);
+const initialEdges = createEdges(res);
+const nodeTypes = { tableNode: TableNode };
 
 const Flow = () => {
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
@@ -58,14 +46,14 @@ const Flow = () => {
   );
 
   return (
-    <div style={{ height: "100%" }}>
-      <h1>Flow here</h1>
+    <div style={{ height: "100%", background: "grey" }}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
+        nodeTypes={nodeTypes}
       >
         <Background />
         <Controls />
