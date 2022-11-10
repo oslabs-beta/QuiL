@@ -1,6 +1,8 @@
 import nodeTest from 'node:test';
 import Chart from './Chart';
-const VisualizeDB = ({ uri, setURI, setDisplayMode, resQL, setResQL }) => {
+import createNodes from '../(flow)/Nodes';
+import createEdges from '../(flow)/Edges';
+const VisualizeDB = ({ uri, setURI, setDisplayMode, resQL, setResQL, nodes, setNodes, edges, setEdges }) => {
   /*
 requirements for a grapghQL request:
 
@@ -9,6 +11,8 @@ requirements for a grapghQL request:
 -send the right headers
 
 */
+
+
 
   const uriLaunch = async (e) => {
     e.preventDefault();
@@ -21,26 +25,29 @@ requirements for a grapghQL request:
       },
 
       body: JSON.stringify({
-        query: `query GetNodes {
-          getNodes(uri: "${uri}") {
+        query: `query GetData {
+          getAllData(uri: "${uri}") {
             nodes {
-              name,
-              primaryKey,
-              columns {
-                columnName,
-                dataType
+                name,
+                primaryKey,
+                columns {
+                  columnName,
+                  dataType
+                },
+                edges {
+                  fKey,
+                  refTable
+                }
               },
-              edges {
-                fKey,
-                refTable
-              }
-            }
+              resolvers,
+              schemas
           }
         }`,
       }),
     });
     let res = await data.json();
-    setResQL(res);
+    setNodes(createNodes(res));
+    setEdges(createEdges(res));
     console.log(res, ' line 24');
   };
   //    postgres://lkdxllvk:GTIkPygxpPOx0ZVNJ3luQHEfApEIJekP@heffalump.db.elephantsql.com/lkdxllvk
@@ -78,7 +85,11 @@ requirements for a grapghQL request:
           Launch
         </button>
       </div>
-      <Chart resQL={resQL} />
+      <Chart resQL={resQL}
+            nodes={nodes}
+            setNodes={setNodes}
+            edges={edges}
+            setEdges={setEdges}/>
     </div>
   );
 };

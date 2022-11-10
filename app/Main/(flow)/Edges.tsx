@@ -2,7 +2,7 @@ const createEdges = (res) => {
   // edges array to be populated and sent to Flow to render
   const edges = [];
   // array of nodes from response
-  const nodes = res.data.getGraph.nodes;
+  const nodes = res.data.getAllData.nodes;
   // loop through each node from response
   nodes.forEach((node, i) => {
     // check to see if each node has any edges
@@ -12,7 +12,7 @@ const createEdges = (res) => {
         const newEdge = {
           id: `${node.name}-${edge.refTable}`,
           source: node.name,
-          sourceHandle: edge.FKey,
+          sourceHandle: edge.fKey,
           targetHandle: edge.refTable,
           target: edge.refTable,
         };

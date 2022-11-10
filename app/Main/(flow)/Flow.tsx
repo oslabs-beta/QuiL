@@ -14,19 +14,21 @@ import ReactFlow, {
 } from "reactflow";
 import TableNode from "./TableNode";
 import "reactflow/dist/style.css";
-import res from "./dummyRes";
+
 import createNodes from "./Nodes";
 import createEdges from "./Edges";
 
-const initialNodes = createNodes(res);
 
-// const initialEdges = createEdges(res);
-const initialEdges = createEdges(res);
+
+// const initialNodes = [];
+// const initialEdges = [];
+
 const nodeTypes = { tableNode: TableNode };
 
-const Flow = () => {
-  const [nodes, setNodes] = useState<Node[]>(initialNodes);
-  const [edges, setEdges] = useState<Edge[]>(initialEdges);
+const Flow = ({nodes, edges, setNodes, setEdges, resQL}) => {
+
+  // setNodes(createNodes(resQL));
+  // setEdges(createEdges(resQL));
 
   const onNodesChange = useCallback(
     (changes: NodeChange[]) =>
