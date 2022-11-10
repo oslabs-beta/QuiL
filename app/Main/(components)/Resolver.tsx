@@ -1,11 +1,9 @@
-const Resolver = ({ uri }) => {
+const Resolver = ({ uri, resQL }) => {
   return (
     <p className="Resolver">
-      <blockquote>
-        <pre>
-          <code>{uri} Testing code </code>
-        </pre>
-      </blockquote>
+      <code>
+        {uri} Testing code {resQL}
+      </code>
     </p>
   );
 };

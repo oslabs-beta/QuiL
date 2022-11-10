@@ -22,7 +22,7 @@ const DisplayContainer = () => {
           setDisplayMode={setDisplayMode}
           uri={uri}
           setURI={setURI}
-          res={resQL}
+          resQL={resQL}
           setResQL={setResQL}
         />
       </div>

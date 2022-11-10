@@ -1,7 +1,8 @@
-const Schema = ({ uri }) => {
+const Schema = ({ uri, resQL }) => {
+  console.log('line 2 ,', resQL);
   return (
     <p className="Schema">
-      <code>{uri} Schema Test </code>
+      <code> asdf {resQL} </code>
     </p>
   );
 };
