@@ -7,7 +7,6 @@ const VisualizeSchemaResolver = ({
   displayMode,
   setDisplayMode,
   uri,
-  setURI,
   resQL,
   setResQL,
   schemaGen,

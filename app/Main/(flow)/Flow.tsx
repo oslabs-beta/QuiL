@@ -14,19 +14,13 @@ import ReactFlow, {
 } from "reactflow";
 import TableNode from "./TableNode";
 import "reactflow/dist/style.css";
-import res from "./dummyRes";
-import createNodes from "./Nodes";
-import createEdges from "./Edges";
 
-const initialNodes = createNodes(res);
 
-// const initialEdges = createEdges(res);
-const initialEdges = createEdges(res);
+// moved a lot of the functionality orginially here to DisplayContainer
+
 const nodeTypes = { tableNode: TableNode };
 
-const Flow = () => {
-  const [nodes, setNodes] = useState<Node[]>(initialNodes);
-  const [edges, setEdges] = useState<Edge[]>(initialEdges);
+const Flow = ({nodes, edges, setNodes, setEdges}) => {
 
   const onNodesChange = useCallback(
     (changes: NodeChange[]) =>
