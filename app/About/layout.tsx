@@ -1,3 +1,5 @@
+import '../(root)/globals.css';
+
 export default function AboutLayout({ children }) {
   return (
     <html lang="en">

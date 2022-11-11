@@ -2,28 +2,43 @@
 import React, { useState } from 'react';
 import VisualizeDB from './VisualizeDB';
 import VisualizeSchemaResolver from './VisualizeSchemaResolver';
-const DisplayContainer = () => {
-  const [displayMode, setDisplayMode] = useState('');
-  const [uri, setURI] = useState('');
-  const [resQL, setResQL] = useState('');
+const DisplayContainer = ({
+  displayMode,
+  uri,
+  setURImeth,
+  uriLaunch,
+  resQL,
+  setResQL,
+  schemaGen,
+  resolverGen,
+}) => {
+  // const [displayMode, setDisplayMode] = useState('');
+  // const [uri, setURI] = useState('');
+  // const [resQL, setResQL] = useState('');
+
+  // const setURImeth = (e) => {
+  //   console.log(e.target.value, ' line 9 in main container');
+  //   setURI(e.target.value);
+  // };
 
   return (
     <>
       <div className="DisplayContainer">
         <VisualizeSchemaResolver
           displayMode={displayMode}
-          setDisplayMode={setDisplayMode}
           uri={uri}
-          setURI={setURI}
           resQL={resQL}
-          setResQL={setResQL}
+          schemaGen={schemaGen}
+          resolverGen={resolverGen}
         />
         <VisualizeDB
-          setDisplayMode={setDisplayMode}
           uri={uri}
-          setURI={setURI}
+          setURImeth={setURImeth}
           resQL={resQL}
           setResQL={setResQL}
+          uriLaunch={uriLaunch}
+          schemaGen={schemaGen}
+          resolverGen={resolverGen}
         />
       </div>
     </>

@@ -1,7 +1,6 @@
 import Flow from '../(flow)/Flow';
 
 const Chart = ({ resQL }) => {
-  console.log(resQL, ' inside the chart');
   /*
   the input field above the chart (visualizeDB) would have a fetch request
   they input their database
