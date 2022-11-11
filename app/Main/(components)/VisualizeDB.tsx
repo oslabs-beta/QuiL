@@ -46,7 +46,7 @@ requirements for a grapghQL request:
       }),
     });
     let res = await data.json();
-    setNodes(createNodes(res));
+    setNodes(createNodes(res)); 
     setEdges(createEdges(res));
     console.log(res, ' line 24');
   };

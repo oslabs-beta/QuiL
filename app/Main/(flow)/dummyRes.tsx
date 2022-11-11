@@ -1,3 +1,5 @@
+// starwars dummy data
+
 const res =  {"data": {
   "getAllData": {
       "nodes": [
