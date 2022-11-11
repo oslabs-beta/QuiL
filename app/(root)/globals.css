@@ -181,6 +181,31 @@ button {
   align-items: center;
 }
 
+.SignUp {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #4095c6;
+}
+form {
+  border-color: black;
+  border-width: thick;
+  border-radius: 20px;
+  background-color: #142d4c;
+  padding: 15px 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 500px;
+  min-height: 500px;
+  min-width: 500px;
+  max-width: 500px;
+  margin-bottom: 60px;
+  margin-top: 60px;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
