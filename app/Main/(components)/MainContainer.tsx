@@ -3,29 +3,30 @@
 import React, { useState } from 'react';
 import NavigationBar from './NavigationBar';
 import DisplayContainer from './DisplayContainer';
-import  {Node, Edge} from "reactflow";
+import  {Node, Edge, applyNodeChanges, NodeChange} from "reactflow";
 import createNodes from '../(flow)/Nodes';
 import createEdges from '../(flow)/Edges';
+import { resQL } from '../../(root)/fronendTypes';
 
-const MainContainer = () => {
-  const [displayMode, setDisplayMode] = useState('');
-  const [isLogged, setIsLogged] = useState(false);
-  const [uri, setURI] = useState('');
-  const [resQL, setResQL] = useState('');
+const MainContainer = (): JSX.Element => {
+  const [displayMode, setDisplayMode] = useState<string>('');
+  const [isLogged, setIsLogged] = useState<boolean>(false);
+  const [uri, setURI] = useState<string>('');
+  const [resQL, setResQL] = useState<resQL | null>(null);
   const [nodes, setNodes] = useState<Node[]>([]);
   const [edges, setEdges] = useState<Edge[]>([]);
 
   //invoked in VisualizeSchemaResolver
-  const schemaGen = () => {
+  const schemaGen = (): void => {
     setDisplayMode('schemaMode');
   };
   //invoked in VisualizeSchemaResolver
-  const resolverGen = () => {
+  const resolverGen = (): void => {
     setDisplayMode('resolverMode');
   };
 
-  //invoked in visualizeDB
-  const uriLaunch = async (e) => {
+  //invoked in visualizeDB. 
+  const uriLaunch = async (): Promise<void> => {
     // e.preventDefault();
     let data = await fetch('http://localhost:4000/graphql', {
       method: 'POST',
@@ -56,17 +57,24 @@ const MainContainer = () => {
       }),
     });
     let res = await data.json();
+    setResQL(res);
     setNodes(createNodes(res)); 
     setEdges(createEdges(res));
   };
+//      handleSetNodes   ((nds) =>        applyNodeChanges(changes, nds)),
+//                       (nds: Node[]): applyNodeChanges
 
-  const handleUri = async (e) => {
-    console.log('inside handle URI line 13');
-    setURI(e.target.value);
-  };
+  const handleSetNodes = (cb: (nds: Node[]) => Node[]) : void => {
+    setNodes(cb);
+  }
+  // export type applyNodeChanges = (changes: NodeChange[], nds: Node[]) => Node[];
 
-  // invoked inside visualizeDB
-  const setURImeth = (e) => {
+  const handleSetEdges = (): void => {
+    setEdges(edges);
+  }
+
+  // invoked inside visualizeDB. users input (uri)
+  const userInputURI = (e: string): void => {
     setURI(e);
   };
   return (
@@ -74,16 +82,13 @@ const MainContainer = () => {
       <NavigationBar isLogged={isLogged} />
       <DisplayContainer
         edges={edges}
-        setEdges={setEdges}
-        setNodes={setNodes}
+        handleSetEdges={handleSetEdges}
+        handleSetNodes={handleSetNodes}
         nodes={nodes}
         displayMode={displayMode}
-        setDisplayMode={setDisplayMode}
-        uri={uri}
-        setURImeth={setURImeth}
+        userInputURI={userInputURI}
         uriLaunch={uriLaunch}
         resQL={resQL}
-        setResQL={setResQL}
         schemaGen={schemaGen}
         resolverGen={resolverGen}
       />

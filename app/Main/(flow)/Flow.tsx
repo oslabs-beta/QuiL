@@ -5,38 +5,37 @@ import ReactFlow, {
   Background,
   applyEdgeChanges,
   applyNodeChanges,
-  Node, // TS Generic, array of Nodes
-  Edge, // TS Generic, array of Edges
   NodeChange, // TS Generic
   EdgeChange, // TS Generic
   Connection, // TS Generic
   addEdge,
+  Edge,
+  Node,
 } from "reactflow";
 import TableNode from "./TableNode";
 import "reactflow/dist/style.css";
+import { FlowProps } from "../../(root)/fronendTypes";
 
-
-// moved a lot of the functionality orginially here to DisplayContainer
 
 const nodeTypes = { tableNode: TableNode };
 
-const Flow = ({nodes, edges, setNodes, setEdges}) => {
+const Flow = ({nodes, edges, handleSetNodes, handleSetEdges}: FlowProps) => {
 
   const onNodesChange = useCallback(
     (changes: NodeChange[]) =>
-      setNodes((nds) => applyNodeChanges(changes, nds)),
-    [setNodes]
+      handleSetNodes((nds) => applyNodeChanges(changes, nds)),
+    [handleSetNodes]
   );
 
   const onEdgesChange = useCallback(
     (changes: EdgeChange[]) =>
-      setEdges((eds) => applyEdgeChanges(changes, eds)),
-    [setEdges]
+      handleSetEdges((eds) => applyEdgeChanges(changes, eds)),
+    [handleSetEdges]
   );
 
   const onConnect = useCallback(
-    (connection: Connection) => setEdges((eds) => addEdge(connection, eds)),
-    [setEdges]
+    (connection: Connection) => handleSetEdges((eds) => addEdge(connection, eds)),
+    [handleSetEdges]
   );
 
   return (

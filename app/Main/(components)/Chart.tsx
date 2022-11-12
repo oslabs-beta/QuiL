@@ -1,16 +1,11 @@
 import Flow from '../(flow)/Flow';
+import { ChartProps } from '../../(root)/fronendTypes';
 
-const Chart = ({ resQL, nodes, edges, setNodes, setEdges}) => {
-  
-  /*
-  the input field above the chart (visualizeDB) would have a fetch request
-  they input their database
-  we display it in here
-  */
- 
+const Chart = ({ nodes, edges, handleSetNodes, handleSetEdges}: ChartProps) : JSX.Element => {
+   
   return (
     <div className="Chart">
-      <Flow nodes={nodes} edges={edges} setNodes={setNodes} setEdges={setEdges} />
+      <Flow nodes={nodes} edges={edges} handleSetNodes={handleSetNodes} handleSetEdges={handleSetEdges} />
     </div>
   );
 };

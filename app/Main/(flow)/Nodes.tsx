@@ -1,4 +1,7 @@
-const createNodes = (res) => {
+import { Node } from "reactflow";
+import { resQL } from "../../(root)/fronendTypes";
+
+const createNodes = (res : resQL) : Node[] => {
   const positions = [
     { x: 0, y: 0 },
     { x: 500, y: 0 },
@@ -50,7 +53,6 @@ const createNodes = (res) => {
       },
     };
   });
-  console.log(nodes);
   return nodes;
 };
 
