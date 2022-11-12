@@ -1,6 +1,5 @@
 import { GlobalServerError, dbConstructor } from '../types';
-require('dotenv').config();
-const { Pool } = require('pg');
+import { Pool } from 'pg';
 import { stringify } from 'querystring';
 
 // const { stringify } = require('querystring');

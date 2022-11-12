@@ -1,4 +1,4 @@
-module.exports = `
+export const DataType: string = `
     type Data {
       nodes: [Node],
       resolvers: [String],
