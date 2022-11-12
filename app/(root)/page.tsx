@@ -15,22 +15,17 @@ export default function Page() {
   // console.log(userName, email, password);
 
   return (
-    <div>
-      <h1>Welcome to the Root</h1>
+    <div className="landingPage">
+      <h1>Welcome to QuiL</h1>
+      <h3>Writing GraphQL for you</h3>
+      <div className="landingPageURI">
+        <div>insert URI</div>
         <input type="text"></input>
-      <form>
-        <h3>Login here!</h3>
-        <>
-          <label htmlFor="username">Username: </label>
-          <input id="username" name="username" type="text"></input>
-        </>
-        <>
-          <label htmlFor="password">Password: </label>
-          <input id="password" name="password" type="password"></input>
-        </>
-        <input type="button" value="submit" />
-      </form>
-      <Link href="/Main">Main</Link>
+        <Link href="/Main">Launch</Link>
+      </div>
+      <Link className="landingPageBtn" href="/Main">
+        Main
+      </Link>
     </div>
   );
 }

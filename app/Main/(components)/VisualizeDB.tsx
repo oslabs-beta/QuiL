@@ -1,6 +1,19 @@
 import nodeTest from 'node:test';
 import Chart from './Chart';
-const VisualizeDB = ({ uri, setURI, setDisplayMode, resQL, setResQL }) => {
+const VisualizeDB = ({
+  uri,
+  setURImeth,
+  setDisplayMode,
+  resQL,
+  setResQL,
+  nodes,
+  edges,
+  setEdges,
+  setNodes,
+  uriLaunch,
+  schemaGen,
+  resolverGen,
+}) => {
   /*
 requirements for a grapghQL request:
 
@@ -10,39 +23,6 @@ requirements for a grapghQL request:
 
 */
 
-  const uriLaunch = async (e) => {
-    e.preventDefault();
-    console.log('line 16,', uri);
-    let data = await fetch('http://localhost:4000/graphql', {
-      method: 'POST',
-
-      headers: {
-        'Content-Type': 'application/json',
-      },
-
-      body: JSON.stringify({
-        query: `query GetNodes {
-          getNodes(uri: "${uri}") {
-            nodes {
-              name,
-              primaryKey,
-              columns {
-                columnName,
-                dataType
-              },
-              edges {
-                fKey,
-                refTable
-              }
-            }
-          }
-        }`,
-      }),
-    });
-    let res = await data.json();
-    setResQL(res);
-    console.log(res, ' line 24');
-  };
   //    postgres://lkdxllvk:GTIkPygxpPOx0ZVNJ3luQHEfApEIJekP@heffalump.db.elephantsql.com/lkdxllvk
   // const uriLaunch = async (e) => {
   //   e.preventDefault();
@@ -65,22 +45,25 @@ requirements for a grapghQL request:
   //   console.log(res, ' line 58');
   // };
 
-  const handleUri = async (e) => {
-    console.log('inside handle URI line 13');
-    setURI(e.target.value);
-  };
+
+
   return (
     <div className="VisualizeDB">
       <div className="searchURI">
         <div> insert URI </div>
-        <input type="text" onChange={handleUri}></input>
-        <button type="submit" onClick={uriLaunch}>
+        <input type="text" onChange={(e) => setURImeth(e.target.value)}></input>
+        <button type="submit" onClick={() => uriLaunch()}>
           Launch
         </button>
       </div>
-      <Chart resQL={resQL} />
+      <Chart resQL={resQL}
+            nodes={nodes}
+            setNodes={setNodes}
+            edges={edges}
+            setEdges={setEdges}/>
     </div>
   );
 };
+
 
 export default VisualizeDB;

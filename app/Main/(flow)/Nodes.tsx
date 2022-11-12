@@ -25,7 +25,7 @@ const createNodes = (res) => {
   // determine whether the TableNode needs a target <Handle />
   const refTables = [];
   // array of nodes from response
-  const resNodes = res.data.getGraph.nodes;
+  const resNodes = res.data.getAllData.nodes;
   // map through the nodes and create template for each node
   const nodes = resNodes.map((node, i) => {
     // check to see if current node has any edges
@@ -33,7 +33,7 @@ const createNodes = (res) => {
       // if so, loop through edges and push the name refTable to 'refTables'
       node.edges.forEach((edge) => {
         refTables.push(edge.refTable);
-        arrFKeys.push(edge.FKey);
+        arrFKeys.push(edge.fKey);
       });
     }
     return {
@@ -50,7 +50,7 @@ const createNodes = (res) => {
       },
     };
   });
-
+  console.log(nodes);
   return nodes;
 };
 

@@ -7,28 +7,19 @@ const VisualizeSchemaResolver = ({
   displayMode,
   setDisplayMode,
   uri,
-  setURI,
   resQL,
   setResQL,
+  schemaGen,
+  resolverGen,
 }) => {
-  const schemaGen = () => {
-    console.log('inside the schemaGen');
-    setDisplayMode('schemaMode');
-  };
-
-  const resolverGen = () => {
-    console.log('inside the resolverGen');
-    setDisplayMode('resolverMode');
-  };
-
   if (displayMode === 'schemaMode') {
     return (
       <div className="VisualizeSchemaResolver">
         <div className="mainButtons">
-          <button onClick={schemaGen} className="SchemaBtn">
+          <button onClick={() => schemaGen()} className="SchemaBtn">
             Schema
           </button>
-          <button onClick={resolverGen} className="ResolverBtn">
+          <button onClick={() => resolverGen()} className="ResolverBtn">
             Resolver
           </button>
         </div>
@@ -39,10 +30,10 @@ const VisualizeSchemaResolver = ({
     return (
       <div className="VisualizeSchemaResolver">
         <div className="mainButtons">
-          <button onClick={schemaGen} className="SchemaBtn">
+          <button onClick={() => schemaGen()} className="SchemaBtn">
             Schema
           </button>
-          <button onClick={resolverGen} className="ResolverBtn">
+          <button onClick={() => resolverGen()} className="ResolverBtn">
             Resolver
           </button>
         </div>
@@ -53,10 +44,10 @@ const VisualizeSchemaResolver = ({
     return (
       <div className="VisualizeSchemaResolver">
         <div className="mainButtons">
-          <button onClick={schemaGen} className="SchemaBtn">
+          <button onClick={() => schemaGen()} className="SchemaBtn">
             Schema
           </button>
-          <button onClick={resolverGen} className="ResolverBtn">
+          <button onClick={() => resolverGen()} className="ResolverBtn">
             Resolver
           </button>
         </div>

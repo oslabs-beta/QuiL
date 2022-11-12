@@ -1,11 +1,11 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import VisualizeDB from './VisualizeDB';
 import VisualizeSchemaResolver from './VisualizeSchemaResolver';
-const DisplayContainer = () => {
-  const [displayMode, setDisplayMode] = useState('');
-  const [uri, setURI] = useState('');
-  const [resQL, setResQL] = useState('');
+import ReactFlow, {Node, Edge} from 'reactflow';
+import res from '../(flow)/dummyRes';
+const DisplayContainer = ({ displayMode, setDisplayMode, uri, setURImeth, uriLaunch, resQL, setResQL, schemaGen, resolverGen, edges, nodes, setEdges, setNodes
+}) => {
 
   return (
     <>
@@ -14,16 +14,24 @@ const DisplayContainer = () => {
           displayMode={displayMode}
           setDisplayMode={setDisplayMode}
           uri={uri}
-          setURI={setURI}
           resQL={resQL}
           setResQL={setResQL}
+          schemaGen={schemaGen}
+          resolverGen={resolverGen}
         />
         <VisualizeDB
           setDisplayMode={setDisplayMode}
           uri={uri}
-          setURI={setURI}
+          setURImeth={setURImeth}
           resQL={resQL}
           setResQL={setResQL}
+          nodes={nodes}
+          setNodes={setNodes}
+          setEdges={setEdges}
+          edges={edges}
+          uriLaunch={uriLaunch}
+          schemaGen={schemaGen}
+          resolverGen={resolverGen}
         />
       </div>
     </>
