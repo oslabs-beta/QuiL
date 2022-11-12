@@ -7,6 +7,7 @@
       "esnext",
       "es2020"
     ],
+    "noImplicitAny": true,
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -30,7 +31,6 @@
     "next-env.d.ts",
     ".next/types/**/*.ts",
     "**/*.ts",
-    "**/*.tsx",
     "app/Login"
   ],
   "exclude": ["node_modules"]
