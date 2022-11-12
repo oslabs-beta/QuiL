@@ -32,6 +32,6 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "app/Login"
-  ],
+, "server/server.js"  ],
   "exclude": ["node_modules"]
 }

@@ -126,4 +126,4 @@ makeNodes(sWAPI);
 // console.log(testQueryColumns())
 
 
-module.exports = makeNodes;
+export {makeNodes}

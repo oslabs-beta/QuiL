@@ -127,4 +127,4 @@ dbInstance.prototype.queryTableLayout = async function (tableName: string):Promi
 
 const sWAPI = new (dbInstance as any)('postgres://eitysjmj:At82GArc1PcAD4nYgBoAODn0-XvBYo-A@peanut.db.elephantsql.com/eitysjmj');
 
-module.exports = dbInstance;
+export {dbInstance}
