@@ -1,35 +1,18 @@
+import { dbConstructor, unparsedColumnShape, parsedColumnShape, unparsedKeys, parsedFKeys, nodeShape, objectOfArrOfNodes} from "./types";
 // function to write statement for PostgresQL to grab table names/data types of tables, foreign keys, primary keys
 const { query } = require('express');
 const { debuglog } = require('util');
 const dbInstance = require('./db/dbConnection');
 
-// test Quitr instance:
-// const db = new dbInstance('postgres://nsjouiot:4nVVHLiARTADoIiwArtQLG-HfkhQR03k@peanut.db.elephantsql.com/nsjouiot')
-
-// inputting a database URI will grab all table names
-// parseTables = async () => {
-//     try {
-//         console.log(queryResults)
-//         console.log(tables);
-//         return tables;
-//     } catch (err) {
-//         return {
-//             log: `helperFunctions.js: ERROR: ${err}`,
-//         }
-//     }
-// };
-
 // parses out columns to key-value name we want
-parseColumns =  (columns) => {
-    const parsedColumns = columns.map(e => {
+const parseColumns = (columns: unparsedColumnShape[]): parsedColumnShape[] => {
+    return columns.map((e: unparsedColumnShape): parsedColumnShape => {
         return {columnName: e.column_name, dataType: e.data_type}
     });
-    // console.log(parsedColumns);
-    return parsedColumns;
 };
 
 // returns pKey of a given table within a databse (so that it grabs pKeys even if not named '_id')
-parsePKey = (queryResults, tableName) => {
+const parsePKey = (queryResults: unparsedKeys[], tableName: string): string => {
     let unparsedPKey;
     let pKey = '';
     for (let i = 0; i < queryResults.length; i++) {
@@ -49,7 +32,7 @@ parsePKey = (queryResults, tableName) => {
 };
 
 // given a table, returns foreign keys for a specific table
-parseFKeys = (queryResults, tableName) => {
+const parseFKeys = (queryResults: unparsedKeys[], tableName: string): parsedFKeys[] => {
     const parsedFKeys = [];
     const unparsedFKeys = [];
     for (let i = 0; i < queryResults.length; i++) {
@@ -58,7 +41,7 @@ parseFKeys = (queryResults, tableName) => {
     }
     // console.log(unparsedFKeys);
     for (let j = 0; j < unparsedFKeys.length; j++) {
-        const fKeyObj = {};
+        const fKeyObj: parsedFKeys = {fKey: '', refTable: ''};
         let unparsedFKey = unparsedFKeys[j].pg_get_constraintdef;
         // parse out foreign key
         let fKey = '';
@@ -88,12 +71,13 @@ parseFKeys = (queryResults, tableName) => {
     return parsedFKeys;
 };
 
-makeNodes = async (db) => {
+const makeNodes = async (db: dbConstructor): Promise< objectOfArrOfNodes > => {
     const arrOfNodes = [];
     if (db.dbType === 'PostgreSQL') {
         let tables = await db.queryTables();
         for (let i = 0; i < tables.length; i++) {
-            const node = {name: `${tables[i].table_name}`};
+            const node: nodeShape = {name: '', primaryKey: '', columns: [], edges: []}
+            node.name = `${tables[i].table_name}`;
             let unparsedPKey = await db.queryPKey();
             // console.log(unparsedPKey);
             node.primaryKey = parsePKey(unparsedPKey, node.name);
@@ -104,9 +88,11 @@ makeNodes = async (db) => {
             arrOfNodes.push(node);
         }
     }
+    // console.log(arrOfNodes);
+    console.log(arrOfNodes[0]);
+    console.log(arrOfNodes[0].columns);
+    console.log(arrOfNodes[0].edges);
     console.log(arrOfNodes);
-    console.log(arrOfNodes[2].columns);
-    console.log(arrOfNodes[2].edges);
     return { nodes: arrOfNodes };
 };
 
@@ -117,9 +103,11 @@ makeNodes(sWAPI);
 // const testQueries = async () => {
 //     // let queryResults = await sWAPI.queryTables();
 //     // console.log(queryResults);
-//     queryResults = await sWAPI.queryPKey();
+//     queryResults = await sWAPI.queryTables();
+//     //queryResults = await sWAPI.queryPKey();
 //     // console.log(queryResults);
-//     console.log(parsePKey(queryResults, 'people'))
+//     // console.log(parsePKey(queryResults, 'people'))
+//     console.log(queryResults)
 // }
 // testQueries();
 
