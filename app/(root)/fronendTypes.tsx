@@ -89,5 +89,17 @@ export type edge = {
     refTable: string;
 }
 
+export interface data {
+        name: string;
+        key: number;
+        columns: columns;
+        edges: edge[];
+        refTables: string[];
+        arrFKeys: string[];
+    }
 
 
+export type position = {
+    x: number;
+    y: number;
+}

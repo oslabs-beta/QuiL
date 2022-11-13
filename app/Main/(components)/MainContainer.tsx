@@ -61,14 +61,11 @@ const MainContainer = (): JSX.Element => {
     setNodes(createNodes(res)); 
     setEdges(createEdges(res));
   };
-//      handleSetNodes   ((nds) =>        applyNodeChanges(changes, nds)),
-//                       (nds: Node[]): applyNodeChanges
 
+  // handleSetNodes takes in a callback (cb). That callback takes in 
   const handleSetNodes = (cb: (nds: Node[]) => Node[]) : void => {
     setNodes(cb);
   }
-  // export type applyNodeChanges = (changes: NodeChange[], nds: Node[]) => Node[];
-
   const handleSetEdges = (): void => {
     setEdges(edges);
   }

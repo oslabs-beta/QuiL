@@ -1,5 +1,5 @@
 "use client";
-import { useState, useCallback } from "react";
+import { useCallback } from "react";
 import ReactFlow, {
   Controls,
   Background,
@@ -9,8 +9,6 @@ import ReactFlow, {
   EdgeChange, // TS Generic
   Connection, // TS Generic
   addEdge,
-  Edge,
-  Node,
 } from "reactflow";
 import TableNode from "./TableNode";
 import "reactflow/dist/style.css";
