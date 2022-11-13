@@ -1,5 +1,6 @@
 import { Node } from "reactflow";
 import { position, resQL } from "../../(root)/fronendTypes";
+import { nodes } from "../../(root)/fronendTypes";
 
 const createNodes = (res : resQL) : Node[] => {
   const positions : position[] = [

@@ -1,5 +1,6 @@
 import { VisualizeDBProps } from '../../(root)/fronendTypes';
 import Chart from './Chart';
+import React from 'react';
 
 const VisualizeDB = ({
   userInputURI,

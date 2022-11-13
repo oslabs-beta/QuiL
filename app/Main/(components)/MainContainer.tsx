@@ -7,12 +7,13 @@ import  {Node, Edge, applyNodeChanges, NodeChange} from "reactflow";
 import createNodes from '../(flow)/Nodes';
 import createEdges from '../(flow)/Edges';
 import { resQL } from '../../(root)/fronendTypes';
+import res from '../(flow)/dummyRes';
 
 const MainContainer = (): JSX.Element => {
   const [displayMode, setDisplayMode] = useState<string>('');
   const [isLogged, setIsLogged] = useState<boolean>(false);
   const [uri, setURI] = useState<string>('');
-  const [resQL, setResQL] = useState<resQL | null>(null);
+  const [resQL, setResQL] = useState<resQL>(res); 
   const [nodes, setNodes] = useState<Node[]>([]);
   const [edges, setEdges] = useState<Edge[]>([]);
 

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { NavigationBarProps } from '../../(root)/fronendTypes';
+import React from 'react';
 const NavigationBar = ({ isLogged }: NavigationBarProps): JSX.Element => {
   return (
     <div className="NavBar">

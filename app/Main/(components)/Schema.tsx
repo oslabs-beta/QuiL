@@ -1,4 +1,5 @@
 import {SchemaProps} from "../../(root)/fronendTypes"
+import React from "react";
 const Schema = ({ resQL }: SchemaProps): JSX.Element => {
   return (
     <p className="Schema">

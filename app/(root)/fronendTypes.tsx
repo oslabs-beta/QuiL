@@ -57,9 +57,9 @@ export type FlowProps = {
     handleSetNodes: (cb: (nds: Node[]) => Node[]) => void;
 }
 
-  export type resQL = {
-    data: { getAllData };
-  }
+  export type resQL = ({
+    data: { getAllData: getAllData } ;
+  });
 
   export type getAllData = {
     nodes: nodes;
