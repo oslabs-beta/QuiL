@@ -58,6 +58,8 @@ const MainContainer = (): JSX.Element => {
       }),
     });
     let res = await data.json();
+    console.log(res);
+    
     setResQL(res);
     setNodes(createNodes(res)); 
     setEdges(createEdges(res));
