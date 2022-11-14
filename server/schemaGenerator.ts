@@ -34,16 +34,16 @@ const pSQLToGQL: pSQLToGQL = {
 
 // function to convert PostgreSQL data types into GraphQL data types
 // TODO: primary keys become ID!
-const convertToGQL = (dataType: string, nullable: string): string => {
-    dataType = pSQLToGQL[dataType];
-    if (nullable === 'NO') dataType += '!';
-    return dataType;
-};
+// const convertToGQL = (dataType: string, nullable: string): string => {
+//     dataType = pSQLToGQL[dataType];
+//     if (nullable === 'NO') dataType += '!';
+//     return dataType;
+// };
 
 // console.log(pluralize.singular('people'))
 
 // TEST:
-generateSchemas(db);
+// generateSchemas(db);
 
 // const testQueries = async () => {
 //     let queryResults = await db.queryTableLayout('people');

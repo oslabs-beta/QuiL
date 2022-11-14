@@ -1,15 +1,17 @@
-const { ApolloServer } = require('@apollo/server');
+import { ApolloServer } from '@apollo/server';
 // const { resolvers } = require('./graphql/models/resolvers/resolvers');
-const { expressMiddleware } = require('@apollo/server/express4');
-const {
-  ApolloServerPluginDrainHttpServer,
-} = require('@apollo/server/plugin/drainHttpServer');
-const express = require('express');
-const http = require('http');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const { auth } = require('./middleware/authHandler');
-const { typeDefs, resolvers } = require('./graphql/modelsSetup');
+import { expressMiddleware } from '@apollo/server/express4';
+import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
+import express from 'express';
+import http from 'http';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+
+import{ typeDefs, resolvers} from './graphql/modelsSetup'
+
+interface MyContext {
+  token?: String;
+}
 
 async function startApolloServer() {
   // Required logic for integrating with Express
@@ -32,7 +34,7 @@ async function startApolloServer() {
 
   // Same ApolloServer initialization as before, plus the drain plugin
   // for our httpServer.
-  const server = new ApolloServer({
+  const server = new ApolloServer<MyContext>({
     typeDefs,
     resolvers,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
@@ -44,9 +46,9 @@ async function startApolloServer() {
   // and our expressMiddleware function.
   app.use(
     '/graphql',
-    cors(),
+    cors<cors.CorsRequest>(),
     bodyParser.json(),
-    auth,
+
     expressMiddleware(server, {
       context: async ({ req, res }) => {
         return { user: res.locals };
@@ -54,12 +56,12 @@ async function startApolloServer() {
     })
   );
 
-  app.get('/visualizer', (req, res) => {
-    res.status(200).json('Response');
-  });
+  // app.get('/visualizer', (req, res) => {
+  //   res.status(200).json('Response');
+  // });
 
   // Modified server startup
-  await new Promise(resolve => httpServer.listen({ port: 4000 }, resolve));
+  await new Promise<void>(resolve => httpServer.listen({ port: 4000 }, resolve));
 
   console.log(`🪶 GraphQL server ready at http://localhost:4000/  🪶`);
 }

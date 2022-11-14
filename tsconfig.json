@@ -9,29 +9,37 @@
     ],
     "noImplicitAny": true,
     "allowJs": true,
+    "sourceMap": true,
     "skipLibCheck": true,
     "strict": false,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
     "incremental": true,
     "esModuleInterop": true,
-    "module": "esnext",
+    "module": "CommonJS",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "types": ["node"],
+    "types": [
+      "node"
+    ],
     "jsx": "preserve",
+    "outDir": "./dist",
     "plugins": [
       {
         "name": "next"
       }
-    ]
+    ],
+    "noEmit": true
   },
   "include": [
     "next-env.d.ts",
     ".next/types/**/*.ts",
     "**/*.ts",
-    "app/Login"
+    "**/*.tsx",
+    "app/Login",
+    "server/server.js"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }

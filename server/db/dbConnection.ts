@@ -1,6 +1,5 @@
 import { GlobalServerError, dbConstructor } from '../types';
-require('dotenv').config();
-const { Pool } = require('pg');
+import { Pool } from 'pg';
 import { stringify } from 'querystring';
 
 // const { stringify } = require('querystring');
@@ -127,4 +126,4 @@ dbInstance.prototype.queryTableLayout = async function (tableName: string):Promi
 
 const sWAPI = new (dbInstance as any)('postgres://eitysjmj:At82GArc1PcAD4nYgBoAODn0-XvBYo-A@peanut.db.elephantsql.com/eitysjmj');
 
-module.exports = dbInstance;
+export {dbInstance}

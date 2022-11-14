@@ -1,6 +1,9 @@
-const createEdges = (res) => {
+import { Edge } from "reactflow";
+import { edge, resQL } from "../../(root)/fronendTypes";
+
+const createEdges = (res : resQL) : Edge[] => {
   // edges array to be populated and sent to Flow to render
-  const edges = [];
+  const edges : Edge[] = [];
   // array of nodes from response
   const nodes = res.data.getAllData.nodes;
   // loop through each node from response

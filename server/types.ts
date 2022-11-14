@@ -1,3 +1,5 @@
+import { type } from "os";
+
 export type GlobalServerError = {
     log: string,
     status: number,
@@ -15,10 +17,6 @@ export type dbConstructor = {
     queryFKeys: Function
     queryTableLayout: Function
 }
-
-// type poolConstructor = {
-//     new (s: object): object,
-// }
 
 export type unparsedColumnShape = {
     column_name: string,
@@ -57,4 +55,11 @@ export type schema = {
 
 export type pSQLToGQL = {
     [key: string]: string,
+}
+
+// Server Types
+export type QuiLData = {
+    nodes: nodeShape[], 
+    resolvers: string[]
+    schemas: string[],
 }
