@@ -14,8 +14,8 @@ const MainContainer = (): JSX.Element => {
   const [isLogged, setIsLogged] = useState<boolean>(false);
   const [uri, setURI] = useState<string>('');
   const [resQL, setResQL] = useState<resQL>(res); 
-  const [nodes, setNodes] = useState<Node[]>([]);
-  const [edges, setEdges] = useState<Edge[]>([]);
+  const [nodes, setNodes] = useState<Node[]>(createNodes(res));
+  const [edges, setEdges] = useState<Edge[]>(createEdges(res));
 
   //invoked in VisualizeSchemaResolver
   const schemaGen = (): void => {
