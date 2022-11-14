@@ -1,10 +1,9 @@
 import { Handle, Position } from "reactflow";
-
-const TableRow = ({ columnName, dataType}) => {
-
+import React from "react";
+const TableRow = ({ columnName, dataType }) => {
   return (
     <>
-      <tr>
+      <tr className="hover">
         <td>{columnName}</td>
         <td>{dataType}</td>
       </tr>
