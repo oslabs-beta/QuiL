@@ -89,16 +89,16 @@ const makeNodes = async (db: dbConstructor): Promise< objectOfArrOfNodes > => {
         }
     }
     // console.log(arrOfNodes);
-    console.log(arrOfNodes[0]);
-    console.log(arrOfNodes[0].columns);
-    console.log(arrOfNodes[0].edges);
-    console.log(arrOfNodes);
+    // console.log(arrOfNodes[0]);
+    // console.log(arrOfNodes[0].columns);
+    // console.log(arrOfNodes[0].edges);
+    // console.log(arrOfNodes);
     return { nodes: arrOfNodes };
 };
 
 // test instance with SWAPI DB
-const sWAPI = new dbInstance('postgres://eitysjmj:At82GArc1PcAD4nYgBoAODn0-XvBYo-A@peanut.db.elephantsql.com/eitysjmj');
-makeNodes(sWAPI);
+// const sWAPI = new dbInstance('postgres://eitysjmj:At82GArc1PcAD4nYgBoAODn0-XvBYo-A@peanut.db.elephantsql.com/eitysjmj');
+// makeNodes(sWAPI);
 
 // const testQueries = async () => {
 //     // let queryResults = await sWAPI.queryTables();

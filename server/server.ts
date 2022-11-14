@@ -1,4 +1,3 @@
-console.log('here');
 import { ApolloServer } from '@apollo/server';
 // const { resolvers } = require('./graphql/models/resolvers/resolvers');
 import { expressMiddleware } from '@apollo/server/express4';

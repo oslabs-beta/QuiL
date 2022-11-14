@@ -5,38 +5,38 @@ const dbInstance = require('./db/dbConnection');
 const db = new dbInstance('postgres://eitysjmj:At82GArc1PcAD4nYgBoAODn0-XvBYo-A@peanut.db.elephantsql.com/eitysjmj');
 
 // generates schemas per table
-const generateSchemas = async (db: dbConstructor) => {
-    let tables = await db.queryTables();
-    for (let i = 0; i < tables.length; i++) {
-        let tableName = tables[i].table_name;
-        const schema = {type: tableName};
-        let tableQuery = await db.queryTableLayout(tableName);
-        for (let j = 0; j < tableQuery.length; j++) {
-            let column = tableQuery[j].column_name;
-            // TODO: dataType has to convert data_type into GraphQL data types as well as concacting ! if is_nullable = 'NO'
-            let dataType = convertToGQL(tableQuery[j].data_type, tableQuery[j].is_nullable);
-            schema[column] = dataType;
-        }
-        console.log(schema);
-    }
-};
+// const generateSchemas = async (db: dbConstructor) => {
+//     let tables = await db.queryTables();
+//     for (let i = 0; i < tables.length; i++) {
+//         let tableName = tables[i].table_name;
+//         const schema = {type: tableName};
+//         let tableQuery = await db.queryTableLayout(tableName);
+//         for (let j = 0; j < tableQuery.length; j++) {
+//             let column = tableQuery[j].column_name;
+//             // TODO: dataType has to convert data_type into GraphQL data types as well as concacting ! if is_nullable = 'NO'
+//             let dataType = convertToGQL(tableQuery[j].data_type, tableQuery[j].is_nullable);
+//             schema[column] = dataType;
+//         }
+//         console.log(schema);
+//     }
+// };
 
 // function to convert PostgreSQL data types into GraphQL data types
 // TODO: primary keys become ID!
-const convertToGQL = (dataType: string, nullable: string): string => {
-    dataType = pSQLToGQL[dataType];
-    if (nullable === 'NO') dataType += '!';
-    return dataType;
-};
+// const convertToGQL = (dataType: string, nullable: string): string => {
+//     dataType = pSQLToGQL[dataType];
+//     if (nullable === 'NO') dataType += '!';
+//     return dataType;
+// };
 
-const pSQLToGQL = {
-    'character varying': 'String',
-    integer: 'Int',
-    bigint: 'Int',
-};
+// const pSQLToGQL = {
+//     'character varying': 'String',
+//     integer: 'Int',
+//     bigint: 'Int',
+// };
 
 // TEST:
-generateSchemas(db);
+// generateSchemas(db);
 
 // const testQueries = async () => {
 //     let queryResults = await db.queryTableLayout('people');
