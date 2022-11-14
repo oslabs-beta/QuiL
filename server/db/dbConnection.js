@@ -182,6 +182,4 @@ dbInstance.prototype.queryTableLayout = function (tableName) {
     });
 };
 var sWAPI = new dbInstance('postgres://eitysjmj:At82GArc1PcAD4nYgBoAODn0-XvBYo-A@peanut.db.elephantsql.com/eitysjmj');
-console.log(sWAPI);
-console.log('hi');
 module.exports = dbInstance;

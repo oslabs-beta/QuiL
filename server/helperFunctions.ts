@@ -62,7 +62,6 @@ const parseFKeys = (queryResults: unparsedKeys[], tableName: string): parsedFKey
         let fKeyRefUnsliced = unparsedFKey.slice(indexStartKeyword + keyword.length);
         let indexOfEscapeChar = fKeyRefUnsliced.indexOf(escapeChar);
         let fKeyRef = fKeyRefUnsliced.slice(0, indexOfEscapeChar);
-        // fKeyObj[fKey] = fKeyRef;
         fKeyObj.fKey = fKey;
         fKeyObj.refTable = fKeyRef;
         parsedFKeys.push(fKeyObj);
@@ -79,7 +78,6 @@ const makeNodes = async (db: dbConstructor): Promise< objectOfArrOfNodes > => {
             const node: nodeShape = {name: '', primaryKey: '', columns: [], edges: []}
             node.name = `${tables[i].table_name}`;
             let unparsedPKey = await db.queryPKey();
-            // console.log(unparsedPKey);
             node.primaryKey = parsePKey(unparsedPKey, node.name);
             let unparsedColumns = await db.queryColumns(node.name);
             node.columns = parseColumns(unparsedColumns);
@@ -88,11 +86,10 @@ const makeNodes = async (db: dbConstructor): Promise< objectOfArrOfNodes > => {
             arrOfNodes.push(node);
         }
     }
+    // console.log(arrOfNodes[0]);
+    // console.log(arrOfNodes[0].columns);
+    // console.log(arrOfNodes[0].edges);
     // console.log(arrOfNodes);
-    console.log(arrOfNodes[0]);
-    console.log(arrOfNodes[0].columns);
-    console.log(arrOfNodes[0].edges);
-    console.log(arrOfNodes);
     return { nodes: arrOfNodes };
 };
 
@@ -126,4 +123,4 @@ makeNodes(sWAPI);
 // console.log(testQueryColumns())
 
 
-module.exports = makeNodes;
+module.exports = makeNodes, parsePKey;

@@ -1,24 +1,35 @@
-import { dbConstructor } from "./types";
+import { dbConstructor, schema, pSQLToGQL } from "./types";
+const pluralize = require('pluralize');
 const { query } = require('express');
 const dbInstance = require('./db/dbConnection');
+const parsePKey = require ('./helperFunctions');
 
 const db = new dbInstance('postgres://eitysjmj:At82GArc1PcAD4nYgBoAODn0-XvBYo-A@peanut.db.elephantsql.com/eitysjmj');
 
 // generates schemas per table
-const generateSchemas = async (db: dbConstructor) => {
+export const generateSchemas = async (db: dbConstructor) => {
     let tables = await db.queryTables();
     for (let i = 0; i < tables.length; i++) {
         let tableName = tables[i].table_name;
-        const schema = {type: tableName};
+        const schema: schema = {type: tableName};
         let tableQuery = await db.queryTableLayout(tableName);
         for (let j = 0; j < tableQuery.length; j++) {
             let column = tableQuery[j].column_name;
-            // TODO: dataType has to convert data_type into GraphQL data types as well as concacting ! if is_nullable = 'NO'
             let dataType = convertToGQL(tableQuery[j].data_type, tableQuery[j].is_nullable);
             schema[column] = dataType;
         }
-        console.log(schema);
+        // primary keys have to become "ID!" in GQL
+        let pKey = await parsePKey(tableName);
+        console.log(pKey);
+        schema[pKey] = 'ID!';
+        // console.log(schema);
     }
+};
+
+const pSQLToGQL: pSQLToGQL = {
+    'character varying': 'String',
+    integer: 'Int',
+    bigint: 'Int',
 };
 
 // function to convert PostgreSQL data types into GraphQL data types
@@ -29,11 +40,7 @@ const convertToGQL = (dataType: string, nullable: string): string => {
     return dataType;
 };
 
-const pSQLToGQL = {
-    'character varying': 'String',
-    integer: 'Int',
-    bigint: 'Int',
-};
+// console.log(pluralize.singular('people'))
 
 // TEST:
 generateSchemas(db);

@@ -52,5 +52,9 @@ export type objectOfArrOfNodes = {
 }
 
 export type schema = {
-    [k: string]: string,
+    [key: string]: string,
+}
+
+export type pSQLToGQL = {
+    [key: string]: string,
 }
