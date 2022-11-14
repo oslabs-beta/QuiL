@@ -2,16 +2,13 @@
 import React, { useState } from 'react';
 import Schema from './Schema';
 import Resolver from './Resolver';
-
+import { VisualizeSchemaResolverProps } from '../../(root)/fronendTypes';
 const VisualizeSchemaResolver = ({
   displayMode,
-  setDisplayMode,
-  uri,
   resQL,
-  setResQL,
   schemaGen,
   resolverGen,
-}) => {
+}:VisualizeSchemaResolverProps): JSX.Element => {
   if (displayMode === 'schemaMode') {
     return (
       <div className="VisualizeSchemaResolver">
@@ -23,7 +20,7 @@ const VisualizeSchemaResolver = ({
             Resolver
           </button>
         </div>
-        <Schema resQL={resQL} uri={uri} />
+        <Schema resQL={resQL} />
       </div>
     );
   } else if (displayMode === 'resolverMode') {
@@ -37,7 +34,7 @@ const VisualizeSchemaResolver = ({
             Resolver
           </button>
         </div>
-        <Resolver resQL={resQL} uri={uri} />
+        <Resolver resQL={resQL} />
       </div>
     );
   } else {

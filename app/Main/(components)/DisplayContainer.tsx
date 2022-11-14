@@ -1,37 +1,28 @@
 'use client';
-import React, { useState, useCallback } from 'react';
+import React from 'react';
 import VisualizeDB from './VisualizeDB';
 import VisualizeSchemaResolver from './VisualizeSchemaResolver';
-import ReactFlow, {Node, Edge} from 'reactflow';
-import res from '../(flow)/dummyRes';
-const DisplayContainer = ({ displayMode, setDisplayMode, uri, setURImeth, uriLaunch, resQL, setResQL, schemaGen, resolverGen, edges, nodes, setEdges, setNodes
-}) => {
+import { DisplayContainerProps } from '../../(root)/fronendTypes';
+
+const DisplayContainer = ({ displayMode, userInputURI, uriLaunch, resQL, schemaGen, resolverGen, edges, nodes, handleSetEdges, handleSetNodes
+} : DisplayContainerProps ): JSX.Element => {
 
   return (
     <>
       <div className="DisplayContainer">
         <VisualizeSchemaResolver
           displayMode={displayMode}
-          setDisplayMode={setDisplayMode}
-          uri={uri}
           resQL={resQL}
-          setResQL={setResQL}
           schemaGen={schemaGen}
           resolverGen={resolverGen}
         />
         <VisualizeDB
-          setDisplayMode={setDisplayMode}
-          uri={uri}
-          setURImeth={setURImeth}
-          resQL={resQL}
-          setResQL={setResQL}
+          userInputURI={userInputURI}
           nodes={nodes}
-          setNodes={setNodes}
-          setEdges={setEdges}
+          handleSetNodes={handleSetNodes}
+          handleSetEdges={handleSetEdges}
           edges={edges}
           uriLaunch={uriLaunch}
-          schemaGen={schemaGen}
-          resolverGen={resolverGen}
         />
       </div>
     </>
