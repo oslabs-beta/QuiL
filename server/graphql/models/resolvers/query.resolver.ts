@@ -1,4 +1,4 @@
-import { ArgType, QuiLData } from '../../../types';
+import { ArgType, nodeShape, QuiLData } from '../../../types';
 
 import { makeNodes } from '../../../helperFunctions';
 import { dbInstance } from '../../../db/dbConnection';
@@ -15,7 +15,7 @@ export const Query = {
     const { nodes } = await makeNodes(new (dbInstance as any)(args.uri));
     return {
       nodes,
-      resolvers: nodes.map(node =>
+      resolvers: nodes.map((node: nodeShape) =>
         makeResolverStrings(node, makeResolverFunctions(node))
       ),
       schemas: dummySchemas,
