@@ -35,7 +35,7 @@ const DisplayContainer = ({
             <div className='flex flex-row justify-between items-center'>
               <label
                 htmlFor='my-drawer'
-                className='btn btn-primary btn-sm drawer-button ml-12 my-2 py-0'
+                className='btn btn-accent btn-outline btn-sm drawer-button ml-12 my-2 py-0'
               >
                 View Schemas/Resolvers
               </label>
@@ -43,11 +43,11 @@ const DisplayContainer = ({
                 <input
                   type='text'
                   onChange={(e) => userInputURI(e.target.value)}
-                  className='input input-sm  input-bordered w-full  mx-1'
+                  className='input input-sm  input-bordered w-full mx-1'
                   placeholder='insert URI'
                 ></input>
                 <button
-                  className='btn btn-secondary btn-sm'
+                  className='btn btn-success btn-outline btn-sm'
                   type='submit'
                   onClick={() => uriLaunch()}
                 >

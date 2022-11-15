@@ -2,6 +2,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { format } from "path";
 import React from "react";
+import RootContainer from "./RootContainer";
 
 export default function Page() {
   const submitForm = (e) => {
@@ -16,17 +17,20 @@ export default function Page() {
   // console.log(userName, email, password);
 
   return (
-    <div data-theme='business'>
-      <h1 className='text-3x1 font-bold underline'>Welcome to QuiL</h1>
-      <h3>Writing GraphQL for you</h3>
-      <div className='landingPageURI'>
-        <div>insert URI</div>
-        <input type='text'></input>
-        <Link href='/Main'>Launch</Link>
-      </div>
-      <Link className='landingPageBtn' href='/Main'>
-        Main
-      </Link>
-    </div>
+    <RootContainer />
   );
+}
+{
+  /* <div data-theme='night'>
+<h1 className='text-3x1 font-bold underline'>Welcome to QuiL</h1>
+<h3>Writing GraphQL for you</h3>
+<div className='landingPageURI'>
+  <div>insert URI</div>
+  <input type='text'></input>
+  <Link href='/Main'>Launch</Link>
+</div>
+<Link className='landingPageBtn' href='/Main'>
+  Main
+</Link>
+</div> */
 }

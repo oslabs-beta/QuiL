@@ -5,12 +5,17 @@ import React from "react";
 const TableNode = ({ data }) => {
   const handles: JSX.Element[] = [];
   const arrOfFKeys = [];
-  let pixels = 75;
+  let pixels = 130;
   const tableFields = data.columns.map((column) => {
     // if the columnName is a foreign key, give it a source handle at the correct key
     if (data.arrFKeys.includes(column.columnName)) {
-      const handleStyle = { top: `${pixels.toString()}px`, bottom: "auto" };
-      pixels += 25;
+      const handleStyle = {
+        top: `${pixels.toString()}px`,
+        bottom: "auto",
+        height: "8px",
+        width: "8px",
+      };
+      pixels += 42;
       handles.push(
         <Handle
           type='source'
@@ -27,7 +32,7 @@ const TableNode = ({ data }) => {
           type='target'
           position={Position.Right}
           id={`${data.name}`}
-          style={{ top: "20px" }}
+          style={{ top: "20px", height: "10px", width: "10px" }}
         />
       );
     }
@@ -37,13 +42,15 @@ const TableNode = ({ data }) => {
   });
 
   return (
-    <div>
+    <div className='border-2 border-secondary rounded-md shadow-2xl'>
       {handles}
-      <table className="table-auto border-collapse">
-        <th className="flex">{data.name}</th>
-        <tr>
-          <td>Column</td>
-          <td>Type</td>
+      <div className='flex flex-start bg-secondary-focus w-full py-2 font-mono text-base-content text-xl pl-3'>
+        {data.name}
+      </div>
+      <table className='table-auto font-mono text-neutral-focus'>
+        <tr className='py-6 border-b border-secondary-focus'>
+          <th className='py-5 bg-neutral-content'>Column</th>
+          <th className='py-5 bg-neutral-content'>Type</th>
         </tr>
         {tableFields}
       </table>
