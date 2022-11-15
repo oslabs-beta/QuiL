@@ -1,4 +1,6 @@
 import { GlobalServerError, dbConstructor } from '../types';
+// import * as pg from 'pg';
+// const { Pool } = pg;
 import { Pool } from 'pg';
 import { stringify } from 'querystring';
 

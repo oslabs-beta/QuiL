@@ -49,8 +49,9 @@ export type objectOfArrOfNodes = {
     nodes: nodeShape[]
 }
 
+// TODO: change schema types
 export type schema = {
-    [key: string]: string,
+    [key: string]: any,
 }
 
 export type pSQLToGQL = {
