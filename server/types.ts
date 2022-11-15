@@ -59,3 +59,7 @@ export type QuiLData = {
     resolvers: string[]
     schemas: string[],
 }
+
+export interface ArgType {
+    uri: String
+  }
