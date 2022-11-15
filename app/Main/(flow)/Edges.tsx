@@ -1,4 +1,4 @@
-import { Edge } from "reactflow";
+import { Edge, StepEdge, StraightEdge } from "reactflow";
 import { edge, resQL } from "../../(root)/fronendTypes";
 
 const createEdges = (res : resQL) : Edge[] => {
@@ -14,7 +14,9 @@ const createEdges = (res : resQL) : Edge[] => {
       node.edges.forEach((edge) => {
         const newEdge = {
           id: `${node.name}-${edge.refTable}`,
+          animated: true,
           source: node.name,
+          type: 'default',
           sourceHandle: edge.fKey,
           targetHandle: edge.refTable,
           target: edge.refTable,

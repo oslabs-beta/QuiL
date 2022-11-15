@@ -39,8 +39,8 @@ const TableNode = ({ data }) => {
   return (
     <div>
       {handles}
-      <table>
-        <th>{data.name}</th>
+      <table className="table-auto border-collapse">
+        <th className="flex">{data.name}</th>
         <tr>
           <td>Column</td>
           <td>Type</td>

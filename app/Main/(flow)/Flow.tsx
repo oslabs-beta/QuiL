@@ -46,7 +46,7 @@ const Flow = ({nodes, edges, handleSetNodes, handleSetEdges}: FlowProps) => {
         onConnect={onConnect}
         nodeTypes={nodeTypes}
       >
-        <Background />
+        <Background color="#edede9"/>
         <Controls />
       </ReactFlow>
     </div>

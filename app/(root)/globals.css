@@ -2,7 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
+
+
+/* html,
 body {
   padding: 0;
   margin: 0;
@@ -124,24 +126,21 @@ pre {
   border-radius: 15px;
   height: 780px;
   width: 1150px;
-  /* background-color: pink; */
+
 }
 
 .Schema {
   padding: 10px 10px 10px 10px;
-  /* border: 1px solid; */
   height: 780px;
 }
 
 .Resolver {
   padding: 10px 10px 10px 10px;
-  /* border: 1px solid; */
   height: 780px;
 }
 
 .SearchDB {
   padding: 10px 10px 10px 10px;
-  /* border: 1px solid; */
   height: 780px;
 }
 
@@ -212,6 +211,5 @@ form {
   }
   body {
     color: white;
-    /* background: black; */
   }
-}
+} */

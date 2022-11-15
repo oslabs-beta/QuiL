@@ -1,6 +1,6 @@
-import { VisualizeDBProps } from '../../(root)/fronendTypes';
-import Chart from './Chart';
-import React from 'react';
+import { VisualizeDBProps } from "../../(root)/fronendTypes";
+import Chart from "./Chart";
+import React from "react";
 
 const VisualizeDB = ({
   userInputURI,
@@ -9,25 +9,17 @@ const VisualizeDB = ({
   handleSetEdges,
   handleSetNodes,
   uriLaunch,
-} : VisualizeDBProps): JSX.Element => {
-
+}: VisualizeDBProps): JSX.Element => {
   return (
-    <div className="VisualizeDB">
-      <div className="searchURI">
-        <div> insert URI </div>
-        <input type="text" onChange={(e) => userInputURI(e.target.value)}></input>
-        <button type="submit" onClick={() => uriLaunch()}>
-          Launch
-        </button>
+      <div className="flex justify-center">
+        <Chart
+          nodes={nodes}
+          handleSetNodes={handleSetNodes}
+          edges={edges}
+          handleSetEdges={handleSetEdges}
+        />
       </div>
-      <Chart 
-            nodes={nodes}
-            handleSetNodes={handleSetNodes}
-            edges={edges}
-            handleSetEdges={handleSetEdges}/>
-    </div>
   );
 };
-
 
 export default VisualizeDB;
