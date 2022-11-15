@@ -1,6 +1,7 @@
 import { GlobalServerError, dbConstructor } from '../types';
-require('dotenv').config();
-const { Pool } = require('pg');
+// import * as pg from 'pg';
+// const { Pool } = pg;
+import { Pool } from 'pg';
 import { stringify } from 'querystring';
 
 // const { stringify } = require('querystring');
@@ -11,17 +12,19 @@ create a func that accepts URI input and exports/returns query obj that's being 
 since return value is query obj, we can import it into helperFuncs
 */
 
-function dbInstance(this: dbConstructor, inputURI: string ): void {
+function dbInstance(this: dbConstructor, inputURI: string): void {
   if (inputURI.includes('postgres')) this.dbType = 'PostgreSQL';
-  this.pool = new Pool({connectionString: inputURI});
+  this.pool = new Pool({ connectionString: inputURI });
   this.query = (text: string, params?: object, callback?: Function): Object => {
     // console.log('executed query', text);
     return this.pool.query(text, params, callback);
-  }
-};
+  };
+}
 
 // Given a database, return all table names in an array
-dbInstance.prototype.queryTables = async function ():Promise<[] | GlobalServerError>  {
+dbInstance.prototype.queryTables = async function (): Promise<
+  [] | GlobalServerError
+> {
   try {
     if (this.dbType === 'PostgreSQL') {
       const tablesQuery = `
@@ -36,13 +39,15 @@ dbInstance.prototype.queryTables = async function ():Promise<[] | GlobalServerEr
     return {
       log: `dbConnection.js.queryTables: ERROR: ${err}`,
       status: 400,
-      message: {err: 'An error occured'}
-    }
+      message: { err: 'An error occured' },
+    };
   }
 };
 
 // Given a table name, return all columns of that table in an array of objects
-dbInstance.prototype.queryColumns = async function (tableName: string):Promise<[] | GlobalServerError> {
+dbInstance.prototype.queryColumns = async function (
+  tableName: string
+): Promise<[] | GlobalServerError> {
   try {
     const query = `
     SELECT column_name, data_type
@@ -55,13 +60,15 @@ dbInstance.prototype.queryColumns = async function (tableName: string):Promise<[
     return {
       log: `dbConnection.js.queryColumns: ERROR: ${err}`,
       status: 400,
-      message: {err: 'An error occured'}
-    }
+      message: { err: 'An error occured' },
+    };
   }
 };
 
 // Returns query for all primary keys of a database
-dbInstance.prototype.queryPKey = async function ():Promise<[] | GlobalServerError> {
+dbInstance.prototype.queryPKey = async function (): Promise<
+  [] | GlobalServerError
+> {
   try {
     const query = `
     SELECT conrelid::regclass AS table_name,
@@ -78,13 +85,15 @@ dbInstance.prototype.queryPKey = async function ():Promise<[] | GlobalServerErro
     return {
       log: `dbConnection.js.queryPKey: ERROR: ${err}`,
       status: 400,
-      message: {err: 'An error occured'}
-    }
+      message: { err: 'An error occured' },
+    };
   }
 };
 
-// Returns query for all 
-dbInstance.prototype.queryFKeys = async function ():Promise<[] | GlobalServerError> {
+// Returns query for all
+dbInstance.prototype.queryFKeys = async function (): Promise<
+  [] | GlobalServerError
+> {
   try {
     const query = `
     SELECT conrelid::regclass AS table_name, 
@@ -95,36 +104,35 @@ dbInstance.prototype.queryFKeys = async function ():Promise<[] | GlobalServerErr
     AND    connamespace = 'public'::regnamespace   
     ORDER  BY conrelid::regclass::text, contype DESC;
     `;
-    const { rows } = await this.query(query)
+    const { rows } = await this.query(query);
     return rows;
   } catch (err: unknown) {
     return {
       log: `dbConnection.js.queryFKeys: ERROR: ${err}`,
       status: 400,
-      message: {err: 'An error occured'}
-    }
+      message: { err: 'An error occured' },
+    };
   }
 };
 
-
-dbInstance.prototype.queryTableLayout = async function (tableName: string):Promise<[] | GlobalServerError> {
+dbInstance.prototype.queryTableLayout = async function (
+  tableName: string
+): Promise<[] | GlobalServerError> {
   try {
     const query = `
     SELECT table_name, column_name, is_nullable, data_type
     FROM information_schema.columns
     WHERE table_schema = 'public' AND table_name = '${tableName}'
     `;
-    const { rows } = await this.query(query)
+    const { rows } = await this.query(query);
     return rows;
   } catch (err: unknown) {
     return {
       log: `dbConnection.js.queryTableLayout: ERROR: ${err}`,
       status: 400,
-      message: {err: 'An error occured'}
-    }
+      message: { err: 'An error occured' },
+    };
   }
 };
 
-const sWAPI = new (dbInstance as any)('postgres://eitysjmj:At82GArc1PcAD4nYgBoAODn0-XvBYo-A@peanut.db.elephantsql.com/eitysjmj');
-
-module.exports = dbInstance;
+export { dbInstance };

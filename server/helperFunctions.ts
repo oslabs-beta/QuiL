@@ -2,7 +2,8 @@ import { dbConstructor, unparsedColumnShape, parsedColumnShape, unparsedKeys, pa
 // function to write statement for PostgresQL to grab table names/data types of tables, foreign keys, primary keys
 const { query } = require('express');
 const { debuglog } = require('util');
-const dbInstance = require('./db/dbConnection');
+// const dbInstance = require('./db/dbConnection');
+import {dbInstance} from './db/dbConnection'
 
 // parses out columns to key-value name we want
 const parseColumns = (columns: unparsedColumnShape[]): parsedColumnShape[] => {
@@ -39,7 +40,6 @@ const parseFKeys = (queryResults: unparsedKeys[], tableName: string): parsedFKey
         let el = queryResults[i];
         if (el.table_name === tableName) unparsedFKeys.push(el);
     }
-    // console.log(unparsedFKeys);
     for (let j = 0; j < unparsedFKeys.length; j++) {
         const fKeyObj: parsedFKeys = {fKey: '', refTable: ''};
         let unparsedFKey = unparsedFKeys[j].pg_get_constraintdef;
@@ -62,12 +62,10 @@ const parseFKeys = (queryResults: unparsedKeys[], tableName: string): parsedFKey
         let fKeyRefUnsliced = unparsedFKey.slice(indexStartKeyword + keyword.length);
         let indexOfEscapeChar = fKeyRefUnsliced.indexOf(escapeChar);
         let fKeyRef = fKeyRefUnsliced.slice(0, indexOfEscapeChar);
-        // fKeyObj[fKey] = fKeyRef;
         fKeyObj.fKey = fKey;
         fKeyObj.refTable = fKeyRef;
         parsedFKeys.push(fKeyObj);
         }
-    // console.log(parsedFKeys);
     return parsedFKeys;
 };
 
@@ -79,51 +77,42 @@ const makeNodes = async (db: dbConstructor): Promise< objectOfArrOfNodes > => {
             const node: nodeShape = {name: '', primaryKey: '', columns: [], edges: []}
             node.name = `${tables[i].table_name}`;
             let unparsedPKey = await db.queryPKey();
-            // console.log(unparsedPKey);
             node.primaryKey = parsePKey(unparsedPKey, node.name);
             let unparsedColumns = await db.queryColumns(node.name);
             node.columns = parseColumns(unparsedColumns);
             let unparsedFKeys = await db.queryFKeys();
             node.edges = parseFKeys(unparsedFKeys, node.name);
             arrOfNodes.push(node);
+            // test console logs to run these logs when invoked instead of having to write async-await tester func
+            // console.log(unparsedFKeys)
+            // console.log(node.name, node.edges)
+            // console.log(node.name, unparsedColumns.length, node.edges.length)
+            // console.log(parseFKeys(unparsedFKeys, node.name).length)
         }
     }
     // console.log(arrOfNodes);
-    console.log(arrOfNodes[0]);
-    console.log(arrOfNodes[0].columns);
-    console.log(arrOfNodes[0].edges);
-    console.log(arrOfNodes);
+    // console.log(arrOfNodes[0].edges)
     return { nodes: arrOfNodes };
 };
 
 // test instance with SWAPI DB
-const sWAPI = new dbInstance('postgres://eitysjmj:At82GArc1PcAD4nYgBoAODn0-XvBYo-A@peanut.db.elephantsql.com/eitysjmj');
+const sWAPI = new (dbInstance as any)('postgres://eitysjmj:At82GArc1PcAD4nYgBoAODn0-XvBYo-A@peanut.db.elephantsql.com/eitysjmj');
 makeNodes(sWAPI);
 
 // const testQueries = async () => {
+//     // test queryTables
 //     // let queryResults = await sWAPI.queryTables();
-//     // console.log(queryResults);
-//     queryResults = await sWAPI.queryTables();
-//     //queryResults = await sWAPI.queryPKey();
-//     // console.log(queryResults);
-//     // console.log(parsePKey(queryResults, 'people'))
-//     console.log(queryResults)
+//     // return queryResults
+//     // test queryPKey
+//     // let queryResults = await sWAPI.queryPKey();
+//     // return parsePKey(queryResults, 'people'))
+//     // test fKeys
+//     // let queryResults = await sWAPI.queryFKeys();
+//     // return parseFKeys(queryResults, 'people');
+//     // test queryColumns
+//     // let queryResults = await sWAPI.queryColumns('planets');
+//     // return parseColumns(queryResults)
 // }
-// testQueries();
+// console.log(testQueries());
 
-// const testQueryFKeys = async () => {
-//     let queryResults = await sWAPI.queryFKeys();
-//     // console.log('queryResults ')
-//     // console.log(queryResults)
-//     return parseFKeys(queryResults, 'people');
-// }
-// console.log(testQueryFKeys());
-
-// const testQueryColumns = async () => {
-//     let queryResults = await sWAPI.queryColumns('planets');
-//     return parseColumns(queryResults)
-// }
-// console.log(testQueryColumns())
-
-
-module.exports = makeNodes;
+export { parseColumns, parsePKey, parseFKeys, makeNodes};
