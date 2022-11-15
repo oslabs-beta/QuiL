@@ -15,7 +15,7 @@ export const Query = {
     const { nodes } = await makeNodes(new (dbInstance as any)(args.uri));
     return {
       nodes,
-      resolverStrings: nodes.map(node =>
+      resolvers: nodes.map(node =>
         makeResolverStrings(node, makeResolverFunctions(node))
       ),
       schemas: dummySchemas,

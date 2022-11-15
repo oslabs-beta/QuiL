@@ -57,7 +57,7 @@ export type schema = {
 // Server Types
 export type QuiLData = {
   nodes: nodeShape[];
-  resolverStrings: ResolverStrings[];
+  resolvers: ResolverStrings[];
   schemas: string[];
 };
 

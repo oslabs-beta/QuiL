@@ -88,14 +88,22 @@ const makeResolverStrings = (
   node: node,
   resolvers: TableResolver
 ): ResolverStrings => {
-  const getOneString = resolvers.getOne
-    .toString()
-    .replace(/\${node.name}/, node.name)
-    .replace(/\${node.primaryKey}/, node.primaryKey);
+  let singular = pluralize.singular(node.name);
+  if (singular === node.name) singular = singular + 'ById';
+  const getOneString =
+    'Query: {\n    ' +
+    `${singular}: ` +
+    resolvers.getOne
+      .toString()
+      .replace(/\${node.name}/, node.name)
+      .replace(/\${node.primaryKey}/, node.primaryKey) +
+    `\n }`;
 
-  const getAllString = resolvers.getAll
-    .toString()
-    .replace(/\${node.name}/, node.name);
+  const getAllString =
+    'Query: {\n    ' +
+    `${node.name}: ` +
+    resolvers.getAll.toString().replace(/\${node.name}/, node.name) +
+    `\n }`;
 
   return {
     tableName: node.name,

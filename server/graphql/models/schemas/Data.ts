@@ -1,7 +1,7 @@
 export const DataType: string = `
 type Data {
   nodes: [Node],
-  resolverStrings: [ResolverStrings],
+  resolvers: [ResolverStrings],
   schemas: [String]
 }
 
