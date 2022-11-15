@@ -10,14 +10,16 @@ import { query } from "express";
 import { dbInstance } from './db/dbConnection';
 import { parseColumns, parsePKey, parseFKeys, makeNodes } from './helperFunctions'
 
-const db = new (dbInstance as any)('postgres://eitysjmj:At82GArc1PcAD4nYgBoAODn0-XvBYo-A@peanut.db.elephantsql.com/eitysjmj');
-
 // generates schemas given a database
-export const generateSchemas = async (db: dbConstructor): Promise <schema[]> => {
+export const generateSchemas = async (db: dbConstructor): Promise <string> => {
     let tables = await db.queryTables();
     const schemas: schema[] = [];
+    // to create initial schemas per table
     for (let i = 0; i < tables.length; i++) {
         let tableName = tables[i].table_name;
+        // // TODO: don't make schemas for intersection tables
+        // let isInterTable = await isIntersectionTable(db, tableName)
+        // if (isInterTable === true) continue; 
         const schema: schema = {table_name: tableName};
         let tableQuery = await db.queryTableLayout(tableName);
         for (let j = 0; j < tableQuery.length; j++) {
@@ -31,7 +33,7 @@ export const generateSchemas = async (db: dbConstructor): Promise <schema[]> => 
         schema[pKey] = 'ID!';
         schemas.push(schema);
     }
-    // iterate again to create table: instance ex: People: [Person] key-value in planets schema
+    // iterate again to append onto schemas: key-value pairs of table-instance (ex: People: [Person] in Planet schema)
     for (let j = 0; j < schemas.length; j++) {
         let schema = schemas[j];
         let isIntTable = await isIntersectionTable(db, schema.table_name)
@@ -42,46 +44,42 @@ export const generateSchemas = async (db: dbConstructor): Promise <schema[]> => 
                 for (let l = 0; l < schemas.length; l++) {
                     if (edges[k].refTable === schemas[l].table_name) {
                         // if a table is not an intersection table, then find its refTables and add key-value pair: tableName: singularizedTableName
-                        if (isIntTable === false) schemas[l][schema.table_name] = formatStr(schema.table_name); 
+                        if (isIntTable === false) schemas[l][schema.table_name] = `[${formatStr(schema.table_name)}]`; 
                         else {
                             for (let m = 0; m < edges.length; m++) {
-                                schemas[l][edges[m].refTable] = formatStr(edges[m].refTable);
+                                schemas[l][edges[m].refTable] = `[${formatStr(edges[m].refTable)}]`;
                         }
                     }
                 }
             }
         }
     }
+    // delete self-references in schemas, replace foreign keys with refTable instances, and delete all intersection tables from schemas array
     for (let n = 0; n < schemas.length; n++) {
+        // delete self-references in schemas
         let tableName = tables[n].table_name;
         delete schemas[n][tableName];
-    }
-    // per table, loop through FKeys
-    for (let o = 0; o < schemas.length; o++) {
+        // per table, loop through FKeys and replace with ref table instance
         let unparsedFKeys = await db.queryFKeys();
-        let edges = parseFKeys(unparsedFKeys, schemas[o].table_name)
-        for (let p = 0; p < edges.length; p++) {
-            delete schemas[o][edges[p].fKey];
-            schemas[o][edges[p].refTable] = formatStr(edges[p].refTable);
+        let edges = parseFKeys(unparsedFKeys, schemas[n].table_name)
+        for (let o = 0; o < edges.length; o++) {
+            delete schemas[n][edges[o].fKey];
+            schemas[n][edges[o].refTable] = `[${formatStr(edges[o].refTable)}]`;
         }
+        // delete all intersection tables from schemas array
+        let isIntTable = await isIntersectionTable(db, schemas[n].table_name)
+        if (isIntTable === true) delete schemas[n];
     }
-    // delete all intersection tables
-    for (let q = 0; q < schemas.length; q++) {
-        let isIntTable = await isIntersectionTable(db, schemas[q].table_name)
-        if (isIntTable === true) delete schemas[q];
+    // need to get rid of undefined obj
+    const noUndefinedArr = [];
+    for (let p = 0; p < schemas.length; p++) {
+        if (schemas[p] === undefined) continue;
+        noUndefinedArr.push(schemas[p]);
     }
-    console.log(schemas);
-    return schemas;
+    // console.log(schemas);
+    console.log(formatSchemas(noUndefinedArr));
+    return formatSchemas(noUndefinedArr);
 };
-
-// TODO: function to stringify and format schemas
-const formatSchemas = async (schemasArray: schema[]): Promise<string> => {
-    let strSchemas = '';
-    for (let i = 0; i < schemasArray.length; i++) {
-        strSchemas += JSON.stringify(schemasArray[i]);
-    } 
-    return strSchemas;
-}
 
 // function to identify whether or not a table is an intersection table (table with all foreign keys)
 const isIntersectionTable = async (db: dbConstructor, tableName: string): Promise <boolean> => {
@@ -94,12 +92,12 @@ const isIntersectionTable = async (db: dbConstructor, tableName: string): Promis
     return false;
 }
 
-// function to singularize words, capitalize the first letter, and then return as '[formattedStr]' (ex: People --> '[Person]')
+// function to singularize a word and capitalize its first letter (ex: People --> 'Person')
 const formatStr = (str: string) => {
     // singularize word
     let singular = pluralize.singular(str);
-    // capitalize first letter and return in string with '[' in front and ']' in back
-    return `[${singular[0].toUpperCase() + singular.slice(1)}]`;
+    // capitalize first letter and return
+    return `${singular[0].toUpperCase() + singular.slice(1)}`;
 }
 
 // function to convert PostgreSQL data types into GraphQL data types
@@ -116,6 +114,35 @@ const pSQLToGQL: pSQLToGQL = {
     bigint: 'Int',
     date: 'String'
 };
+
+// function to format one schema object
+const formatSchema = (schema: schema): string => {
+    let returnStr = '';
+    returnStr += `type ${formatStr(schema.table_name)} {`;
+    // add rest of contents of object except for table_name property
+    for (let key in schema) {
+        // ignore table_name property
+        if (key === 'table_name') continue;
+        // stringify rest and add to returnStr
+        returnStr += `\n ${key}: ${schema[key]}`;
+    }
+    returnStr += '\n}'
+    return returnStr;
+}
+
+// function to stringfy the entire array of schemas
+const formatSchemas = (schemasArray: schema[]): string => {
+    let returnStr = '';
+    for (let i = 0; i < schemasArray.length; i++) {
+        returnStr += formatSchema(schemasArray[i]);
+        returnStr += '\n \n'
+    }
+    return returnStr;
+}
+
+const db = new (dbInstance as any)('postgres://eitysjmj:At82GArc1PcAD4nYgBoAODn0-XvBYo-A@peanut.db.elephantsql.com/eitysjmj');
+generateSchemas(db);
+
 
 /*
 Loop through foreign keys query, specifically the pg_get_constraintdef strings
@@ -143,5 +170,3 @@ loop through tableNames and check if any of the array of strings includes that t
 //     isIntersectionTable("planets_in_films");
 //     isIntersectionTable("planets");
 // }
-
-generateSchemas(db);

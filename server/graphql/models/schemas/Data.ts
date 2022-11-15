@@ -1,7 +1,7 @@
-export const DataType: string =`
+export const DataType: string = `
 type Data {
   nodes: [Node],
-  resolvers: [String],
+  resolvers: [ResolverStrings],
   schemas: [String]
 }
 
@@ -20,4 +20,10 @@ type ColumnData {
 type Edge {
   fKey: String,
   refTable: String
-}`
+}
+
+type ResolverStrings {
+  tableName: String,
+  getOneString: String, 
+  getAllString: String
+}`;
