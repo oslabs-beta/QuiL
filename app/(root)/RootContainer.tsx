@@ -1,7 +1,24 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-
+ 
 const RootContainer = () => {
+  const [initialURI, setInitialURI] = useState<string>(null);
+  const [sampleURI, setSampleURI] = useState<string>(null);
+ 
+  const router = useRouter();
+  const handleUserURI = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setInitialURI(e.target.value);
+  };
+  const handleSampleURI = (e: React.ChangeEvent<HTMLSelectElement>): void => {
+    setSampleURI(e.target.value);
+  };
+ 
+  const handleLaunch = (e: React.MouseEvent<HTMLElement>): void => {
+    const URI = initialURI ? initialURI : sampleURI;
+    router.push(`/Main?URI=${URI}`);
+  };
+ 
   return (
     <div className='hero min-h-screen bg-base-200'>
       <div className='hero-content flex-col lg:flex-row-reverse'>
@@ -21,31 +38,42 @@ const RootContainer = () => {
               </label>
               <input
                 type='text'
+                disabled={sampleURI ? true : false}
                 placeholder='Enter URI here or choose a sample'
                 className='input input-bordered'
+                onChange={handleUserURI}
               />
             </div>
             <div className='form-control w-full max-w-xs'>
               <label className='label'>
                 <span className='label-text'>Sample Database</span>
               </label>
-              <select className='select select-bordered'>
+              <select
+                onChange={handleSampleURI}
+                disabled={initialURI ? true : false}
+                className='select select-bordered'
+              >
                 <option disabled selected>
                   Pick one
                 </option>
-                <option>Star Wars</option>
-                <option>Pokemon</option>
-                <option>Quitr</option>
+                <option value='postgres://lkdxllvk:GTIkPygxpPOx0ZVNJ3luQHEfApEIJekP@heffalump.db.elephantsql.com/lkdxllvk'>
+                  Star Wars
+                </option>
+                <option value='postgres://nsjouiot:4nVVHLiARTADoIiwArtQLG-HfkhQR03k@peanut.db.elephantsql.com/nsjouiot'>
+                  Quitr
+                </option>
               </select>
             </div>
           </div>
           <div className='form-control mt-6'>
-            <button className='btn btn-primary'>Launch</button>
+            <button disabled={initialURI || sampleURI ? false : true} onClick={handleLaunch} className='btn btn-primary'>
+              Launch
+            </button>
           </div>
         </div>
       </div>
     </div>
   );
 };
-
+ 
 export default RootContainer;
