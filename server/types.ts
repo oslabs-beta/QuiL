@@ -52,18 +52,18 @@ export type objectOfArrOfNodes = {
 
 // TODO: change schema types
 export type schema = {
-    [key: string]: any,
-}
+  [key: string]: any;
+};
 
 export type pSQLToGQL = {
-    [key: string]: string,
-}
+  [key: string]: string;
+};
 
 // Server Types
 export type QuiLData = {
   nodes: nodeShape[];
   resolvers: ResolverStrings[];
-  schemas: string[];
+  schemas: string;
 };
 
 export type TableResolver = {

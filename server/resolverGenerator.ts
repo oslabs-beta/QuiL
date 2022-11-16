@@ -19,6 +19,7 @@ const makeResolverFunctions = (node: node): TableResolver => {
     const { rows } = await db.query(query, values);
     return rows;
   };
+
   const getAll = async () => {
     const query = `SELECT * FROM ${node.name}`;
     const values = [node.name];
@@ -39,7 +40,7 @@ const makeResolverStrings = (
   let singular = pluralize.singular(node.name);
   if (singular === node.name) singular = singular + 'ById';
   const getOneString =
-    'Query: {\n    ' +
+    '\n Query: {\n    ' +
     `${singular}: ` +
     resolvers.getOne
       .toString()
@@ -48,7 +49,7 @@ const makeResolverStrings = (
     `\n }`;
 
   const getAllString =
-    'Query: {\n    ' +
+    '\n Query: {\n    ' +
     `${node.name}: ` +
     resolvers.getAll.toString().replace(/\${node.name}/, node.name) +
     `\n }`;

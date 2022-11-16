@@ -7,13 +7,13 @@ const Schema = ({ resQL }: SchemaProps): JSX.Element => {
   const onChange = React.useCallback((value, viewUpdate) => {
     console.log("value:", value);
   }, []);
-  const test =
-    "type Node { \n  name: String, \n  primaryKey: String,\n  columns: [ColumnData],\n  edges: [Edgfadsfffffffffffffffffffffffffe]\n} ";
+
+
   return (
     <div className=''>
       <ReactCodeMirror
-        value={test}
-        height='200px'
+        value={resQL.data.getAllData.schemas}
+        height='80%'
         extensions={[javascript({ jsx: true })]}
         onChange={onChange}
         theme={dracula}
