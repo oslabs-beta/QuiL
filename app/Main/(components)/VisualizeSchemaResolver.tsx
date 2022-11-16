@@ -1,56 +1,29 @@
-'use client';
-import React, { useState } from 'react';
-import Schema from './Schema';
-import Resolver from './Resolver';
-import { VisualizeSchemaResolverProps } from '../../(root)/fronendTypes';
+"use client";
+import React, { useState } from "react";
+import Schema from "./Schema";
+import Resolver from "./Resolver";
+import { VisualizeSchemaResolverProps } from "../../(root)/fronendTypes";
 const VisualizeSchemaResolver = ({
   displayMode,
   resQL,
-  schemaGen,
-  resolverGen,
-}:VisualizeSchemaResolverProps): JSX.Element => {
-  if (displayMode === 'schemaMode') {
-    return (
-      <div className="VisualizeSchemaResolver">
-        <div className="mainButtons">
-          <button onClick={() => schemaGen()} className="SchemaBtn">
-            Schema
-          </button>
-          <button onClick={() => resolverGen()} className="ResolverBtn">
-            Resolver
-          </button>
-        </div>
-        <Schema resQL={resQL} />
-      </div>
-    );
-  } else if (displayMode === 'resolverMode') {
-    return (
-      <div className="VisualizeSchemaResolver">
-        <div className="mainButtons">
-          <button onClick={() => schemaGen()} className="SchemaBtn">
-            Schema
-          </button>
-          <button onClick={() => resolverGen()} className="ResolverBtn">
-            Resolver
-          </button>
-        </div>
-        <Resolver resQL={resQL} />
-      </div>
-    );
-  } else {
-    return (
-      <div className="VisualizeSchemaResolver">
-        <div className="mainButtons">
-          <button onClick={() => schemaGen()} className="SchemaBtn">
-            Schema
-          </button>
-          <button onClick={() => resolverGen()} className="ResolverBtn">
-            Resolver
-          </button>
-        </div>
-      </div>
-    );
-  }
-};
+}: VisualizeSchemaResolverProps): JSX.Element => {
+  let modeComponent;
+  switch (displayMode) {
+    case "schemaMode":
+      modeComponent = <Schema resQL={resQL} />;
 
+      break;
+    case "resolverMode":
+      modeComponent = <Resolver resQL={resQL} />;
+      break;
+    default:
+      modeComponent = null;
+  }
+  return (
+    <div className="min-w-full max-w-fit">
+      {modeComponent}
+    </div>
+    );
+};
 export default VisualizeSchemaResolver;
+

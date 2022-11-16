@@ -5,7 +5,7 @@ import { ChartProps } from '../../(root)/fronendTypes';
 const Chart = ({ nodes, edges, handleSetNodes, handleSetEdges}: ChartProps) : JSX.Element => {
    
   return (
-    <div className="Chart">
+    <div style={{ height: "75rem", width: "120rem"}}>
       <Flow nodes={nodes} edges={edges} handleSetNodes={handleSetNodes} handleSetEdges={handleSetEdges} />
     </div>
   );

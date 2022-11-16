@@ -21,8 +21,6 @@ export type NavigationBarProps = {
 export type VisualizeSchemaResolverProps = {
 displayMode: string;
 resQL: resQL;
-schemaGen: () => void;
-resolverGen: () => void;
 }
 
 export type SchemaProps = {
