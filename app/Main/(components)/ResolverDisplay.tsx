@@ -1,10 +1,11 @@
-import { ResolverProps } from '../../(root)/fronendTypes';
-import ReactCodeMirror from '@uiw/react-codemirror';
+'use client';
+import { CopyTwoTone } from '@ant-design/icons';
 import { javascript } from '@codemirror/lang-javascript';
 import { dracula } from '@uiw/codemirror-theme-dracula';
-import React from 'react';
+import ReactCodeMirror from '@uiw/react-codemirror';
+import React, { useState } from 'react';
+import { ResolverProps } from '../../(root)/fronendTypes';
 import { ResolverStrings } from '../../../server/types';
-import { CopyTwoTone } from '@ant-design/icons';
 
 type ResolverMirrorProps = {
   value: any;
@@ -33,17 +34,27 @@ export const ResolverMirror = ({ value }: ResolverMirrorProps) => {
 }
 
 export const Card = ({ value, title }: ResolverMirrorProps) => {
+  const [copyStatus, setCopyStatus] = useState('Copy');
+
+  const onClick = () => {
+    navigator.clipboard.writeText(value);
+    setCopyStatus('Copied!');
+    setTimeout(() => {
+      setCopyStatus('Copy');
+    }, 5000);
+  };
   return (
     <div style={{ margin: '25px' }}>
       <div>
         <div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <h3 className="font-bold">{title}</h3>
-            <button className="btn btn-xs sm:btn-sm">
-              <CopyTwoTone />
-            </button>
+            <div className="tooltip" data-tip={copyStatus}>
+              <button className="btn btn-xs sm:btn-sm" onClick={onClick}>
+                <CopyTwoTone />
+              </button>
+            </div>
           </div>
-
           <ResolverMirror value={value} />
         </div>
       </div>
