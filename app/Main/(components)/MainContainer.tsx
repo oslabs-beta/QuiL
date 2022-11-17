@@ -18,6 +18,7 @@ const MainContainer = (): JSX.Element => {
   const [resQL, setResQL] = useState<resQL>(res);
   const [nodes, setNodes] = useState<Node[]>([]);
   const [edges, setEdges] = useState<Edge[]>([]);
+  const [isLoaded, setLoading] = useState(false);
 
   const searchParams = useSearchParams();
   const initialURI = searchParams.get("URI");
@@ -61,6 +62,7 @@ const MainContainer = (): JSX.Element => {
       setResQL(res);
       setNodes(createNodes(res));
       setEdges(createEdges(res));
+      setLoading(true);
     };
     fetchData().catch(console.error);
   }, []);
@@ -114,6 +116,7 @@ const MainContainer = (): JSX.Element => {
     setResQL(res);
     setNodes(createNodes(res));
     setEdges(createEdges(res));
+    setLoading(false);
   };
 
   // handleSetNodes takes in a callback (cb). That callback takes in
@@ -149,6 +152,7 @@ const MainContainer = (): JSX.Element => {
         resQL={resQL}
         schemaGen={schemaGen}
         resolverGen={resolverGen}
+        isLoaded={isLoaded}
       />
     </div>
   );

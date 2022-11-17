@@ -29,7 +29,3 @@ export const Query = {
     };
   },
 };
-
-// resolvers: nodes.map((node: nodeShape) =>
-// makeResolverStrings(node, makeResolverFunctions(node))
-// ),

@@ -16,6 +16,7 @@ const DisplayContainer = ({
   nodes,
   handleSetEdges,
   handleSetNodes,
+  isLoaded
 }: DisplayContainerProps): JSX.Element => {
   let schemaTabStyle = "tab tab-bordered";
   let resolverTabStyle = "tab tab-bordered";
@@ -71,6 +72,7 @@ const DisplayContainer = ({
               handleSetEdges={handleSetEdges}
               edges={edges}
               uriLaunch={uriLaunch}
+              isLoaded={isLoaded}
             />
           </div>
           <div className='drawer-side'>
