@@ -426,14 +426,63 @@ const res =  {"data": {
           }
       ],
       "resolvers": [
-          "users: () => db.get(\"users\")",
-          "user: (_, args) => db.get({user: args.id})"
+        {
+          "tableName": "species",
+          "getOneString": "\n Query: {\n    speciesById: async (_, args) => {\n        const query = `SELECT * FROM species WHERE _id = $1`;\n        const values = [args._id];\n        const { rows } = await db.query(query, values);\n        return rows;\n    }\n }",
+          "getAllString": "\n Query: {\n    species: async () => {\n        const query = `SELECT * FROM species`;\n        const values = [node.name];\n        const { rows } = await db.query(query, values);\n        return rows;\n    }\n }"
+        },
+        {
+          "tableName": "people",
+          "getOneString": "\n Query: {\n    person: async (_, args) => {\n        const query = `SELECT * FROM people WHERE _id = $1`;\n        const values = [args._id];\n        const { rows } = await db.query(query, values);\n        return rows;\n    }\n }",
+          "getAllString": "\n Query: {\n    people: async () => {\n        const query = `SELECT * FROM people`;\n        const values = [node.name];\n        const { rows } = await db.query(query, values);\n        return rows;\n    }\n }"
+        },
+        {
+          "tableName": "planets",
+          "getOneString": "\n Query: {\n    planet: async (_, args) => {\n        const query = `SELECT * FROM planets WHERE _id = $1`;\n        const values = [args._id];\n        const { rows } = await db.query(query, values);\n        return rows;\n    }\n }",
+          "getAllString": "\n Query: {\n    planets: async () => {\n        const query = `SELECT * FROM planets`;\n        const values = [node.name];\n        const { rows } = await db.query(query, values);\n        return rows;\n    }\n }"
+        },
+        {
+          "tableName": "people_in_films",
+          "getOneString": "\n Query: {\n    people_in_film: async (_, args) => {\n        const query = `SELECT * FROM people_in_films WHERE _id = $1`;\n        const values = [args._id];\n        const { rows } = await db.query(query, values);\n        return rows;\n    }\n }",
+          "getAllString": "\n Query: {\n    people_in_films: async () => {\n        const query = `SELECT * FROM people_in_films`;\n        const values = [node.name];\n        const { rows } = await db.query(query, values);\n        return rows;\n    }\n }"
+        },
+        {
+          "tableName": "films",
+          "getOneString": "\n Query: {\n    film: async (_, args) => {\n        const query = `SELECT * FROM films WHERE _id = $1`;\n        const values = [args._id];\n        const { rows } = await db.query(query, values);\n        return rows;\n    }\n }",
+          "getAllString": "\n Query: {\n    films: async () => {\n        const query = `SELECT * FROM films`;\n        const values = [node.name];\n        const { rows } = await db.query(query, values);\n        return rows;\n    }\n }"
+        },
+        {
+          "tableName": "species_in_films",
+          "getOneString": "\n Query: {\n    species_in_film: async (_, args) => {\n        const query = `SELECT * FROM species_in_films WHERE _id = $1`;\n        const values = [args._id];\n        const { rows } = await db.query(query, values);\n        return rows;\n    }\n }",
+          "getAllString": "\n Query: {\n    species_in_films: async () => {\n        const query = `SELECT * FROM species_in_films`;\n        const values = [node.name];\n        const { rows } = await db.query(query, values);\n        return rows;\n    }\n }"
+        },
+        {
+          "tableName": "planets_in_films",
+          "getOneString": "\n Query: {\n    planets_in_film: async (_, args) => {\n        const query = `SELECT * FROM planets_in_films WHERE _id = $1`;\n        const values = [args._id];\n        const { rows } = await db.query(query, values);\n        return rows;\n    }\n }",
+          "getAllString": "\n Query: {\n    planets_in_films: async () => {\n        const query = `SELECT * FROM planets_in_films`;\n        const values = [node.name];\n        const { rows } = await db.query(query, values);\n        return rows;\n    }\n }"
+        },
+        {
+          "tableName": "pilots",
+          "getOneString": "\n Query: {\n    pilot: async (_, args) => {\n        const query = `SELECT * FROM pilots WHERE _id = $1`;\n        const values = [args._id];\n        const { rows } = await db.query(query, values);\n        return rows;\n    }\n }",
+          "getAllString": "\n Query: {\n    pilots: async () => {\n        const query = `SELECT * FROM pilots`;\n        const values = [node.name];\n        const { rows } = await db.query(query, values);\n        return rows;\n    }\n }"
+        },
+        {
+          "tableName": "vessels",
+          "getOneString": "\n Query: {\n    vessel: async (_, args) => {\n        const query = `SELECT * FROM vessels WHERE _id = $1`;\n        const values = [args._id];\n        const { rows } = await db.query(query, values);\n        return rows;\n    }\n }",
+          "getAllString": "\n Query: {\n    vessels: async () => {\n        const query = `SELECT * FROM vessels`;\n        const values = [node.name];\n        const { rows } = await db.query(query, values);\n        return rows;\n    }\n }"
+        },
+        {
+          "tableName": "vessels_in_films",
+          "getOneString": "\n Query: {\n    vessels_in_film: async (_, args) => {\n        const query = `SELECT * FROM vessels_in_films WHERE _id = $1`;\n        const values = [args._id];\n        const { rows } = await db.query(query, values);\n        return rows;\n    }\n }",
+          "getAllString": "\n Query: {\n    vessels_in_films: async () => {\n        const query = `SELECT * FROM vessels_in_films`;\n        const values = [node.name];\n        const { rows } = await db.query(query, values);\n        return rows;\n    }\n }"
+        },
+        {
+          "tableName": "starship_specs",
+          "getOneString": "\n Query: {\n    starship_spec: async (_, args) => {\n        const query = `SELECT * FROM starship_specs WHERE _id = $1`;\n        const values = [args._id];\n        const { rows } = await db.query(query, values);\n        return rows;\n    }\n }",
+          "getAllString": "\n Query: {\n    starship_specs: async () => {\n        const query = `SELECT * FROM starship_specs`;\n        const values = [node.name];\n        const { rows } = await db.query(query, values);\n        return rows;\n    }\n }"
+        }
       ],
-      "schemas": [
-          "type User { name: String, age: Int }",
-          "type Users { users: [User] }",
-          "type Query { users: Users, user(id: Int): User }"
-      ]
+      "schemas": "type Species {\n _id: ID!\n name: String!\n classification: String\n average_height: String\n average_lifespan: String\n hair_colors: String\n skin_colors: String\n eye_colors: String\n language: String\n people: [Person]\n films: [Film]\n planets: [Planet]\n}\n \ntype Person {\n _id: ID!\n name: String!\n mass: String\n hair_color: String\n skin_color: String\n eye_color: String\n birth_year: String\n gender: String\n height: Int\n films: [Film]\n vessels: [Vessel]\n species: [Species]\n planets: [Planet]\n}\n \ntype Planet {\n _id: ID!\n name: String\n rotation_period: Int\n orbital_period: Int\n diameter: Int\n climate: String\n gravity: String\n terrain: String\n surface_water: String\n population: Int\n species: [Species]\n people: [Person]\n films: [Film]\n}\n \ntype Film {\n _id: ID!\n title: String!\n episode_id: Int!\n opening_crawl: String!\n director: String!\n producer: String!\n release_date: String!\n people: [Person]\n species: [Species]\n planets: [Planet]\n vessels: [Vessel]\n}\n \ntype Vessel {\n _id: ID!\n name: String!\n manufacturer: String\n model: String\n vessel_type: String!\n vessel_class: String!\n cost_in_credits: Int\n length: String\n max_atmosphering_speed: String\n crew: Int\n passengers: Int\n cargo_capacity: String\n consumables: String\n people: [Person]\n films: [Film]\n starship_specs: [Starship_spec]\n}\n \ntype Starship_spec {\n _id: ID!\n hyperdrive_rating: String\n MGLT: String\n vessels: [Vessel]\n}\n \n"
   }
 }
 }

@@ -12,6 +12,7 @@
     "url": "git+https://github.com/oslabs-beta/QuiL.git"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.8.0",
     "@apollo/server": "^4.1.1",
     "@codemirror/lang-javascript": "^6.1.1",
     "@graphql-tools/load-files": "^6.6.1",
