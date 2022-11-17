@@ -64,7 +64,7 @@ export type pSQLToGQL = {
 export type QuiLData = {
   nodes: nodeShape[];
   resolvers: ResolverStrings[];
-  schemas: string;
+  schemas: SingleSchemaType[];
 };
 
 export type TableResolver = {
@@ -84,3 +84,8 @@ export interface ArgType {
   _id?: String;
   node?: nodeShape;
 }
+
+export type SingleSchemaType = {
+  tableName: String;
+  schemas: String;
+};

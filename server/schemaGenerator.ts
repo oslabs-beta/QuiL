@@ -1,4 +1,4 @@
-import { dbConstructor, schema, pSQLToGQL } from './types';
+import { dbConstructor, schema, pSQLToGQL, SingleSchemaType } from './types';
 // const pluralize = require('pluralize');
 // const { query } = require('express');
 // const dbInstance = require('./db/dbConnection');
@@ -14,9 +14,12 @@ import {
   parseFKeys,
   makeNodes,
 } from './helperFunctions';
+import { Schema } from 'inspector';
 
 // generates schemas given a database
-export const generateSchemas = async (db: dbConstructor): Promise<string> => {
+export const generateSchemas = async (
+  db: dbConstructor
+): Promise<SingleSchemaType[]> => {
   let tables = await db.queryTables();
   const schemas: schema[] = [];
   // to create initial schemas per table
@@ -88,7 +91,7 @@ export const generateSchemas = async (db: dbConstructor): Promise<string> => {
     noUndefinedArr.push(schemas[p]);
   }
   // console.log(schemas);
-  console.log(formatSchemas(noUndefinedArr));
+  console.log('FORMATE STRING', formatSchemas(noUndefinedArr));
   return formatSchemas(noUndefinedArr);
 };
 
@@ -145,17 +148,25 @@ const formatSchema = (schema: schema): string => {
 };
 
 // function to stringfy the entire array of schemas
-const formatSchemas = (schemasArray: schema[]): string => {
+const formatSchemas = (schemasArray: schema[]): SingleSchemaType[] => {
+  let returnArr = [];
   let returnStr = '';
   for (let i = 0; i < schemasArray.length; i++) {
+    returnStr = '';
     returnStr += formatSchema(schemasArray[i]);
     returnStr += '\n \n';
+    returnArr.push({
+      tableName: schemasArray[i].table_name,
+      schema: returnStr,
+    });
   }
-  return returnStr;
+  return returnArr;
 };
 
-// const db = new (dbInstance as any)('postgres://eitysjmj:At82GArc1PcAD4nYgBoAODn0-XvBYo-A@peanut.db.elephantsql.com/eitysjmj');
-// generateSchemas(db);
+const db = new (dbInstance as any)(
+  'postgres://eitysjmj:At82GArc1PcAD4nYgBoAODn0-XvBYo-A@peanut.db.elephantsql.com/eitysjmj'
+);
+generateSchemas(db);
 
 /*
 Loop through foreign keys query, specifically the pg_get_constraintdef strings

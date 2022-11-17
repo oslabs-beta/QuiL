@@ -2,7 +2,7 @@ export const DataType: string = `
 type Data {
   nodes: [Node],
   resolvers: [ResolverStrings],
-  schemas: String
+  schemas: [SchemasObject]
 }
 
 type Node {
@@ -26,4 +26,9 @@ type Edge {
 type ResolverStrings {
   tableName: String,
   resolver: String
+}
+
+type SchemasObject {
+  tableName: String,
+  schemas: String
 }`;

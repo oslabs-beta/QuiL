@@ -1,6 +1,6 @@
 import { type } from 'os';
 import { Node, Edge, NodeChange, EdgeChange } from 'reactflow';
-import { nodeShape, ResolverStrings } from '../../server/types';
+import { nodeShape, ResolverStrings, SchemaType } from '../../server/types';
 
 export type DisplayContainerProps = {
   displayMode: string;
@@ -63,7 +63,7 @@ export type resQL = {
 export type getAllData = {
   nodes: nodeShape[];
   resolvers: ResolverStrings[];
-  schemas: string;
+  schemas: [SchemaType];
 };
 
 export type nodes = node[];
