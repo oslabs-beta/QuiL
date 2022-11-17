@@ -38,7 +38,7 @@
     "**/*.tsx",
     "app/Login",
     "server/server.js"
-  ],
+, "server/middleware/controller.ts"  ],
   "exclude": [
     "node_modules"
   ]
