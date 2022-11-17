@@ -91,7 +91,6 @@ export const generateSchemas = async (
     noUndefinedArr.push(schemas[p]);
   }
   // console.log(schemas);
-  console.log('FORMATE STRING', formatSchemas(noUndefinedArr));
   return formatSchemas(noUndefinedArr);
 };
 
@@ -166,7 +165,6 @@ const formatSchemas = (schemasArray: schema[]): SingleSchemaType[] => {
 const db = new (dbInstance as any)(
   'postgres://eitysjmj:At82GArc1PcAD4nYgBoAODn0-XvBYo-A@peanut.db.elephantsql.com/eitysjmj'
 );
-generateSchemas(db);
 
 /*
 Loop through foreign keys query, specifically the pg_get_constraintdef strings
