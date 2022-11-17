@@ -1,7 +1,7 @@
-import { VisualizeDBProps } from '../../(root)/fronendTypes';
-import Chart from './Chart';
-import React, { useEffect, useState } from 'react';
-
+import { VisualizeDBProps } from "../../(root)/fronendTypes";
+import Chart from "./Chart";
+import React from "react";
+import { motion } from "framer-motion";
 const VisualizeDB = ({
   userInputURI,
   nodes,
@@ -22,30 +22,19 @@ const VisualizeDB = ({
   }, [percent]);
 
   return (
-    <>
-      {!isLoaded && (
-        <div
-          style={{
-            display: 'flex',
-            height: '60%',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <button className="btn btn-lg loading"></button>
-        </div>
-      )}
-      {isLoaded && (
-        <div className="flex justify-center">
-          <Chart
-            nodes={nodes}
-            handleSetNodes={handleSetNodes}
-            edges={edges}
-            handleSetEdges={handleSetEdges}
-          />
-        </div>
-      )}
-    </>
+    <motion.div
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, delay: 3.75}}
+      className='flex justify-center'
+    >
+      <Chart
+        nodes={nodes}
+        handleSetNodes={handleSetNodes}
+        edges={edges}
+        handleSetEdges={handleSetEdges}
+      />
+    </motion.div>
   );
 };
 

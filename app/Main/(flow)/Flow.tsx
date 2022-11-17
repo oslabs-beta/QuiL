@@ -13,12 +13,11 @@ import ReactFlow, {
 import TableNode from "./TableNode";
 import "reactflow/dist/style.css";
 import { FlowProps } from "../../(root)/fronendTypes";
-
+import { motion } from "framer-motion";
 
 const nodeTypes = { tableNode: TableNode };
 
-const Flow = ({nodes, edges, handleSetNodes, handleSetEdges}: FlowProps) => {
-
+const Flow = ({ nodes, edges, handleSetNodes, handleSetEdges }: FlowProps) => {
   const onNodesChange = useCallback(
     (changes: NodeChange[]) =>
       handleSetNodes((nds) => applyNodeChanges(changes, nds)),
@@ -32,7 +31,8 @@ const Flow = ({nodes, edges, handleSetNodes, handleSetEdges}: FlowProps) => {
   );
 
   const onConnect = useCallback(
-    (connection: Connection) => handleSetEdges((eds) => addEdge(connection, eds)),
+    (connection: Connection) =>
+      handleSetEdges((eds) => addEdge(connection, eds)),
     [handleSetEdges]
   );
 
@@ -46,7 +46,7 @@ const Flow = ({nodes, edges, handleSetNodes, handleSetEdges}: FlowProps) => {
         onConnect={onConnect}
         nodeTypes={nodeTypes}
       >
-        <Background className="bg-base-content" size={4}/>
+        <Background className='bg-base-content' size={4} />
         <Controls />
       </ReactFlow>
     </div>

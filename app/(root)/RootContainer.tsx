@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 'use client';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
+=======
+"use client";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
+>>>>>>> dev
 const RootContainer = () => {
   const [initialURI, setInitialURI] = useState<string>(null);
   const [sampleURI, setSampleURI] = useState<string>(null);
@@ -20,6 +27,7 @@ const RootContainer = () => {
   };
 
   return (
+<<<<<<< HEAD
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:flex-row-reverse">
         <div className="text-center lg:text-left">
@@ -36,6 +44,43 @@ const RootContainer = () => {
             <div className="form-control">
               <label className="label">
                 <span className="label-text">URI</span>
+=======
+    <div className='hero min-h-screen bg-base-200'>
+      <div className='hero-content flex-col lg:flex-row-reverse'>
+        <div className='text-center lg:text-left'>
+          <motion.h1
+            initial={{ opacity: 0, y: -30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1 }}
+            exit={{ opacity: 0, y: -30 }}
+            className='text-5xl font-bold'
+          >
+            QuiL
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: -30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: .5 }}
+            exit={{ opacity: 0, y: -30 }}
+            className='py-6'
+          >
+            Here we can put some text about what QuiL does such as visualizing
+            relational databases and/or generating schemas for people who don't
+            know how to use GraphQL
+          </motion.p>
+        </div>
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 2 }}
+          exit={{ opacity: 0.5, x: 30 }}
+          className='card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100'
+        >
+          <div className='card-body'>
+            <div className='form-control'>
+              <label className='label'>
+                <span className='label-text'>URI</span>
+>>>>>>> dev
               </label>
               <input
                 type="text"
@@ -66,16 +111,24 @@ const RootContainer = () => {
               </select>
             </div>
           </div>
+<<<<<<< HEAD
           <div className="form-control mt-6">
             <button
               disabled={initialURI || sampleURI ? false : true}
               onClick={handleLaunch}
               className="btn btn-primary"
+=======
+          <div className='form-control mt-6'>
+            <button
+              disabled={initialURI || sampleURI ? false : true}
+              onClick={handleLaunch}
+              className='btn btn-primary'
+>>>>>>> dev
             >
               Launch
             </button>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
