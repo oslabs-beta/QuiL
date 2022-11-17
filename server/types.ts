@@ -44,6 +44,7 @@ export type nodeShape = {
   primaryKey: string;
   columns: parsedColumnShape[];
   edges: parsedFKeys[];
+  isIntersectionTable: boolean;
 };
 
 export type objectOfArrOfNodes = {
@@ -63,7 +64,7 @@ export type pSQLToGQL = {
 export type QuiLData = {
   nodes: nodeShape[];
   resolvers: ResolverStrings[];
-  schemas: string;
+  schemas: SingleSchemaType[];
 };
 
 export type TableResolver = {
@@ -73,8 +74,7 @@ export type TableResolver = {
 
 export type ResolverStrings = {
   tableName: String;
-  getOneString: String;
-  getAllString: String;
+  resolver: string;
 };
 
 export type TableResolver1 = Function;
@@ -84,3 +84,8 @@ export interface ArgType {
   _id?: String;
   node?: nodeShape;
 }
+
+export type SingleSchemaType = {
+  tableName: String;
+  schemas: String;
+};

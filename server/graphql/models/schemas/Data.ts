@@ -2,14 +2,15 @@ export const DataType: string = `
 type Data {
   nodes: [Node],
   resolvers: [ResolverStrings],
-  schemas: String
+  schemas: [SchemasObject]
 }
 
 type Node {
   name: String, 
   primaryKey: String,
   columns: [ColumnData],
-  edges: [Edge]
+  edges: [Edge], 
+  isIntersectionTable: Boolean
 }
 
 type ColumnData {
@@ -24,6 +25,10 @@ type Edge {
 
 type ResolverStrings {
   tableName: String,
-  getOneString: String, 
-  getAllString: String
+  resolver: String
+}
+
+type SchemasObject {
+  tableName: String,
+  schemas: String
 }`;

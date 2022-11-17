@@ -18,10 +18,18 @@ export const Query = {
     const queryString = await generateSchemas(dataBase);
     return {
       nodes,
-      resolvers: nodes.map((node: nodeShape) =>
-        makeResolverStrings(node, makeResolverFunctions(node))
-      ),
+      resolvers: nodes.reduce((resolvers, node) => {
+        if (!node.isIntersectionTable)
+          resolvers.push(
+            makeResolverStrings(node, makeResolverFunctions(node))
+          );
+        return resolvers;
+      }, []),
       schemas: queryString,
     };
   },
 };
+
+// resolvers: nodes.map((node: nodeShape) =>
+// makeResolverStrings(node, makeResolverFunctions(node))
+// ),
