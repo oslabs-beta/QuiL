@@ -50,7 +50,7 @@ const MainContainer = (): JSX.Element => {
               },
               schemas {
                 tableName,
-                schema
+                schemas
               }
           }
         }`,
@@ -100,8 +100,11 @@ const MainContainer = (): JSX.Element => {
               resolvers {
                 tableName,
                 resolver
+              },
+              schemas {
+                tableName,
+                schemas
               }
-              schemas
           }
         }`,
       }),

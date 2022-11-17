@@ -157,7 +157,7 @@ const formatSchemas = (schemasArray: schema[]): SingleSchemaType[] => {
     returnStr += '\n \n';
     returnArr.push({
       tableName: schemasArray[i].table_name,
-      schema: returnStr,
+      schemas: returnStr,
     });
   }
   return returnArr;

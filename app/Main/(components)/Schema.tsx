@@ -1,7 +1,7 @@
 import { SchemaProps } from '../../(root)/fronendTypes';
 import React, { useState } from 'react';
 import { Card } from './ResolverDisplay';
-import { SchemaType } from '../../../server/types';
+import { SchemaType, SingleSchemaType } from '../../../server/types';
 
 const Schema = ({ resQL }: SchemaProps): JSX.Element => {
   const [copyStatus, setCopyStatus] = useState('Copy');
@@ -13,7 +13,9 @@ const Schema = ({ resQL }: SchemaProps): JSX.Element => {
     // }, '');
 
     // const formatted = `Query {` + allResolvers + `\n }`;
-    navigator.clipboard.writeText('s');
+    navigator.clipboard.writeText(
+      schemas.reduce((a, b: SingleSchemaType) => a + b.schemas, '')
+    );
     setCopyStatus('Copied!');
     setTimeout(() => {
       setCopyStatus('Copy');
@@ -30,7 +32,7 @@ const Schema = ({ resQL }: SchemaProps): JSX.Element => {
         </div>
       </div>
       {schemas.map((e: SchemaType) => (
-        <Card value={e.schema} tableName={e.tableName} />
+        <Card value={e.schemas} tableName={e.tableName} />
       ))}
     </div>
   );
