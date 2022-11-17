@@ -152,6 +152,7 @@ const MainContainer = (): JSX.Element => {
         resQL={resQL}
         schemaGen={schemaGen}
         resolverGen={resolverGen}
+        isLoaded={isLoaded}
       />
     </div>
   );
