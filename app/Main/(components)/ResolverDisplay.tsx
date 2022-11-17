@@ -9,14 +9,10 @@ import { ResolverStrings } from '../../../server/types';
 
 type ResolverMirrorProps = {
   value: any;
-  title: any;
+  tableName: any;
 };
 
 export const ResolverMirror = ({ value }: ResolverMirrorProps) => {
-  // const onChange = React.useCallback((value, viewUpdate) => {
-  //   console.log("value:", value);
-  // }, []);
-
   return (
     <div>
       <ReactCodeMirror
@@ -29,11 +25,8 @@ export const ResolverMirror = ({ value }: ResolverMirrorProps) => {
     </div>
   );
 };
-{
-  /* <ResolverMirror value={value} />; */
-}
 
-export const Card = ({ value, title }: ResolverMirrorProps) => {
+export const Card = ({ value, tableName }: ResolverMirrorProps) => {
   const [copyStatus, setCopyStatus] = useState('Copy');
 
   const onClick = () => {
@@ -48,7 +41,10 @@ export const Card = ({ value, title }: ResolverMirrorProps) => {
       <div>
         <div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <h3 className="font-bold">{title}</h3>
+            <h3 className="font-bold">
+              {tableName[0].toUpperCase() +
+                tableName.substring(1, tableName.length)}
+            </h3>
             <div className="tooltip" data-tip={copyStatus}>
               <button className="btn btn-xs sm:btn-sm" onClick={onClick}>
                 <CopyTwoTone />

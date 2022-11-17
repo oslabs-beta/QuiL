@@ -44,6 +44,7 @@ export type nodeShape = {
   primaryKey: string;
   columns: parsedColumnShape[];
   edges: parsedFKeys[];
+  isIntersectionTable: boolean;
 };
 
 export type objectOfArrOfNodes = {
@@ -73,8 +74,7 @@ export type TableResolver = {
 
 export type ResolverStrings = {
   tableName: String;
-  getOneString: String;
-  getAllString: String;
+  resolver: string;
 };
 
 export type TableResolver1 = Function;

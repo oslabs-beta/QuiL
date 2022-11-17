@@ -40,24 +40,20 @@ const makeResolverStrings = (
   let singular = pluralize.singular(node.name);
   if (singular === node.name) singular = singular + 'ById';
   const getOneString =
-    '\n Query: {\n    ' +
     `${singular}: ` +
     resolvers.getOne
       .toString()
       .replace(/\${node.name}/, node.name)
-      .replace(/\${node.primaryKey}/, node.primaryKey) +
-    `\n }`;
+      .replace(/\${node.primaryKey}/, node.primaryKey);
 
-  const getAllString =
-    '\n Query: {\n    ' +
-    `${node.name}: ` +
+  const resolver =
+    `\n    ${node.name}: ` +
     resolvers.getAll.toString().replace(/\${node.name}/, node.name) +
-    `\n }`;
+    `\n\n    ${getOneString}`;
 
   return {
     tableName: node.name,
-    getOneString,
-    getAllString,
+    resolver,
   };
 };
 

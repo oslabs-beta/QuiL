@@ -9,7 +9,8 @@ type Node {
   name: String, 
   primaryKey: String,
   columns: [ColumnData],
-  edges: [Edge]
+  edges: [Edge], 
+  isIntersectionTable: Boolean
 }
 
 type ColumnData {
@@ -24,6 +25,5 @@ type Edge {
 
 type ResolverStrings {
   tableName: String,
-  getOneString: String, 
-  getAllString: String
+  resolver: String
 }`;

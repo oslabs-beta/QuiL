@@ -1,8 +1,8 @@
-"use client";
-import React from "react";
-import VisualizeDB from "./VisualizeDB";
-import VisualizeSchemaResolver from "./VisualizeSchemaResolver";
-import { DisplayContainerProps } from "../../(root)/fronendTypes";
+'use client';
+import React from 'react';
+import VisualizeDB from './VisualizeDB';
+import VisualizeSchemaResolver from './VisualizeSchemaResolver';
+import { DisplayContainerProps } from '../../(root)/fronendTypes';
 
 const DisplayContainer = ({
   displayMode,
@@ -16,39 +16,39 @@ const DisplayContainer = ({
   handleSetEdges,
   handleSetNodes,
 }: DisplayContainerProps): JSX.Element => {
-  let schemaTabStyle = "tab tab-bordered";
-  let resolverTabStyle = "tab tab-bordered";
+  let schemaTabStyle = 'tab tab-bordered';
+  let resolverTabStyle = 'tab tab-bordered';
   switch (displayMode) {
-    case "schemaMode":
-      schemaTabStyle = "tab tab-bordered tab-active";
+    case 'schemaMode':
+      schemaTabStyle = 'tab tab-bordered tab-active';
       break;
-    case "resolverMode":
-      resolverTabStyle = "tab tab-bordered tab-active";
+    case 'resolverMode':
+      resolverTabStyle = 'tab tab-bordered tab-active';
       break;
   }
   return (
     <>
-      <div className='DisplayContainer'>
-        <div className='drawer'>
-          <input id='my-drawer' type='checkbox' className='drawer-toggle' />
-          <div className='drawer-content'>
-            <div className='flex flex-row justify-between items-center'>
+      <div className="DisplayContainer">
+        <div className="drawer">
+          <input id="my-drawer" type="checkbox" className="drawer-toggle" />
+          <div className="drawer-content">
+            <div className="flex flex-row justify-between items-center">
               <label
-                htmlFor='my-drawer'
-                className='btn btn-accent btn-outline btn-sm drawer-button ml-12 my-2 py-0'
+                htmlFor="my-drawer"
+                className="btn btn-accent btn-outline btn-sm drawer-button ml-12 my-2 py-0"
               >
                 View Schemas/Resolvers
               </label>
-              <div className='flex flex-row mr-12 w-2/5'>
+              <div className="flex flex-row mr-12 w-2/5">
                 <input
-                  type='text'
-                  onChange={(e) => userInputURI(e.target.value)}
-                  className='input input-sm  input-bordered w-full mx-1'
-                  placeholder='insert URI'
+                  type="text"
+                  onChange={e => userInputURI(e.target.value)}
+                  className="input input-sm  input-bordered w-full mx-1"
+                  placeholder="insert URI"
                 ></input>
                 <button
-                  className='btn btn-success btn-outline btn-sm'
-                  type='submit'
+                  className="btn btn-success btn-outline btn-sm"
+                  type="submit"
                   onClick={() => uriLaunch()}
                 >
                   Launch
@@ -64,9 +64,9 @@ const DisplayContainer = ({
               uriLaunch={uriLaunch}
             />
           </div>
-          <div className='drawer-side'>
-            <label htmlFor='my-drawer' className='drawer-overlay'></label>
-            <div className='menu p-4 w-2/5 bg-base-100 text-base-content'>
+          <div className="drawer-side">
+            <label htmlFor="my-drawer" className="drawer-overlay"></label>
+            <div className="menu p-4 w-2/5 bg-base-100 text-base-content">
               <ul>
                 <li className={schemaTabStyle} onClick={() => schemaGen()}>
                   Schemas

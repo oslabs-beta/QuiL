@@ -93,7 +93,7 @@ export const generateSchemas = async (db: dbConstructor): Promise<string> => {
 };
 
 // function to identify whether or not a table is an intersection table (table with all foreign keys)
-const isIntersectionTable = async (
+export const isIntersectionTable = async (
   db: dbConstructor,
   tableName: string
 ): Promise<boolean> => {
