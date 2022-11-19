@@ -1,6 +1,6 @@
-import { type } from 'os';
-import { Node, Edge, NodeChange, EdgeChange } from 'reactflow';
-import { nodeShape, ResolverStrings, SchemaType } from '../../server/types';
+import { type } from "os";
+import { Node, Edge, NodeChange, EdgeChange } from "reactflow";
+import { nodeShape, ResolverStrings, SchemaType } from "../../server/types";
 
 export type DisplayContainerProps = {
   displayMode: string;
@@ -18,6 +18,8 @@ export type DisplayContainerProps = {
 
 export type NavigationBarProps = {
   isLogged: boolean;
+  theme: string;
+  handleSetTheme: (e: string) => void;
 };
 
 export type VisualizeSchemaResolverProps = {
