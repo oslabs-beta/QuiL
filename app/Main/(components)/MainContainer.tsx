@@ -19,6 +19,7 @@ const MainContainer = (): JSX.Element => {
   const [nodes, setNodes] = useState<Node[]>([]);
   const [edges, setEdges] = useState<Edge[]>([]);
   const [isLoaded, setLoading] = useState(false);
+  const [theme, setTheme] = useState<string>("night");
 
   const searchParams = useSearchParams();
   const initialURI = searchParams.get("URI");
@@ -132,14 +133,22 @@ const MainContainer = (): JSX.Element => {
     setURI(e);
   };
 
+  const handleSetTheme = (e: string): void => {
+    setTheme(e);
+  };
+
   return (
-    <div data-theme='night'>
+    <div data-theme={theme}>
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 1.5 }}
+        transition={{ duration: 1, delay: 2.25 }}
       >
-        <NavigationBar isLogged={isLogged} />
+        <NavigationBar
+          isLogged={isLogged}
+          theme={theme}
+          handleSetTheme={handleSetTheme}
+        />
       </motion.div>
       <DisplayContainer
         edges={edges}
