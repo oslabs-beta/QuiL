@@ -31,24 +31,7 @@ export const Query = {
   },
 };
 
-export const userCreateQuery = {
-  Query: {
-    newUser(_: any, obj: newUser) {
-      return obj; // returns an obj that contains em usr pw
-    },
-  },
-};
-type newUser = {
-  email: String;
-  username: String;
-  password: String;
-};
 
-const fakeUser = {
-  email: 'andres@quil.com',
-  username: 'QuiL',
-  password: 'QL4u',
-};
 
 // resolvers: nodes.map((node: nodeShape) =>
 // makeResolverStrings(node, makeResolverFunctions(node))

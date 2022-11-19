@@ -1,6 +1,7 @@
 import { Handle, Position } from "reactflow";
 import TableRow from "./TableRow";
 import React from "react";
+import { motion } from "framer-motion";
 
 const TableNode = ({ data }) => {
   const handles: JSX.Element[] = [];
@@ -42,7 +43,9 @@ const TableNode = ({ data }) => {
   });
 
   return (
-    <div className='border-2 border-secondary rounded-md shadow-2xl'>
+    <motion.div
+      className='border-2 border-secondary rounded-md shadow-2xl'
+    >
       {handles}
       <div className='flex flex-start bg-secondary-focus w-full py-2 font-mono text-base-content text-xl pl-3'>
         {data.name}
@@ -54,7 +57,7 @@ const TableNode = ({ data }) => {
         </tr>
         {tableFields}
       </table>
-    </div>
+    </motion.div>
   );
 };
 
