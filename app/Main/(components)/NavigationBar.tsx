@@ -2,7 +2,11 @@
 import { useRouter } from "next/navigation";
 import { NavigationBarProps } from "../../(root)/fronendTypes";
 import React from "react";
-const NavigationBar = ({ isLogged }: NavigationBarProps): JSX.Element => {
+const NavigationBar = ({
+  isLogged,
+  theme,
+  handleSetTheme,
+}: NavigationBarProps): JSX.Element => {
   const router = useRouter();
   return (
     <div className='navbar'>
@@ -33,6 +37,20 @@ const NavigationBar = ({ isLogged }: NavigationBarProps): JSX.Element => {
             <button className='btn' onClick={() => router.push("/About")}>
               About
             </button>
+            <select
+              className='select w-full max-w-xs'
+              onChange={(e) => handleSetTheme(e.target.value)}
+            >
+              <option disabled selected>
+                Theme
+              </option>
+              <option value='light'>light</option>
+              <option value='night'>night</option>
+              <option value='retro'>retro</option>
+              <option value='cyberpunk'>cyberpunk</option>
+              <option value='synthwave'>synthwave</option>
+              <option value='pastel'>pastel</option>
+            </select>
           </div>
         </div>
       </div>
@@ -41,4 +59,3 @@ const NavigationBar = ({ isLogged }: NavigationBarProps): JSX.Element => {
 };
 
 export default NavigationBar;
-

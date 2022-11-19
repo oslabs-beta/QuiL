@@ -16,7 +16,7 @@ const DisplayContainer = ({
   nodes,
   handleSetEdges,
   handleSetNodes,
-  isLoaded
+  isLoaded,
 }: DisplayContainerProps): JSX.Element => {
   let schemaTabStyle = "tab tab-bordered";
   let resolverTabStyle = "tab tab-bordered";
@@ -38,7 +38,7 @@ const DisplayContainer = ({
               <motion.label
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 2.75 }}
+                transition={{ duration: 1, delay: 3.25 }}
                 htmlFor='my-drawer'
                 className='btn btn-accent btn-outline btn-sm drawer-button ml-12 my-2 py-0'
               >
@@ -47,7 +47,7 @@ const DisplayContainer = ({
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 2.25 }}
+                transition={{ duration: 1, delay: 2.75 }}
                 className='flex flex-row mr-12 w-2/5'
               >
                 <input
