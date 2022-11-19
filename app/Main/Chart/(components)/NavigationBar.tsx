@@ -1,13 +1,20 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { NavigationBarProps } from "../../(root)/fronendTypes";
-import React from "react";
-const NavigationBar = ({
-  isLogged,
-  theme,
-  handleSetTheme,
-}: NavigationBarProps): JSX.Element => {
+import { NavigationBarProps } from "../../../(root)/fronendTypes";
+import React, { useState } from "react";
+import { useSearchParams } from "next/navigation";
+const NavigationBar = (): //   {
+//   isLogged,
+//   theme,
+//   handleSetTheme,
+// }: NavigationBarProps
+
+JSX.Element => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const URIfromRoot = searchParams.get("URI");
+  const [uriParam, setUriParam] = useState(URIfromRoot);
+
   return (
     <div className='navbar'>
       <div className='navbar bg-base-100'>
@@ -18,23 +25,23 @@ const NavigationBar = ({
           <div className='btn-group flex space-x-1 font-mono'>
             <button
               className='btn btn-primary'
-              onClick={() => router.push("/Main")}
+              onClick={() => router.push(`/Main/Chart?URI=${uriParam}`)}
             >
               Main
             </button>
             <button
               className='btn btn-secondary'
-              onClick={() => router.push("/Login")}
+              onClick={() => router.push("/Main/Login")}
             >
               Login
             </button>
             <button
               className='btn btn-accent'
-              onClick={() => router.push("/Register")}
+              onClick={() => router.push("/Main/Register")}
             >
               Register
             </button>
-            <button className='btn' onClick={() => router.push("/About")}>
+            <button className='btn' onClick={() => router.push("/Main/About")}>
               About
             </button>
             <select

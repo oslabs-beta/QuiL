@@ -1,5 +1,5 @@
 import { type } from 'os';
-import Resolver from '../app/Main/(components)/Resolver';
+import Resolver from '../app/Main/Chart/(components)/Resolver';
 
 export type GlobalServerError = {
   log: string;

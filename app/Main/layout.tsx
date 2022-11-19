@@ -1,8 +1,12 @@
 import "../(root)/globals.css";
+import NavigationBar from "./Chart/(components)/NavigationBar";
 export default function MainLayout({ children }) {
   return (
     <html lang='en'>
-      <body>{children}</body>
+      <body>
+        <NavigationBar />
+        {children}
+      </body>
     </html>
   );
 }

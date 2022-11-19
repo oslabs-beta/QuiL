@@ -12,7 +12,7 @@ import ReactFlow, {
 } from "reactflow";
 import TableNode from "./TableNode";
 import "reactflow/dist/style.css";
-import { FlowProps } from "../../(root)/fronendTypes";
+import { FlowProps } from "../../../(root)/fronendTypes";
 import { motion } from "framer-motion";
 
 const nodeTypes = { tableNode: TableNode };

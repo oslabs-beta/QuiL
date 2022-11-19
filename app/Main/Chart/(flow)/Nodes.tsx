@@ -1,9 +1,9 @@
 import { Node } from "reactflow";
-import { position, resQL } from "../../(root)/fronendTypes";
-import { nodes } from "../../(root)/fronendTypes";
+import { position, resQL } from "../../../(root)/fronendTypes";
+import { nodes } from "../../../(root)/fronendTypes";
 
-const createNodes = (res : resQL) : Node[] => {
-  const positions : position[] = [
+const createNodes = (res: resQL): Node[] => {
+  const positions: position[] = [
     { x: 0, y: 0 },
     { x: 500, y: 0 },
     { x: 0, y: 350 },
@@ -22,16 +22,16 @@ const createNodes = (res : resQL) : Node[] => {
     { x: 500, y: 2450 },
     { x: 0, y: 2450 },
   ];
-  // pass down an array of FKeys so that each row can check to see their dataType is a foreign key, 
-  // in 
-  const arrFKeys : string[] = [];
+  // pass down an array of FKeys so that each row can check to see their dataType is a foreign key,
+  // in
+  const arrFKeys: string[] = [];
   // array of tableNames that needs a handle. 'refTables will be passed down to each TableNode to
   // determine whether the TableNode needs a target <Handle />
-  const refTables : string[] = [];
+  const refTables: string[] = [];
   // array of nodes from response
   const resNodes = res.data.getAllData.nodes;
   // map through the nodes and create template for each node
-  const nodes : Node[] = resNodes.map((node, i) => {
+  const nodes: Node[] = resNodes.map((node, i) => {
     // check to see if current node has any edges
     if (node.edges.length !== 0) {
       // if so, loop through edges and push the name refTable to 'refTables'
