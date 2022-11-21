@@ -1,6 +1,6 @@
-'use client';
-import NavigationBar from '../Main/(components)/NavigationBar';
-import RegisterComponent from './RegisterComponent';
+"use client";
+import NavigationBar from "../Chart/(components)/NavigationBar";
+import RegisterComponent from "./RegisterComponent";
 // const handleEmail = () => {
 //   console.log(e.target.value, ' inside handle email');
 // };
@@ -19,7 +19,6 @@ import RegisterComponent from './RegisterComponent';
 export default function Page() {
   return (
     <div>
-      <NavigationBar />
       <RegisterComponent />
     </div>
   );

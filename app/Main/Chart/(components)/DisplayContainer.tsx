@@ -2,7 +2,7 @@
 import React from "react";
 import VisualizeDB from "./VisualizeDB";
 import VisualizeSchemaResolver from "./VisualizeSchemaResolver";
-import { DisplayContainerProps } from "../../(root)/fronendTypes";
+import { DisplayContainerProps } from "../../../(root)/fronendTypes";
 import { motion } from "framer-motion";
 
 const DisplayContainer = ({
@@ -16,7 +16,6 @@ const DisplayContainer = ({
   nodes,
   handleSetEdges,
   handleSetNodes,
-  isLoaded,
 }: DisplayContainerProps): JSX.Element => {
   let schemaTabStyle = "tab tab-bordered";
   let resolverTabStyle = "tab tab-bordered";
@@ -72,7 +71,6 @@ const DisplayContainer = ({
               handleSetEdges={handleSetEdges}
               edges={edges}
               uriLaunch={uriLaunch}
-              isLoaded={isLoaded}
             />
           </div>
           <div className='drawer-side'>
