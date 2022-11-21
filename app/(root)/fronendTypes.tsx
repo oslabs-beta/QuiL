@@ -1,6 +1,6 @@
-import { type } from 'os';
-import { Node, Edge, NodeChange, EdgeChange } from 'reactflow';
-import { nodeShape, ResolverStrings, SchemaType } from '../../server/types';
+import { type } from "os";
+import { Node, Edge, NodeChange, EdgeChange } from "reactflow";
+import { nodeShape, ResolverStrings, SchemaType } from "../../server/types";
 
 export type DisplayContainerProps = {
   displayMode: string;
@@ -13,11 +13,12 @@ export type DisplayContainerProps = {
   nodes: Node[];
   handleSetEdges: (cb: (eds: Edge[]) => Edge[]) => void;
   handleSetNodes: (cb: (nds: Node[]) => Node[]) => void;
-  isLoaded: boolean;
 };
 
 export type NavigationBarProps = {
   isLogged: boolean;
+  theme: string;
+  handleSetTheme: (e: string) => void;
 };
 
 export type VisualizeSchemaResolverProps = {
@@ -40,7 +41,6 @@ export type VisualizeDBProps = {
   handleSetEdges: (cb: (eds: Edge[]) => Edge[]) => void;
   handleSetNodes: (cb: (nds: Node[]) => Node[]) => void;
   uriLaunch: () => Promise<void>;
-  isLoaded: boolean;
 };
 
 export type ChartProps = {
@@ -102,3 +102,9 @@ export type position = {
   x: number;
   y: number;
 };
+
+export type MainContainerProps = {
+  initialNodes: Node[];
+  initialEdges: Edge[];
+  data: resQL;
+}

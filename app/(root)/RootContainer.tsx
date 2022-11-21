@@ -16,7 +16,7 @@ const RootContainer = () => {
 
   const handleLaunch = (e: React.MouseEvent<HTMLElement>): void => {
     const URI = initialURI ? initialURI : sampleURI;
-    router.push(`/Main?URI=${URI}`);
+    router.push(`/Main/Chart?URI=${URI}`);
   };
 
   return (

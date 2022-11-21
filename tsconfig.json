@@ -36,9 +36,9 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx",
-    "app/Login",
+    "app/Main/Login",
     "server/server.js"
-, "server/middleware/controller.ts"  ],
+, "server/middleware/controller.ts", "app/Main/Chart/page.jsx", "app/Main/Chart/page.jsx"  ],
   "exclude": [
     "node_modules"
   ]
