@@ -47,15 +47,18 @@ export default async function Page({
 }: {
   searchParams: { id: string };
 }) {
-  console.log(searchParams.URI);
   const data = await getData(searchParams.URI);
   const initialNodes = createNodes(data);
   const initialEdges = createEdges(data);
-  console.log(initialNodes);
+
   return (
     // Parent component of reactflow needs a height and width in order to display
     <div>
-      <MainContainer data={data} initialNodes={initialNodes} initialEdges={initialEdges} />
+      <MainContainer
+        data={data}
+        initialNodes={initialNodes}
+        initialEdges={initialEdges}
+      />
       <div style={{ height: "500px", width: "500px" }}></div>
     </div>
   );

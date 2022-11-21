@@ -1,5 +1,4 @@
 import { ResolverProps } from "../../../(root)/fronendTypes";
-
 import React, { useState } from "react";
 import { Card } from "./ResolverDisplay";
 import { ResolverStrings } from "../../../../server/types";

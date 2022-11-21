@@ -1,15 +1,8 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { NavigationBarProps } from "../../../(root)/fronendTypes";
 import React, { useState } from "react";
 import { useSearchParams } from "next/navigation";
-const NavigationBar = (): //   {
-//   isLogged,
-//   theme,
-//   handleSetTheme,
-// }: NavigationBarProps
-
-JSX.Element => {
+const NavigationBar = (): JSX.Element => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const URIfromRoot = searchParams.get("URI");
