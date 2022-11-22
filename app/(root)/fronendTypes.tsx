@@ -13,7 +13,6 @@ export type DisplayContainerProps = {
   nodes: Node[];
   handleSetEdges: (cb: (eds: Edge[]) => Edge[]) => void;
   handleSetNodes: (cb: (nds: Node[]) => Node[]) => void;
-  isLoaded: boolean;
 };
 
 export type NavigationBarProps = {
@@ -42,7 +41,6 @@ export type VisualizeDBProps = {
   handleSetEdges: (cb: (eds: Edge[]) => Edge[]) => void;
   handleSetNodes: (cb: (nds: Node[]) => Node[]) => void;
   uriLaunch: () => Promise<void>;
-  isLoaded: boolean;
 };
 
 export type ChartProps = {
@@ -104,3 +102,9 @@ export type position = {
   x: number;
   y: number;
 };
+
+export type MainContainerProps = {
+  initialNodes: Node[];
+  initialEdges: Edge[];
+  data: resQL;
+}
