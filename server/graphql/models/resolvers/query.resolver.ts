@@ -9,14 +9,16 @@ import {
 import { dbInstance } from '../../../db/dbConnection';
 import { makeNodes } from '../../../helperFunctions';
 
-// Import dummy data for testing
+// Import dummy data for t
 import axios from 'axios';
-import { dummyResolvers, dummySchemas } from '../../../db/dummyData';
+import * as dotenv from 'dotenv';
 import {
   makeResolverFunctions,
   makeResolverStrings,
 } from '../../../resolverGenerator';
 import { generateSchemas } from '../../../schemaGenerator';
+dotenv.config();
+const { GITHUB_OAUTH_CLIENT_ID, GITHUB_OAUTH_CLIENT_SECRET } = process.env;
 
 export const Query = {
   getAllData: async (_: any, args: ArgType): Promise<QuiLData> => {
@@ -39,19 +41,45 @@ export const Query = {
 
 export const Mutation = {
   handleOAuth: async (_: any, args: OAuthArgs): Promise<OAuthResponse> => {
-    const { data } = await axios.get(
-      `https://github.com/login/oauth/access_token?client_id={{client_id}}&client_secret={{client_secret}}&code=f0e69302d27715c1bbc7`,
-      {
-        params: {
-          client_id: '',
-          client_secret: '',
-          code: args.code,
-        },
-      }
-    );
+    try {
+      let { data } = await axios.post(
+        `https://github.com/login/oauth/access_token`,
+        {},
+        {
+          params: {
+            client_id: GITHUB_OAUTH_CLIENT_ID,
+            client_secret: GITHUB_OAUTH_CLIENT_SECRET,
+            code: args.code,
+          },
+          headers: {
+            Accept: 'application/json',
+          },
+        }
+      );
 
-    return {
-      token: data,
-    };
+      console.log(data);
+
+      const userEmailResponse = await axios.get(
+        'https://api.github.com/user/emails',
+        {
+          headers: {
+            Authorization: `Bearer ${data.access_token}`,
+            Accept: 'application/json',
+          },
+        }
+      );
+
+      const userEmailObj = userEmailResponse.data.find(
+        (e: any) => e.primary === 'true'
+      );
+
+      console.log(userEmailObj);
+
+      return {
+        token: 'data.access_token',
+      };
+    } catch (error) {
+      console.log('an error');
+    }
   },
 };
