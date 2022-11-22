@@ -89,3 +89,11 @@ export type SingleSchemaType = {
   tableName: String;
   schemas: String;
 };
+
+export type OAuthArgs = {
+  code: String;
+};
+
+export type OAuthResponse = {
+  token: String;
+};

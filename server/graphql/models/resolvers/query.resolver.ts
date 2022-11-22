@@ -1,9 +1,16 @@
-import { ArgType, nodeShape, QuiLData } from '../../../types';
+import {
+  ArgType,
+  nodeShape,
+  OAuthArgs,
+  OAuthResponse,
+  QuiLData,
+} from '../../../types';
 
-import { makeNodes } from '../../../helperFunctions';
 import { dbInstance } from '../../../db/dbConnection';
+import { makeNodes } from '../../../helperFunctions';
 
 // Import dummy data for testing
+import axios from 'axios';
 import { dummyResolvers, dummySchemas } from '../../../db/dummyData';
 import {
   makeResolverFunctions,
@@ -26,6 +33,25 @@ export const Query = {
         return resolvers;
       }, []),
       schemas: queryString,
+    };
+  },
+};
+
+export const Mutation = {
+  handleOAuth: async (_: any, args: OAuthArgs): Promise<OAuthResponse> => {
+    const { data } = await axios.get(
+      `https://github.com/login/oauth/access_token?client_id={{client_id}}&client_secret={{client_secret}}&code=f0e69302d27715c1bbc7`,
+      {
+        params: {
+          client_id: '',
+          client_secret: '',
+          code: args.code,
+        },
+      }
+    );
+
+    return {
+      token: data,
     };
   },
 };

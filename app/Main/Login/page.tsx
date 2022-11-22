@@ -8,36 +8,31 @@ const state = 'jXDXBwH@7!#rz9KH';
 const clientSecret = '5fa9b64049117efb7af84af8db2b2b16934f015b';
 
 export default function Page({ searchParams }) {
-  const handleOAuth = () => {};
+  const handleOAuth = async (code: string) => {
+    const token = await fetch('http://localhost:4000/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query: `mutation HandleOAuthToken {
+          handleOAuth (code: "${code}") {
+            token
+          }
+        }`,
+      }),
+    }).then((res) => res.json());
+
+    console.log('TOKEN', token);
+
+    return token;
+  };
 
   const gitHubAuth = `https://github.com/login/oauth/authorize?client_id=${clientId}`;
 
-  useEffect(() => {
-    const authorizeCode = async (code: string) => {
-      const status = await fetch(
-        `https://github.com/login/oauth/access_token?client_id=${clientId}&client_secret=${clientSecret}&code=${code}`,
-        {
-          method: 'POST',
-          headers: {
-            accept: 'application/json',
-          },
-        }
-      )
-        .then(res => {
-          console.log('STATUS:', status);
-          return res.json();
-        })
-        .catch(err => console.log(err));
-
-      return status;
-    };
-
-    if (searchParams.code) {
-      console.log('CODE', searchParams.code);
-
-      authorizeCode(searchParams.code);
-    }
-  });
+  if (searchParams.code) {
+    handleOAuth(searchParams.code);
+  }
 
   return (
     <div>
