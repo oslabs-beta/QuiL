@@ -2,6 +2,8 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
+import jwtDecode from 'jwt-decode';
+
 const clientId = '99436692da0716eb1c22';
 
 export default function Page({ searchParams }) {
@@ -12,7 +14,7 @@ export default function Page({ searchParams }) {
   useEffect(() => {
     if (code) {
       const handleOAuth = async (code: string) => {
-        const token = await fetch('http://localhost:4000/graphql', {
+        const { data } = await fetch('http://localhost:4000/graphql', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -30,7 +32,9 @@ export default function Page({ searchParams }) {
         // console.log(`TOKEN`, token.data.handleOAuth.token);
         // if (window.localStorage.getItem(`key_${keyNum}`)) keyNum++;
         // window.localStorage.setItem('token', token.data.handleOAuth.token);
-        return token;
+        const { token } = data.handleOAuth.token;
+
+        
       };
       handleOAuth(code);
     }

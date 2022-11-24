@@ -12,13 +12,16 @@ import { makeNodes } from '../../../helperFunctions';
 // Import dummy data for t
 import axios from 'axios';
 import * as dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
 import {
   makeResolverFunctions,
   makeResolverStrings,
 } from '../../../resolverGenerator';
 import { generateSchemas } from '../../../schemaGenerator';
+const { sign, verify } = jwt;
 dotenv.config();
-const { GITHUB_OAUTH_CLIENT_ID, GITHUB_OAUTH_CLIENT_SECRET } = process.env;
+const { GITHUB_OAUTH_CLIENT_ID, GITHUB_OAUTH_CLIENT_SECRET, JWT_SECRET } =
+  process.env;
 
 export const Query = {
   getAllData: async (_: any, args: ArgType): Promise<QuiLData> => {
@@ -57,10 +60,8 @@ export const Mutation = {
         }
       );
 
-      console.log(data);
-
-      const userEmailResponse = await axios.get(
-        'https://api.github.com/user/emails',
+      const gitHubUserResponse = await axios.get(
+        'https://api.github.com/user',
         {
           headers: {
             Authorization: `Bearer ${data.access_token}`,
@@ -69,17 +70,44 @@ export const Mutation = {
         }
       );
 
-      const userEmailObj = userEmailResponse.data.find(
-        (e: any) => e.primary === 'true'
+      // login
+      // avatar_url
+      // Name
+      const { login, avatar_url, name } = gitHubUserResponse.data;
+      let { email } = gitHubUserResponse.data;
+
+      if (!email) {
+        const userEmailResponse = await axios.get(
+          'https://api.github.com/user/emails',
+          {
+            headers: {
+              Authorization: `Bearer ${data.access_token}`,
+              Accept: 'application/json',
+            },
+          }
+        );
+
+        const primaryEmailObject = userEmailResponse.data.find(
+          (e: any) => e.primary === true
+        );
+        email = primaryEmailObject.email;
+      }
+
+      const token = sign(
+        {
+          name,
+          login,
+        },
+        JWT_SECRET,
+        {
+          expiresIn: 3_600_000,
+        }
       );
-
-      console.log(userEmailObj);
-
       return {
-        token: 'data.access_token',
+        token,
       };
     } catch (error) {
-      console.log('an error');
+      console.log(error.message);
     }
   },
 };
