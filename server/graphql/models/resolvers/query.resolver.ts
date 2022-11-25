@@ -71,6 +71,9 @@ export const Mutation = {
   saveData: async (_: any, obj: SaveProject): Promise<SavedProjectRes> => {
     return await saveProject(obj);
   },
+  valUser: async (_: any, obj: GetUser): Promise<GetUserRes> => {
+    return await validateUser(obj);
+  },
   handleOAuth: async (_: any, args: OAuthArgs): Promise<OAuthResponse> => {
     try {
       let { data } = await axios.post(
@@ -136,8 +139,5 @@ export const Mutation = {
     } catch (error) {
       console.log(error.message);
     }
-  },
-  valUser: async (_: any, obj: GetUser): Promise<GetUserRes> => {
-    return await validateUser(obj);
   },
 };
