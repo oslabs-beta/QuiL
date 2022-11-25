@@ -20,7 +20,12 @@ export const createAccount = async (
     VALUES ($1, $2) RETURNING *;`;
     const values = [username, hashedPassword];
     const { rows } = await quilDbConnection.query(query, values);
-    return { success: true, userId: rows[0]._id, token: 'token' };
+    return {
+      success: true,
+      userId: rows[0]._id,
+      token: 'token',
+      oauth_user: false,
+    };
   } catch (err) {
     return { success: false };
   }

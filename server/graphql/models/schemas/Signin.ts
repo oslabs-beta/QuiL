@@ -10,7 +10,7 @@ type CreatedUserResponse {
     token: String
   }
 type GetUserProjectRes {
-    db: [save],
+    db: [ProjectData],
     success: Boolean
 }
 

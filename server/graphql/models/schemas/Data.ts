@@ -28,10 +28,10 @@ type ResolverStrings {
   resolver: String
 }
 
-type save {
+type ProjectData {
   name: String,
-  owner_id: Int,
-  saved_db: String
+   owner_id: Int,
+saved_db: String
 }
 
 type SchemasObject {
