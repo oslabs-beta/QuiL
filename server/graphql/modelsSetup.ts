@@ -15,4 +15,5 @@ export const typeDefs = mergeTypeDefs(schemaFiles.reduce((a, c) => {
     return a
 }, '' ))
 export const resolvers = mergeResolvers(resolverFiles)  
-  
+
+// andres' test resolver    

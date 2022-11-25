@@ -4,6 +4,11 @@ import {
   OAuthArgs,
   OAuthResponse,
   QuiLData,
+  NewUser,
+  SaveProject,
+  CreateAccountRes,
+  SavedProjectRes,
+  GetUserProjectRes,
 } from '../../../types';
 
 import { dbInstance } from '../../../db/dbConnection';
@@ -13,6 +18,15 @@ import { makeNodes } from '../../../helperFunctions';
 import axios from 'axios';
 import * as dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
+//imported middleware/controller by andres and the type NewUser
+import {
+  createAccount,
+  getUserProject,
+  saveProject,
+} from '../../../middleware/controller';
+
+// Import dummy data for testing
+import { dummyResolvers, dummySchemas } from '../../../db/dummyData';
 import {
   makeResolverFunctions,
   makeResolverStrings,
@@ -22,6 +36,8 @@ const { sign, verify } = jwt;
 dotenv.config();
 const { GITHUB_OAUTH_CLIENT_ID, GITHUB_OAUTH_CLIENT_SECRET, JWT_SECRET } =
   process.env;
+import { stringify } from 'querystring';
+import { extendSchemaImpl } from 'graphql/utilities/extendSchema';
 
 export const Query = {
   getAllData: async (_: any, args: ArgType): Promise<QuiLData> => {
@@ -40,9 +56,18 @@ export const Query = {
       schemas: queryString,
     };
   },
+  getUserProjects: async (_: any, arg: Number): Promise<GetUserProjectRes> => {
+    return await getUserProject(arg);
+  },
 };
 
 export const Mutation = {
+  newUser: async (_: any, obj: NewUser): Promise<CreateAccountRes> => {
+    return await createAccount(obj);
+  },
+  saveData: async (_: any, obj: SaveProject): Promise<SavedProjectRes> => {
+    return await saveProject(obj);
+  },
   handleOAuth: async (_: any, args: OAuthArgs): Promise<OAuthResponse> => {
     try {
       let { data } = await axios.post(

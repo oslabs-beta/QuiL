@@ -97,3 +97,34 @@ export type OAuthArgs = {
 export type OAuthResponse = {
   token: String;
 };
+// andres added newuser
+export type NewUser = {
+  email: string;
+  username: string;
+  password: string;
+};
+
+export type SaveProject = {
+  projectName: string;
+  projectData: string;
+  userId: string;
+};
+
+export type CreateAccountRes = {
+  success: Boolean;
+  userId?: Number;
+  token?: String;
+};
+
+export type SavedProjectRes = {
+  projectName?: String;
+  success: Boolean;
+  projectId?: Number;
+};
+
+export type GetUserProjectRes = {
+  name?: String[];
+  owner_id?: Number;
+  saved_db?: String[];
+  success: Boolean;
+};
