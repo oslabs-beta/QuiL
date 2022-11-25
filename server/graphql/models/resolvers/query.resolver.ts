@@ -103,6 +103,8 @@ export const Mutation = {
           expiresIn: 3_600_000,
         }
       );
+
+      console.log('VERIFY', verify(token, JWT_SECRET));
       return {
         token,
       };
