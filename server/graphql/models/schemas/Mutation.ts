@@ -6,3 +6,4 @@ type Mutation {
     saveData(projectName: String, projectData: String, userId: Int): SaveData,
     valUser(username: String, password: String): GetUser
 }`;
+

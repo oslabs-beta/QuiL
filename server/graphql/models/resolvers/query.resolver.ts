@@ -98,9 +98,6 @@ export const Mutation = {
         }
       );
 
-      // login
-      // avatar_url
-      // Name
       const { login, avatar_url, name } = gitHubUserResponse.data;
       let { email } = gitHubUserResponse.data;
 
@@ -124,7 +121,7 @@ export const Mutation = {
       const token = sign(
         {
           name,
-          login,
+          username: login,
           avatar_url,
         },
         JWT_SECRET,
