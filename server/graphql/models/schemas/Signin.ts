@@ -4,11 +4,10 @@ type SigninResponse {
     error: String
 }
 
-<<<<<<< HEAD
 type OAuthResponse {
     token: String
-}`;
-=======
+}
+
 type CreatedUserResponse {
     success: Boolean,
     userId: Int,
@@ -26,4 +25,3 @@ type GetUserProjectRes {
     success: Boolean,
     projectId: Int   
  }`;
->>>>>>> dev
