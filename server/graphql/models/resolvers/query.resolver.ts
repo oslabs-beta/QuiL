@@ -7,6 +7,8 @@ import {
   CreateAccountRes,
   SavedProjectRes,
   GetUserProjectRes,
+  GetUser,
+  GetUserRes,
 } from '../../../types';
 
 import { makeNodes } from '../../../helperFunctions';
@@ -17,6 +19,7 @@ import {
   createAccount,
   getUserProject,
   saveProject,
+  validateUser,
 } from '../../../middleware/controller';
 
 // Import dummy data for testing
@@ -51,12 +54,14 @@ export const Query = {
   },
 };
 
-
 export const Mutation = {
   newUser: async (_: any, obj: NewUser): Promise<CreateAccountRes> => {
     return await createAccount(obj);
   },
   saveData: async (_: any, obj: SaveProject): Promise<SavedProjectRes> => {
     return await saveProject(obj);
+  },
+  valUser: async (_: any, obj: GetUser): Promise<GetUserRes> => {
+    return await validateUser(obj);
   },
 };

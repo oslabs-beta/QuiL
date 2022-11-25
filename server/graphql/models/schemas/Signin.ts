@@ -20,4 +20,10 @@ type GetUserProjectRes {
     projectName: String,
     success: Boolean,
     projectId: Int   
+ }
+ 
+ type GetUser {
+    username: String,
+    password: String,
+    success: Boolean
  }`;
