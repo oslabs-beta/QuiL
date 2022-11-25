@@ -9,6 +9,8 @@ import {
   CreateAccountRes,
   SavedProjectRes,
   GetUserProjectRes,
+  GetUser,
+  GetUserRes,
 } from '../../../types';
 
 import { dbInstance } from '../../../db/dbConnection';
@@ -23,6 +25,7 @@ import {
   createAccount,
   getUserProject,
   saveProject,
+  validateUser,
 } from '../../../middleware/controller';
 
 // Import dummy data for testing
@@ -133,9 +136,11 @@ export const Mutation = {
       return {
         token,
       };
-      
     } catch (error) {
       console.log(error.message);
     }
+  },
+  valUser: async (_: any, obj: GetUser): Promise<GetUserRes> => {
+    return await validateUser(obj);
   },
 };

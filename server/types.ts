@@ -123,8 +123,16 @@ export type SavedProjectRes = {
 };
 
 export type GetUserProjectRes = {
-  name?: String[];
-  owner_id?: Number;
   saved_db?: String[];
+  success: Boolean;
+};
+
+export type GetUser = {
+  username: String;
+  password: String;
+};
+
+export type GetUserRes = {
+  id_?: Number;
   success: Boolean;
 };
