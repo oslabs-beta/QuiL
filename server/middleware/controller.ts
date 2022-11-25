@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt');
+import { resolve } from 'path';
 import { quilDbConnection } from '../postgres/userModels';
 import {
   SaveProject,
@@ -12,12 +13,12 @@ export const createAccount = async (
   obj: NewUser
 ): Promise<CreateAccountRes> => {
   try {
-    const { email, username, password } = obj;
+    const { username, password } = obj;
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-    const query = `INSERT INTO users (email,username,password)\
-  VALUES ($1, $2, $3) RETURNING *;`;
-    const values = [email, username, hashedPassword];
+    const query = `INSERT INTO users (username,password)\
+    VALUES ($1, $2) RETURNING *;`;
+    const values = [username, hashedPassword];
     const { rows } = await quilDbConnection.query(query, values);
     return { success: true, userId: rows[0]._id, token: 'token' };
   } catch (err) {
@@ -33,7 +34,7 @@ export const saveProject = async (
     // const salt = await bcrypt.genSalt(10);
     // const hashedProjectData = await bcrypt.hash(projectData, salt);
     const query = `INSERT INTO projects (name, saved_db, owner_id)\
-    VALUES ( $1, ($2, ENCRYPTBYKEY(key_guid('SK1'),'5000'), (SELECT _id FROM users WHERE _id = $3)) RETURNING *;`;
+    VALUES ( $1, $2, (SELECT _id FROM users WHERE _id = $3)) RETURNING *;`;
     const values = [projectName, projectData, userId];
     const { rows } = await quilDbConnection.query(query, values);
     return { projectName: projectName, success: true };
@@ -47,12 +48,13 @@ export const getUserProject = async (userId: Number) => {
     const query = `SELECT name, owner_id, saved_db FROM projects WHERE owner_id = 1;`;
     const { rows } = await quilDbConnection.query(query);
     const resObj: any = {
-      saved_db: [],
+      db: [],
       success: true,
     };
     rows.forEach((el: any) => {
-      resObj.saved_db.push(el);
+      resObj.db.push(el);
     });
+    console.log(resObj);
     return resObj;
   } catch (err) {
     return { success: false };
