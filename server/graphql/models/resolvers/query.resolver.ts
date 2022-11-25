@@ -122,6 +122,7 @@ export const Mutation = {
         {
           name,
           login,
+          avatar_url,
         },
         JWT_SECRET,
         {
@@ -129,10 +130,10 @@ export const Mutation = {
         }
       );
 
-      console.log('VERIFY', verify(token, JWT_SECRET));
       return {
         token,
       };
+      
     } catch (error) {
       console.log(error.message);
     }

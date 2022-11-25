@@ -26,15 +26,15 @@ export default function Page({ searchParams }) {
               }
             }`,
           }),
-        }).then((res) => res.json());
+        }).then(res => res.json());
 
+        
         // let keyNum = 1;
         // console.log(`TOKEN`, token.data.handleOAuth.token);
         // if (window.localStorage.getItem(`key_${keyNum}`)) keyNum++;
         // window.localStorage.setItem('token', token.data.handleOAuth.token);
-        const { token } = data.handleOAuth.token;
+        // const { token } = data.handleOAuth.token;
 
-        
       };
       handleOAuth(code);
     }
