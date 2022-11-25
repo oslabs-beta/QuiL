@@ -10,11 +10,10 @@ type CreatedUserResponse {
     token: String
   }
 type GetUserProjectRes {
-    name: [String],
-    owner_id: Int,
-    saved_db: [String],
+    db: [ProjectData],
     success: Boolean
 }
+
 
  type SaveData {
     projectName: String,
