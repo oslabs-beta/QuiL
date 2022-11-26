@@ -1,5 +1,4 @@
 import { ApolloServer } from '@apollo/server';
-// const { resolvers } = require('./graphql/models/resolvers/resolvers');
 import { expressMiddleware } from '@apollo/server/express4';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
 import express from 'express';
@@ -7,14 +6,16 @@ import http from 'http';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 
-import{ typeDefs, resolvers} from './graphql/modelsSetup'
+// Importing the combined type and resolver definitions to import to Apollo Server
+import { typeDefs, resolvers } from './graphql/modelsSetup';
+// Type definitions
+import { MyContext } from './types';
 
-interface MyContext {
-  token?: String;
-}
-
+/*
+This function defines the logic needed to initiate an Apollo GraphQL Server
+Apollo here builds on top of an express server
+*/
 async function startApolloServer() {
-  // Required logic for integrating with Express
   const app = express();
   app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -33,7 +34,8 @@ async function startApolloServer() {
   const httpServer = http.createServer(app);
 
   // Same ApolloServer initialization as before, plus the drain plugin
-  // for our httpServer.
+  // for our httpServer.ww
+  // We pass our merged type and resolvers definitions here
   const server = new ApolloServer<MyContext>({
     typeDefs,
     resolvers,
@@ -48,7 +50,6 @@ async function startApolloServer() {
     '/graphql',
     cors<cors.CorsRequest>(),
     bodyParser.json(),
-
     expressMiddleware(server, {
       context: async ({ req, res }) => {
         return { user: res.locals };
@@ -56,13 +57,11 @@ async function startApolloServer() {
     })
   );
 
-  // app.get('/visualizer', (req, res) => {
-  //   res.status(200).json('Response');
-  // });
-
   // Modified server startup
-  await new Promise<void>(resolve => httpServer.listen({ port: 4000 }, resolve));
-
+  await new Promise<void>(resolve =>
+    httpServer.listen({ port: 4000 }, resolve)
+  );
+  // Display a log to notify that the GQL server is up and running
   console.log(`🪶 GraphQL server ready at http://localhost:4000/  🪶`);
 }
 

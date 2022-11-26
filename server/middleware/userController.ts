@@ -1,9 +1,8 @@
 const bcrypt = require('bcrypt');
-import { quilDbConnection } from '../postgres/userModels';
+import { quilDbConnection } from '../db/quilDBConnection';
 import {
   SaveProject,
   SavedProjectRes,
-  GetUserProjectRes,
   CreateNewUserObject,
   CreateNewAccountResponse,
   GetUser,

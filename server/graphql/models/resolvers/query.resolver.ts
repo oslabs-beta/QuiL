@@ -1,3 +1,4 @@
+// TypeScript Definitions
 import {
   ArgType,
   OAuthArgs,
@@ -7,30 +8,37 @@ import {
   SavedProjectRes,
   GetUserProjectRes,
   GetUser,
-  GetUserRes,
   JWTResponse,
 } from '../../../types';
 
 import { dbInstance } from '../../../db/dbConnection';
 import { makeNodes } from '../../../helperFunctions';
 
-//imported middleware/controller by andres and the type NewUser
+// TODO: Refactor this to one object
 import {
   createAccount,
   getUserProject,
   saveProject,
   validateUser,
-} from '../../../middleware/controller';
+} from '../../../middleware/userController';
 
+// TODO: Refactor this to one object
 import {
   makeResolverFunctions,
   makeResolverStrings,
 } from '../../../resolverGenerator';
+
+// TODO: refactor this to one object
 import { generateSchemas } from '../../../schemaGenerator';
 
 import { generateJWT, handleOAuth } from '../../../middleware/auth';
 
+//Here we define our main GQL resolver definitions.
 export const Query = {
+  /*
+  Returns all of the data required by the frontend to display in the display container, this includes
+  the nodes, resolvers, and schemas
+  */
   getAllData: async (_: any, args: ArgType): Promise<QuiLData> => {
     const dataBase = new (dbInstance as any)(args.uri);
     const { nodes } = await makeNodes(dataBase);
@@ -47,12 +55,16 @@ export const Query = {
       schemas: queryString,
     };
   },
+  // Returns all of the user's projects with a user id
+  // TODO: Fix the arg type. The arg will be arg.id
   getUserProjects: async (_: any, arg: Number): Promise<GetUserProjectRes> => {
     return await getUserProject(arg);
   },
 };
 
+// Define all of our mutations for the GQL backend
 export const Mutation = {
+  // Signin handles normal non-oauth signin if the signin is successfull a JWT is returned else token is null
   signin: async (
     _: any,
     arg: GetUser
@@ -71,15 +83,15 @@ export const Mutation = {
     }
   },
 
+  // Handles regular non-oauth user sighnup
   newUser: async (_: any, obj: CreateNewUserObject): Promise<JWTResponse> => {
     return await generateJWT(await createAccount(obj));
   },
+  // Saves a project to a database
   saveData: async (_: any, obj: SaveProject): Promise<SavedProjectRes> => {
     return await saveProject(obj);
   },
-  valUser: async (_: any, obj: GetUser): Promise<GetUserRes> => {
-    return await validateUser(obj);
-  },
+  // Handles both login and register GitHub OAuth Requests
   postOAuth: async (_: any, args: OAuthArgs): Promise<JWTResponse> => {
     try {
       const { token } = await handleOAuth(args.code, args.oauthType);
