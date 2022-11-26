@@ -99,7 +99,6 @@ export type OAuthResponse = {
 };
 // andres added newuser
 export type NewUser = {
-  email: string;
   username: string;
   password: string;
 };
@@ -111,28 +110,30 @@ export type SaveProject = {
 };
 
 export type CreateAccountRes = {
-  success: Boolean;
-  userId?: Number;
-  token?: String;
+  success: boolean;
+  userId?: number;
+  token?: string;
+  name?: string;
+  oauth_user?: boolean;
 };
 
 export type SavedProjectRes = {
-  projectName?: String;
-  success: Boolean;
-  projectId?: Number;
+  projectName?: string;
+  success: boolean;
+  projectId?: number;
 };
 
 export type GetUserProjectRes = {
-  saved_db?: String[];
-  success: Boolean;
+  saved_db?: [];
+  success: boolean;
 };
 
 export type GetUser = {
-  username: String;
-  password: String;
+  username: string;
+  password: string;
 };
 
 export type GetUserRes = {
-  id_?: Number;
-  success: Boolean;
+  id_?: number;
+  success: boolean;
 };
