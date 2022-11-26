@@ -4,7 +4,7 @@ type SigninResponse {
     error: String
 }
 
-type OAuthResponse {
+type JWTResponse {
     token: String
 }
 

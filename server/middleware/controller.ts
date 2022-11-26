@@ -6,6 +6,7 @@ import {
   GetUserProjectRes,
   CreateNewUserObject,
   CreateNewAccountResponse,
+  GetUser,
 } from '../types';
 
 export const createAccount = async (
@@ -77,18 +78,27 @@ export const getUserProject = async (userId: Number) => {
   }
 };
 
-export const validateUser = async (isUser: any) => {
+export const validateUser = async (
+  isUser: GetUser
+): Promise<CreateNewAccountResponse> => {
   try {
     const { username, password } = isUser;
     const query = `SELECT * FROM users WHERE username = $1;`;
     const values = [username];
     const { rows } = await quilDbConnection.query(query, values);
-    if (rows.length === 0) return { success: false };
+    if (rows.length === 0)
+      return { success: false, username: null, userId: null };
     else {
       const hashPass = rows[0].password;
       const result = await bcrypt.compare(password, hashPass);
-      if (!result) return { success: false };
-      return { id_: rows[0]._id, success: true };
+      if (!result) return { success: false, username: null, userId: null };
+      return {
+        success: true,
+        userId: rows[0]._id,
+        username: rows[0].username,
+        name: rows[0].name,
+        avatarUrl: rows[0].avatar_url,
+      };
     }
   } catch (err) {
     console.log(err, ' inside validate catch block');
