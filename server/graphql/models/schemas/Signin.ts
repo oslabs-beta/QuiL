@@ -4,6 +4,10 @@ type SigninResponse {
     error: String
 }
 
+type OAuthResponse {
+    token: String
+}
+
 type CreatedUserResponse {
     success: Boolean,
     userId: Int,

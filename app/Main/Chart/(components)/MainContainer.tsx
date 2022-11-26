@@ -113,7 +113,7 @@ const MainContainer = ({
   return (
     <div data-theme={theme}>
       <NavigationBar
-        loggedUser={loggedUser}
+        // loggedUser={loggedUser}
       />
       <DisplayContainer
         edges={edges}
