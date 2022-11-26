@@ -1,6 +1,6 @@
 const pluralize = require('pluralize');
 import { getNodesInside } from '@reactflow/core/dist/esm/utils/graph';
-import { node } from '../app/(root)/fronendTypes';
+import { node } from '../app/(root)/frontendTypes';
 import res from '../app/Main/Chart/(flow)/dummyRes';
 import { dbInstance } from './db/dbConnection';
 import { ArgType, nodeShape, ResolverStrings, TableResolver } from './types';

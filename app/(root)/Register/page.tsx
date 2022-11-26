@@ -1,6 +1,7 @@
 "use client";
-import NavigationBar from "../Chart/(components)/NavigationBar";
-import RegisterComponent from "./RegisterComponent";
+import Register from "./Register";
+import { useRouter } from "next/navigation";
+
 // const handleEmail = () => {
 //   console.log(e.target.value, ' inside handle email');
 // };
@@ -16,10 +17,14 @@ import RegisterComponent from "./RegisterComponent";
 // const handleSubmit = () => {
 //   console.log(e.target.value, ' handle the submit');
 // };
+
 export default function Page() {
+//   const router = useRouter();
+//   router.prefetch(`/Main/Chart?URI=${uriParam}`)
+
   return (
     <div>
-      <RegisterComponent />
+      <Register/>
     </div>
   );
 }
