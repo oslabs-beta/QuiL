@@ -1,10 +1,16 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
+import jwt_decode from 'jwt-decode';
+import router from 'next/router';
+import Register from './Register/Register';
+
 const RootContainer = () => {
   const [initialURI, setInitialURI] = useState<string>(null);
   const [sampleURI, setSampleURI] = useState<string>(null);
+  // undefined/null = not logged in
+  const [loggedUser, setLoggedUser] = useState<{}>(null);
 
   const router = useRouter();
   const handleUserURI = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -18,6 +24,20 @@ const RootContainer = () => {
     const URI = initialURI ? initialURI : sampleURI;
     router.push(`/Main/Chart?URI=${URI}`);
   };
+
+  useEffect(() => {
+    let JWT = window.localStorage.getItem('token');
+    let decoded;
+    if (JWT) {
+      decoded = jwt_decode(JWT);
+    }
+    // if JWT doesnt exist, set loggedUser to null
+    if (!decoded) setLoggedUser(null);
+    // otherwise decode it and set loggedInUser
+    else {
+      setLoggedUser({username: 'username'});
+    }
+  }, []);
 
   return (
     <div className="hero min-h-screen bg-base-200">
@@ -41,7 +61,7 @@ const RootContainer = () => {
           >
             QuiL is a developer tool used to visualize an exisiting relational
             database and generate the GraphQL schemas & resolvers for that data
-            base. This is intended to help developer see how to tranisition to
+            base. This is intended to help developers see how to tranisition to
             GraphQL from a traditional REST API architecture.
           </motion.p>
         </div>
@@ -53,6 +73,11 @@ const RootContainer = () => {
           className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100"
         >
           <div className="card-body">
+            {(loggedUser) ? (<h1>Welcome {5 + 5}</h1>) : (
+            <div className='form-control justify-end w-full min-w-full'>
+              <button className="btn btn-primary min-w-1/2" onClick={() => router.push("/Login")}>Login</button> 
+              <button className="btn btn-primary min-w-1/2" onClick={() => router.push("/Register")}>Register</button>
+            </div>)}
             <div className="form-control">
               <label className="label">
                 <span className="label-text">URI</span>

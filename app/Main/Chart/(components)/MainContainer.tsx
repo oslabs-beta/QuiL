@@ -1,25 +1,47 @@
 "use client";
 //      postgres://lkdxllvk:GTIkPygxpPOx0ZVNJ3luQHEfApEIJekP@heffalump.db.elephantsql.com/lkdxllvk
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DisplayContainer from "./DisplayContainer";
 import { Node, Edge } from "reactflow";
 import createNodes from "../(flow)/Nodes";
 import createEdges from "../(flow)/Edges";
-import { resQL } from "../../../(root)/fronendTypes";
-import { MainContainerProps } from "../../../(root)/fronendTypes";
+import { resQL } from "../../../(root)/frontendTypes";
+import { MainContainerProps, loggedUser } from "../../../(root)/frontendTypes";
+import NavigationBar from "./NavigationBar";
+import jwt_decode from 'jwt-decode';
+import { useAnimationFrame } from "framer-motion";
 
 const MainContainer = ({
   initialNodes,
   initialEdges,
   data,
 }: MainContainerProps): JSX.Element => {
-  const [displayMode, setDisplayMode] = useState<string>("");
-  const [isLogged, setIsLogged] = useState<boolean>(false);
+  const [displayMode, setDisplayMode] = useState<string>("schemaMode");
   const [uri, setURI] = useState<string>("");
   const [resQL, setResQL] = useState<resQL>(data);
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
   const [edges, setEdges] = useState<Edge[]>(initialEdges);
   const [theme, setTheme] = useState<string>("night");
+  // const [loggedUser, setLoggedUser] = useState<{}>(window.localStorage.getItem('token'));
+  const [loggedUser, setLoggedUser] = useState<loggedUser | null>(null);
+
+  const LoggedUserProps = {
+    username: 'Daniel'
+  }
+
+  useEffect(() => {
+    // let JWT = window.localStorage.getItem('token');
+    let decoded;
+    if (JWT) {
+      decoded = jwt_decode(JWT);
+    }
+    // if JWT doesnt exist, set loggedUser to null
+    if (!decoded) setLoggedUser(null);
+    // otherwise decode it and set loggedInUser
+    else {
+      setLoggedUser({username: 'Daniel'});
+    }
+  }, []);
 
   //invoked in VisualizeSchemaResolver
   const schemaGen = (): void => {
@@ -92,6 +114,9 @@ const MainContainer = ({
 
   return (
     <div data-theme={theme}>
+      <NavigationBar
+        loggedUser={loggedUser}
+      />
       <DisplayContainer
         edges={edges}
         handleSetEdges={handleSetEdges}

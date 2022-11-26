@@ -1,4 +1,4 @@
-import { ResolverProps } from "../../../(root)/fronendTypes";
+import { ResolverProps } from "../../../(root)/frontendTypes";
 import React, { useState } from "react";
 import { Card } from "./ResolverDisplay";
 import { ResolverStrings } from "../../../../server/types";
@@ -22,10 +22,10 @@ const Resolver = ({ resQL }: ResolverProps): JSX.Element => {
   };
 
   return (
-    <div className=''>
+    <div className="">
       <div style={{ display: "flex", flexDirection: "row-reverse" }}>
-        <div className='tooltip' data-tip={copyStatus}>
-          <button className='btn btn-xs' onClick={onClick}>
+        <div className="tooltip" data-tip={copyStatus}>
+          <button className="btn btn-xs" onClick={onClick}>
             Copy All
           </button>
         </div>

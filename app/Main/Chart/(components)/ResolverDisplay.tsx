@@ -4,7 +4,7 @@ import { javascript } from "@codemirror/lang-javascript";
 import { dracula } from "@uiw/codemirror-theme-dracula";
 import ReactCodeMirror from "@uiw/react-codemirror";
 import React, { useState } from "react";
-import { ResolverProps } from "../../../(root)/fronendTypes";
+import { ResolverProps } from "../../../(root)/frontendTypes";
 import { ResolverStrings } from "../../../../server/types";
 
 type ResolverMirrorProps = {
@@ -17,8 +17,8 @@ export const ResolverMirror = ({ value }: ResolverMirrorProps) => {
     <div>
       <ReactCodeMirror
         value={value}
-        height='80%'
-        width='100%'
+        height="80%"
+        width="100%"
         extensions={[javascript({ jsx: true })]}
         theme={dracula}
       />
@@ -41,12 +41,12 @@ export const Card = ({ value, tableName }: ResolverMirrorProps) => {
       <div>
         <div>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <h3 className='font-bold'>
+            <h3 className="font-bold">
               {tableName[0].toUpperCase() +
                 tableName.substring(1, tableName.length)}
             </h3>
-            <div className='tooltip' data-tip={copyStatus}>
-              <button className='btn btn-xs sm:btn-sm' onClick={onClick}>
+            <div className="tooltip" data-tip={copyStatus}>
+              <button className="btn btn-xs sm:btn-sm" onClick={onClick}>
                 <CopyTwoTone />
               </button>
             </div>

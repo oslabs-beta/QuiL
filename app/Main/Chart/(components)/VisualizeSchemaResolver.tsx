@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Schema from "./Schema";
 import Resolver from "./Resolver";
-import { VisualizeSchemaResolverProps } from "../../../(root)/fronendTypes";
+import { VisualizeSchemaResolverProps } from "../../../(root)/frontendTypes";
 const VisualizeSchemaResolver = ({
   displayMode,
   resQL,
@@ -19,6 +19,6 @@ const VisualizeSchemaResolver = ({
     default:
       modeComponent = null;
   }
-  return <div className='min-w-full max-w-fit'>{modeComponent}</div>;
+  return <div className="min-w-full max-w-fit">{modeComponent}</div>;
 };
 export default VisualizeSchemaResolver;

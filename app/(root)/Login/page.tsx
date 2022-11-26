@@ -1,8 +1,11 @@
+"use client"
 import "../../(root)/globals.css";
+import Login from "./Login";
+
 export default function Page() {
   return (
     <div>
-      <h1> inside the login page </h1>
+      <Login/>
     </div>
   );
 }
