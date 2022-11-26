@@ -7,7 +7,7 @@ import http from 'http';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 
-import{ typeDefs, resolvers} from './graphql/modelsSetup'
+import { typeDefs, resolvers } from './graphql/modelsSetup';
 
 interface MyContext {
   token?: String;
@@ -16,6 +16,7 @@ interface MyContext {
 async function startApolloServer() {
   // Required logic for integrating with Express
   const app = express();
+  app.use(express.urlencoded({ extended: false }));
   app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
@@ -61,7 +62,9 @@ async function startApolloServer() {
   // });
 
   // Modified server startup
-  await new Promise<void>(resolve => httpServer.listen({ port: 4000 }, resolve));
+  await new Promise<void>((resolve) =>
+    httpServer.listen({ port: 4000 }, resolve)
+  );
 
   console.log(`🪶 GraphQL server ready at http://localhost:4000/  🪶`);
 }
