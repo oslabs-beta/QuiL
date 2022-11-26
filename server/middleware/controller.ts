@@ -1,33 +1,44 @@
 const bcrypt = require('bcrypt');
-import { resolve } from 'path';
 import { quilDbConnection } from '../postgres/userModels';
 import {
   SaveProject,
-  NewUser,
-  CreateAccountRes,
   SavedProjectRes,
   GetUserProjectRes,
+  CreateNewUserObject,
+  CreateNewAccountResponse,
 } from '../types';
 
 export const createAccount = async (
-  obj: NewUser
-): Promise<CreateAccountRes> => {
+  newUserObject: CreateNewUserObject
+): Promise<CreateNewAccountResponse> => {
   try {
-    const { username, password } = obj;
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-    const query = `INSERT INTO users (username,password)\
-    VALUES ($1, $2) RETURNING *;`;
-    const values = [username, hashedPassword];
+    let values = [];
+    if (newUserObject.oauthUser) {
+      const { name, username, avatarUrl } = newUserObject;
+      values = [username, name, avatarUrl, null];
+    } else {
+      const { username, password } = newUserObject;
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+      values = [username, null, null, hashedPassword];
+    }
+
+    const query = `INSERT INTO users (username, name, avatar_url, password)\
+    VALUES ($1, $2, $3, $4) RETURNING *;`;
+
     const { rows } = await quilDbConnection.query(query, values);
+
     return {
       success: true,
       userId: rows[0]._id,
-      token: 'token',
-      oauth_user: false,
+      username: rows[0].username,
+      name: rows[0].name,
+      avatarUrl: rows[0].avatar_url,
     };
   } catch (err) {
-    return { success: false };
+    console.log(err.message);
+
+    return { success: false, username: null, userId: null };
   }
 };
 
@@ -83,3 +94,24 @@ export const validateUser = async (isUser: any) => {
     console.log(err, ' inside validate catch block');
   }
 };
+
+export async function getQuilUser(
+  username: string
+): Promise<CreateNewAccountResponse> {
+  try {
+    const queryString = 'SELECT * FROM users WHERE username = $1';
+    const values = [username];
+    const { rows } = await quilDbConnection.query(queryString, values);
+    return {
+      success: true,
+      username: rows[0].username,
+      userId: rows[0]._id,
+      name: rows[0].name,
+      avatarUrl: rows[0].avatar_url,
+    };
+  } catch (error) {
+    console.log(error.message);
+
+    return { success: false, username: null, userId: null };
+  }
+}

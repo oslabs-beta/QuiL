@@ -1,13 +1,13 @@
-import MainContainer from "./(components)/MainContainer";
-import createNodes from "./(flow)/Nodes";
-import createEdges from "./(flow)/Edges";
-import { resQL } from "../../(root)/fronendTypes";
+import MainContainer from './(components)/MainContainer';
+import createNodes from './(flow)/Nodes';
+import createEdges from './(flow)/Edges';
+import { resQL } from '../../(root)/fronendTypes';
 async function getData(URI: string) {
-  let data = await fetch("http://localhost:4000/graphql", {
-    method: "POST",
+  let data = await fetch('http://localhost:4000/graphql', {
+    method: 'POST',
 
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
 
     body: JSON.stringify({
@@ -45,7 +45,7 @@ async function getData(URI: string) {
 export default async function Page({
   searchParams,
 }: {
-  searchParams: { id: string };
+  searchParams: { URI: string };
 }) {
   const data = await getData(searchParams.URI);
   const initialNodes = createNodes(data);
@@ -59,7 +59,7 @@ export default async function Page({
         initialNodes={initialNodes}
         initialEdges={initialEdges}
       />
-      <div style={{ height: "500px", width: "500px" }}></div>
+      <div style={{ height: '500px', width: '500px' }}></div>
     </div>
   );
 }

@@ -1,18 +1,19 @@
 import {
   ArgType,
-  nodeShape,
+  OAuthArgs,
+  OAuthResponse,
   QuiLData,
-  NewUser,
+  CreateNewUserObject,
   SaveProject,
-  CreateAccountRes,
+  CreateNewAccountResponse,
   SavedProjectRes,
   GetUserProjectRes,
   GetUser,
   GetUserRes,
 } from '../../../types';
 
-import { makeNodes } from '../../../helperFunctions';
 import { dbInstance } from '../../../db/dbConnection';
+import { makeNodes } from '../../../helperFunctions';
 
 //imported middleware/controller by andres and the type NewUser
 import {
@@ -22,15 +23,13 @@ import {
   validateUser,
 } from '../../../middleware/controller';
 
-// Import dummy data for testing
-import { dummyResolvers, dummySchemas } from '../../../db/dummyData';
 import {
   makeResolverFunctions,
   makeResolverStrings,
 } from '../../../resolverGenerator';
 import { generateSchemas } from '../../../schemaGenerator';
-import { stringify } from 'querystring';
-import { extendSchemaImpl } from 'graphql/utilities/extendSchema';
+
+import { handleOAuth } from '../../../middleware/auth';
 
 export const Query = {
   getAllData: async (_: any, args: ArgType): Promise<QuiLData> => {
@@ -55,7 +54,10 @@ export const Query = {
 };
 
 export const Mutation = {
-  newUser: async (_: any, obj: NewUser): Promise<CreateAccountRes> => {
+  newUser: async (
+    _: any,
+    obj: CreateNewUserObject
+  ): Promise<CreateNewAccountResponse> => {
     return await createAccount(obj);
   },
   saveData: async (_: any, obj: SaveProject): Promise<SavedProjectRes> => {
@@ -64,6 +66,12 @@ export const Mutation = {
   valUser: async (_: any, obj: GetUser): Promise<GetUserRes> => {
     return await validateUser(obj);
   },
+  postOAuth: async (_: any, args: OAuthArgs): Promise<OAuthResponse> => {
+    try {
+      const { token } = await handleOAuth(args.code, args.oauthType);
+      return { token };
+    } catch (error) {
+      console.log(error.message);
+    }
+  },
 };
-
-

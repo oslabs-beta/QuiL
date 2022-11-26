@@ -86,14 +86,25 @@ export interface ArgType {
 }
 
 export type SingleSchemaType = {
-  tableName: String;
-  schemas: String;
+  tableName: string;
+  schemas: string;
 };
 
+export type OAuthArgs = {
+  code: string;
+  oauthType: string;
+};
+
+export type OAuthResponse = {
+  token: string;
+};
 // andres added newuser
-export type NewUser = {
+export type CreateNewUserObject = {
+  oauthUser: boolean;
   username: string;
-  password: string;
+  name?: string;
+  avatarUrl?: string;
+  password?: string;
 };
 
 export type SaveProject = {
@@ -102,12 +113,12 @@ export type SaveProject = {
   userId: string;
 };
 
-export type CreateAccountRes = {
+export type CreateNewAccountResponse = {
   success: boolean;
-  userId?: number;
-  token?: string;
+  username: string;
+  userId: number;
   name?: string;
-  oauth_user?: boolean;
+  avatarUrl?: string;
 };
 
 export type SavedProjectRes = {
