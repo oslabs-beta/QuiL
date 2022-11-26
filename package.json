@@ -50,6 +50,7 @@
     "@types/pg": "^8.6.5",
     "@types/react": "18.0.25",
     "autoprefixer": "^10.4.13",
+    "bcrypt": "^5.1.0",
     "concurrently": "^7.5.0",
     "nodemon": "^2.0.20",
     "postcss": "^8.4.18",

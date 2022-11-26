@@ -89,3 +89,44 @@ export type SingleSchemaType = {
   tableName: String;
   schemas: String;
 };
+
+// andres added newuser
+export type NewUser = {
+  username: string;
+  password: string;
+};
+
+export type SaveProject = {
+  projectName: string;
+  projectData: string;
+  userId: string;
+};
+
+export type CreateAccountRes = {
+  success: boolean;
+  userId?: number;
+  token?: string;
+  name?: string;
+  oauth_user?: boolean;
+};
+
+export type SavedProjectRes = {
+  projectName?: string;
+  success: boolean;
+  projectId?: number;
+};
+
+export type GetUserProjectRes = {
+  saved_db?: [];
+  success: boolean;
+};
+
+export type GetUser = {
+  username: string;
+  password: string;
+};
+
+export type GetUserRes = {
+  id_?: number;
+  success: boolean;
+};

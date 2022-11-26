@@ -28,6 +28,12 @@ type ResolverStrings {
   resolver: String
 }
 
+type ProjectData {
+  name: String,
+   owner_id: Int,
+saved_db: String
+}
+
 type SchemasObject {
   tableName: String,
   schemas: String

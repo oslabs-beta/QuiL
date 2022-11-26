@@ -1,7 +1,26 @@
-import { ArgType, nodeShape, QuiLData } from '../../../types';
+import {
+  ArgType,
+  nodeShape,
+  QuiLData,
+  NewUser,
+  SaveProject,
+  CreateAccountRes,
+  SavedProjectRes,
+  GetUserProjectRes,
+  GetUser,
+  GetUserRes,
+} from '../../../types';
 
 import { makeNodes } from '../../../helperFunctions';
 import { dbInstance } from '../../../db/dbConnection';
+
+//imported middleware/controller by andres and the type NewUser
+import {
+  createAccount,
+  getUserProject,
+  saveProject,
+  validateUser,
+} from '../../../middleware/controller';
 
 // Import dummy data for testing
 import { dummyResolvers, dummySchemas } from '../../../db/dummyData';
@@ -10,6 +29,8 @@ import {
   makeResolverStrings,
 } from '../../../resolverGenerator';
 import { generateSchemas } from '../../../schemaGenerator';
+import { stringify } from 'querystring';
+import { extendSchemaImpl } from 'graphql/utilities/extendSchema';
 
 export const Query = {
   getAllData: async (_: any, args: ArgType): Promise<QuiLData> => {
@@ -28,4 +49,21 @@ export const Query = {
       schemas: queryString,
     };
   },
+  getUserProjects: async (_: any, arg: Number): Promise<GetUserProjectRes> => {
+    return await getUserProject(arg);
+  },
 };
+
+export const Mutation = {
+  newUser: async (_: any, obj: NewUser): Promise<CreateAccountRes> => {
+    return await createAccount(obj);
+  },
+  saveData: async (_: any, obj: SaveProject): Promise<SavedProjectRes> => {
+    return await saveProject(obj);
+  },
+  valUser: async (_: any, obj: GetUser): Promise<GetUserRes> => {
+    return await validateUser(obj);
+  },
+};
+
+
