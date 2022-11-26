@@ -1,15 +1,14 @@
 import {
   ArgType,
   OAuthArgs,
-  OAuthResponse,
   QuiLData,
   CreateNewUserObject,
   SaveProject,
-  CreateNewAccountResponse,
   SavedProjectRes,
   GetUserProjectRes,
   GetUser,
   GetUserRes,
+  JWTResponse,
 } from '../../../types';
 
 import { dbInstance } from '../../../db/dbConnection';
@@ -29,7 +28,7 @@ import {
 } from '../../../resolverGenerator';
 import { generateSchemas } from '../../../schemaGenerator';
 
-import { handleOAuth } from '../../../middleware/auth';
+import { generateJWT, handleOAuth } from '../../../middleware/auth';
 
 export const Query = {
   getAllData: async (_: any, args: ArgType): Promise<QuiLData> => {
@@ -54,11 +53,26 @@ export const Query = {
 };
 
 export const Mutation = {
-  newUser: async (
+  signin: async (
     _: any,
-    obj: CreateNewUserObject
-  ): Promise<CreateNewAccountResponse> => {
-    return await createAccount(obj);
+    arg: GetUser
+  ): Promise<JWTResponse | { error: string }> => {
+    const user = await validateUser({
+      username: arg.username,
+      password: arg.password,
+    });
+
+    if (user.success) {
+      return generateJWT(user);
+    } else {
+      return {
+        token: null,
+      };
+    }
+  },
+
+  newUser: async (_: any, obj: CreateNewUserObject): Promise<JWTResponse> => {
+    return await generateJWT(await createAccount(obj));
   },
   saveData: async (_: any, obj: SaveProject): Promise<SavedProjectRes> => {
     return await saveProject(obj);
@@ -66,7 +80,7 @@ export const Mutation = {
   valUser: async (_: any, obj: GetUser): Promise<GetUserRes> => {
     return await validateUser(obj);
   },
-  postOAuth: async (_: any, args: OAuthArgs): Promise<OAuthResponse> => {
+  postOAuth: async (_: any, args: OAuthArgs): Promise<JWTResponse> => {
     try {
       const { token } = await handleOAuth(args.code, args.oauthType);
       return { token };

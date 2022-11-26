@@ -95,7 +95,7 @@ export type OAuthArgs = {
   oauthType: string;
 };
 
-export type OAuthResponse = {
+export type JWTResponse = {
   token: string;
 };
 // andres added newuser
