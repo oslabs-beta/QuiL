@@ -14,13 +14,8 @@ import {
 import { dbInstance } from '../../../db/dbConnection';
 import { makeNodes } from '../../../helperFunctions';
 
-// TODO: Refactor this to one object
-import {
-  createAccount,
-  getUserProject,
-  saveProject,
-  validateUser,
-} from '../../../middleware/userController';
+// Import the userController
+import { userController } from '../../../middleware/userController';
 
 // TODO: Refactor this to one object
 import {
@@ -58,7 +53,7 @@ export const Query = {
   // Returns all of the user's projects with a user id
   // TODO: Fix the arg type. The arg will be arg.id
   getUserProjects: async (_: any, arg: Number): Promise<GetUserProjectRes> => {
-    return await getUserProject(arg);
+    return await userController.getUserProject(arg);
   },
 };
 
@@ -69,7 +64,7 @@ export const Mutation = {
     _: any,
     arg: GetUser
   ): Promise<JWTResponse | { error: string }> => {
-    const user = await validateUser({
+    const user = await userController.validateUser({
       username: arg.username,
       password: arg.password,
     });
@@ -85,11 +80,11 @@ export const Mutation = {
 
   // Handles regular non-oauth user sighnup
   newUser: async (_: any, obj: CreateNewUserObject): Promise<JWTResponse> => {
-    return await generateJWT(await createAccount(obj));
+    return await generateJWT(await userController.createAccount(obj));
   },
   // Saves a project to a database
   saveData: async (_: any, obj: SaveProject): Promise<SavedProjectRes> => {
-    return await saveProject(obj);
+    return await userController.saveProject(obj);
   },
   // Handles both login and register GitHub OAuth Requests
   postOAuth: async (_: any, args: OAuthArgs): Promise<JWTResponse> => {

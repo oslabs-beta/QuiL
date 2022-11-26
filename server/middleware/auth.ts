@@ -6,8 +6,8 @@ import {
   CreateNewUserObject,
   TokenJwt,
 } from '../types';
-import { createAccount, getQuilUser } from './userController';
 dotenv.config();
+import { userController } from './userController';
 
 /*
 This code is responsible for handling both login & register requests through OAuth
@@ -128,7 +128,7 @@ export async function handleOAuth(
 
     if (type === 'register') {
       const newUserObj = buildNewGitHubUserData(gitHubUserData);
-      const createdUser = await createAccount(newUserObj);
+      const createdUser = await userController.createAccount(newUserObj);
       if (createdUser.success) {
         return generateJWT(createdUser);
       } else throw new Error('Error creating account');
@@ -136,7 +136,7 @@ export async function handleOAuth(
 
     if (type === 'signin') {
       const { login } = gitHubUserData;
-      const user = await getQuilUser(login);
+      const user = await userController.getQuilUser(login);
       if (user.success) {
         return generateJWT(user);
       } else throw new Error('Error creating account');
