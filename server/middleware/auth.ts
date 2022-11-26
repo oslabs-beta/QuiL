@@ -2,7 +2,8 @@ import axios from 'axios';
 import * as dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import { quilDbConnection } from '../postgres/userModels';
-import { createAccount } from './controller';
+import { CreateNewAccountResponse, CreateNewUserObject } from '../types';
+import { createAccount, getQuilUser } from './controller';
 dotenv.config();
 
 // Import github OAuth credentials from the environment
@@ -36,6 +37,7 @@ export async function getOAuthToken(
       {},
       { params, headers }
     );
+    console.log('access_token', accessTokenResponse.data.access_token);
 
     return { gitHubToken: accessTokenResponse.data.access_token };
   } catch (error) {
@@ -73,19 +75,25 @@ export function buildNewGitHubUserData(gitHubUserData: {
   login: string;
   avatar_url: string;
   name: string;
-}): UserObject {
+}): CreateNewUserObject {
   return {
+    oauthUser: true,
     name: gitHubUserData.name,
     username: gitHubUserData.login,
     avatarUrl: gitHubUserData.avatar_url,
   };
 }
 
-export function generateJWT(userObject: UserObject): { token: string } {
+type TokenJwt = {
+  token: string;
+};
+
+export function generateJWT(userObject: CreateNewAccountResponse): TokenJwt {
   const token = jwt.sign(
     {
-      name: userObject.name,
       username: userObject.username,
+      userId: userObject.userId,
+      name: userObject.name,
       avatarUrl: userObject.avatarUrl,
     },
     JWT_SECRET,
@@ -100,22 +108,14 @@ export function generateJWT(userObject: UserObject): { token: string } {
 }
 
 // TODO: Edit this to return the shape that the JWT needs
-export async function getUser(username: string) {
-  try {
-    const queryString = 'SELECT * FROM users WHERE username = $1';
-    const values = [username];
-    const { rows } = await quilDbConnection.query(queryString, values);
-    return rows[0];
-  } catch (error) {
-    return {
-      err: error.message,
-    };
-  }
-}
 
-export async function handleOAuth(code: string, type: string) {
+export async function handleOAuth(
+  code: string,
+  type: string
+): Promise<TokenJwt> {
   try {
     const { gitHubToken } = await getOAuthToken(code);
+
     if (!gitHubToken) throw new Error('Bad credentials');
 
     const { gitHubUserData } = await getGitHubUserData(gitHubToken);
@@ -124,18 +124,18 @@ export async function handleOAuth(code: string, type: string) {
       const newUserObj = buildNewGitHubUserData(gitHubUserData);
       const createdUser = await createAccount(newUserObj);
       if (createdUser.success) {
-        return generateJWT(newQuilUser);
+        return generateJWT(createdUser);
       } else throw new Error('Error creating account');
     }
 
     if (type === 'signin') {
       const { login } = gitHubUserData;
-      const user = getUser(login);
-      if (user) {
+      const user = await getQuilUser(login);
+      if (user.success) {
         return generateJWT(user);
-      }
+      } else throw new Error('Error creating account');
     }
   } catch (error) {
-    return { err: error.message };
+    return { token: null };
   }
 }

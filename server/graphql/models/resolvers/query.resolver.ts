@@ -1,12 +1,11 @@
 import {
   ArgType,
-  nodeShape,
   OAuthArgs,
   OAuthResponse,
   QuiLData,
-  NewUser,
+  CreateNewUserObject,
   SaveProject,
-  CreateAccountRes,
+  CreateNewAccountResponse,
   SavedProjectRes,
   GetUserProjectRes,
   GetUser,
@@ -16,10 +15,6 @@ import {
 import { dbInstance } from '../../../db/dbConnection';
 import { makeNodes } from '../../../helperFunctions';
 
-// Import dummy data for t
-import axios from 'axios';
-import * as dotenv from 'dotenv';
-import jwt from 'jsonwebtoken';
 //imported middleware/controller by andres and the type NewUser
 import {
   createAccount,
@@ -28,19 +23,13 @@ import {
   validateUser,
 } from '../../../middleware/controller';
 
-// Import dummy data for testing
-import { dummyResolvers, dummySchemas } from '../../../db/dummyData';
 import {
   makeResolverFunctions,
   makeResolverStrings,
 } from '../../../resolverGenerator';
 import { generateSchemas } from '../../../schemaGenerator';
-const { sign, verify } = jwt;
-dotenv.config();
-const { GITHUB_OAUTH_CLIENT_ID, GITHUB_OAUTH_CLIENT_SECRET, JWT_SECRET } =
-  process.env;
-import { stringify } from 'querystring';
-import { extendSchemaImpl } from 'graphql/utilities/extendSchema';
+
+import { handleOAuth } from '../../../middleware/auth';
 
 export const Query = {
   getAllData: async (_: any, args: ArgType): Promise<QuiLData> => {
@@ -65,7 +54,10 @@ export const Query = {
 };
 
 export const Mutation = {
-  newUser: async (_: any, obj: NewUser): Promise<CreateAccountRes> => {
+  newUser: async (
+    _: any,
+    obj: CreateNewUserObject
+  ): Promise<CreateNewAccountResponse> => {
     return await createAccount(obj);
   },
   saveData: async (_: any, obj: SaveProject): Promise<SavedProjectRes> => {
@@ -74,72 +66,12 @@ export const Mutation = {
   valUser: async (_: any, obj: GetUser): Promise<GetUserRes> => {
     return await validateUser(obj);
   },
-  handleOAuth: async (_: any, args: OAuthArgs): Promise<OAuthResponse> => {
+  postOAuth: async (_: any, args: OAuthArgs): Promise<OAuthResponse> => {
     try {
-      let { data } = await axios.post(
-        `https://github.com/login/oauth/access_token`,
-        {},
-        {
-          params: {
-            client_id: GITHUB_OAUTH_CLIENT_ID,
-            client_secret: GITHUB_OAUTH_CLIENT_SECRET,
-            code: args.code,
-          },
-          headers: {
-            Accept: 'application/json',
-          },
-        }
-      );
-
-      const gitHubUserResponse = await axios.get(
-        'https://api.github.com/user',
-        {
-          headers: {
-            Authorization: `Bearer ${data.access_token}`,
-            Accept: 'application/json',
-          },
-        }
-      );
-
-      const { login, avatar_url, name } = gitHubUserResponse.data;
-      let { email } = gitHubUserResponse.data;
-
-      if (!email) {
-        const userEmailResponse = await axios.get(
-          'https://api.github.com/user/emails',
-          {
-            headers: {
-              Authorization: `Bearer ${data.access_token}`,
-              Accept: 'application/json',
-            },
-          }
-        );
-
-        const primaryEmailObject = userEmailResponse.data.find(
-          (e: any) => e.primary === true
-        );
-        email = primaryEmailObject.email;
-      }
-
-      const token = sign(
-        {
-          name,
-          username: login,
-          avatar_url,
-        },
-        JWT_SECRET,
-        {
-          expiresIn: 3_600_000,
-        }
-      );
-
-      return {
-        token,
-      };
+      const { token } = await handleOAuth(args.code, args.oauthType);
+      return { token };
     } catch (error) {
       console.log(error.message);
     }
   },
 };
-
-
