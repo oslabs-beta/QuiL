@@ -22,26 +22,24 @@ const MainContainer = ({
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
   const [edges, setEdges] = useState<Edge[]>(initialEdges);
   const [theme, setTheme] = useState<string>("night");
-  // const [loggedUser, setLoggedUser] = useState<{}>(window.localStorage.getItem('token'));
-  const [loggedUser, setLoggedUser] = useState<loggedUser | null>(null);
-
+  // const [loggedUser, setLoggedUser] = useState<any>(localStorage.getItem('token'));
   const LoggedUserProps = {
     username: 'Daniel'
   }
 
-  useEffect(() => {
-    // let JWT = window.localStorage.getItem('token');
-    let decoded;
-    if (JWT) {
-      decoded = jwt_decode(JWT);
-    }
-    // if JWT doesnt exist, set loggedUser to null
-    if (!decoded) setLoggedUser(null);
-    // otherwise decode it and set loggedInUser
-    else {
-      setLoggedUser({username: 'Daniel'});
-    }
-  }, []);
+  // useEffect(() => {
+  //   let JWT = localStorage.getItem('token');
+  //   let decoded;
+  //   if (JWT) {
+  //     decoded = jwt_decode(JWT);
+  //   }
+  //   // if JWT doesnt exist, set loggedUser to null
+  //   if (!decoded) setLoggedUser(null);
+  //   // otherwise decode it and set loggedInUser
+  //   else {
+  //     setLoggedUser({username: 'Daniel'});
+  //   }
+  // }, []);
 
   //invoked in VisualizeSchemaResolver
   const schemaGen = (): void => {

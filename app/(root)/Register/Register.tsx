@@ -29,8 +29,13 @@ const Register = () => {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            username: userObj.username,
-            password: userObj.password
+          query: `mutation Mutation(${userObj.username}: String, ${userObj.password}: String) {
+            newUser(username: ${userObj.username}, password: ${userObj.password}) {
+              success
+              token
+              userId
+            }
+          }`
         })
     })
     .then((data) => {

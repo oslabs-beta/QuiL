@@ -12,15 +12,19 @@ const Login = () => {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            username: userObj.username,
-            password: userObj.password
+          query:`mutation Mutation($password: String, $email: String) {
+            signin(password: $password, email: $email) {
+              error
+              token
+            }
+          }`
         })
     })
     .then((data) => {
         return data.json();
     })
     .then((data) => {
-        window.localStorage.setItem('token', data.token);
+        localStorage.setItem('token', data.token);
     })
   };
 

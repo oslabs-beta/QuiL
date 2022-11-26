@@ -25,19 +25,19 @@ const RootContainer = () => {
     router.push(`/Main/Chart?URI=${URI}`);
   };
 
-  useEffect(() => {
-    let JWT = window.localStorage.getItem('token');
-    let decoded;
-    if (JWT) {
-      decoded = jwt_decode(JWT);
-    }
-    // if JWT doesnt exist, set loggedUser to null
-    if (!decoded) setLoggedUser(null);
-    // otherwise decode it and set loggedInUser
-    else {
-      setLoggedUser({username: 'username'});
-    }
-  }, []);
+  // useEffect(() => {
+  //   let JWT = window.localStorage.getItem('token');
+  //   let decoded;
+  //   if (JWT) {
+  //     decoded = jwt_decode(JWT);
+  //   }
+  //   // if JWT doesnt exist, set loggedUser to null
+  //   if (!decoded) setLoggedUser(null);
+  //   // otherwise decode it and set loggedInUser
+  //   else {
+  //     setLoggedUser({username: 'username'});
+  //   }
+  // }, []);
 
   return (
     <div className="hero min-h-screen bg-base-200">
