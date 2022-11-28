@@ -141,3 +141,11 @@ export type GetUserRes = {
   id_?: number;
   success: boolean;
 };
+
+export interface MyContext {
+  token?: String;
+}
+
+export type TokenJwt = {
+  token: string;
+};

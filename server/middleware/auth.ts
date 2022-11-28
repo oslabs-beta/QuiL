@@ -1,19 +1,27 @@
 import axios from 'axios';
 import * as dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
-import { quilDbConnection } from '../postgres/userModels';
-import { CreateNewAccountResponse, CreateNewUserObject } from '../types';
-import { createAccount, getQuilUser } from './controller';
+import {
+  CreateNewAccountResponse,
+  CreateNewUserObject,
+  TokenJwt,
+} from '../types';
 dotenv.config();
+import { userController } from './userController';
 
-// Import github OAuth credentials from the environment
+/*
+This code is responsible for handling both login & register requests through OAuth
+To understand the OAuth flow start at the function handleOAuth() at the bottom of this file
+*/
+
+// Import github OAuth credentials from the environment variables
 const { GITHUB_OAUTH_CLIENT_ID, GITHUB_OAUTH_CLIENT_SECRET, JWT_SECRET } =
   process.env;
 
 /*
 Uses a github oauth code to exchange for an OAuth access token. 
-This allows subsequent funcs to use this OAuth code to query the
- GitHUb api on the authenticated user's behalf.
+This allows subsequent funcs to use this OAuth token to query the
+ GitHub api on the authenticated user's behalf.
 */
 export async function getOAuthToken(
   code: string
@@ -37,7 +45,6 @@ export async function getOAuthToken(
       {},
       { params, headers }
     );
-    console.log('access_token', accessTokenResponse.data.access_token);
 
     return { gitHubToken: accessTokenResponse.data.access_token };
   } catch (error) {
@@ -46,16 +53,9 @@ export async function getOAuthToken(
   }
 }
 
-type UserObject = {
-  name: string;
-  username: string;
-  avatarUrl: string;
-};
-
 /*
-Uses a github oauth code to exchange for an OAuth access token. 
-This allows subsequent funcs to use this OAuth code to query the
- GitHUb api on the authenticated user's behalf.
+Uses the OAuth access token provided by getOAuthToken() to query the GitHub user 
+endpoint and retrieve the authenticated user's data. Returns all the data github returns
 */
 export async function getGitHubUserData(oauthAccessToken: string) {
   try {
@@ -71,6 +71,10 @@ export async function getGitHubUserData(oauthAccessToken: string) {
   }
 }
 
+/*
+Accepts the entire user object returned by getGitHubUserData() and constructs an object that is required to 
+create a new QuiL user
+*/
 export function buildNewGitHubUserData(gitHubUserData: {
   login: string;
   avatar_url: string;
@@ -84,10 +88,9 @@ export function buildNewGitHubUserData(gitHubUserData: {
   };
 }
 
-type TokenJwt = {
-  token: string;
-};
-
+/*
+Accepts a QuiL user object and encodes the user data into a JSON webtoken 
+*/
 export function generateJWT(userObject: CreateNewAccountResponse): TokenJwt {
   const token = jwt.sign(
     {
@@ -107,8 +110,11 @@ export function generateJWT(userObject: CreateNewAccountResponse): TokenJwt {
   };
 }
 
-// TODO: Edit this to return the shape that the JWT needs
-
+/*
+Main fucntion for handling OAuth login & register. Based on the 'type' parameter, this func will either 
+create a new user in QuiL's database using the Oauth information or will validate an exisiting user
+that is attempting to sign in via OAuth
+*/
 export async function handleOAuth(
   code: string,
   type: string
@@ -122,7 +128,7 @@ export async function handleOAuth(
 
     if (type === 'register') {
       const newUserObj = buildNewGitHubUserData(gitHubUserData);
-      const createdUser = await createAccount(newUserObj);
+      const createdUser = await userController.createAccount(newUserObj);
       if (createdUser.success) {
         return generateJWT(createdUser);
       } else throw new Error('Error creating account');
@@ -130,7 +136,7 @@ export async function handleOAuth(
 
     if (type === 'signin') {
       const { login } = gitHubUserData;
-      const user = await getQuilUser(login);
+      const user = await userController.getQuilUser(login);
       if (user.success) {
         return generateJWT(user);
       } else throw new Error('Error creating account');
