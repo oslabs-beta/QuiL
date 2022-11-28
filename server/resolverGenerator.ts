@@ -1,17 +1,14 @@
 const pluralize = require('pluralize');
-import { getNodesInside } from '@reactflow/core/dist/esm/utils/graph';
+// TODO: Combine and refactor Type definitions
 import { node } from '../app/(root)/frontendTypes';
-import res from '../app/Main/Chart/(flow)/dummyRes';
-import { dbInstance } from './db/dbConnection';
-import { ArgType, nodeShape, ResolverStrings, TableResolver } from './types';
+import { ArgType, ResolverStrings, TableResolver } from './types';
+import { quilDbConnection as db } from './db/quilDBConnection';
 
-// Test variable
-
-const db = new (dbInstance as any)(
-  'postgres://lkdxllvk:GTIkPygxpPOx0ZVNJ3luQHEfApEIJekP@heffalump.db.elephantsql.com/lkdxllvk'
-);
-// ##################
-
+/*
+This function creates the actual function defintions for resolvers related to the user's data base.
+This allows the functions definitions to be passed to makeResolverStrings which stringifies the 
+defintions so they can be sent to the frontend
+*/
 const makeResolverFunctions = (node: node): TableResolver => {
   const getOne = async (_: any, args: ArgType) => {
     const query = `SELECT * FROM ${node.name} WHERE ${node.primaryKey} = $1`;
@@ -32,7 +29,10 @@ const makeResolverFunctions = (node: node): TableResolver => {
     getAll,
   };
 };
-
+/*
+This function resolves the template literals and formats the fucntions in a string form so they
+can be easily displayed in the code mirrors on the frontend
+*/
 const makeResolverStrings = (
   node: node,
   resolvers: TableResolver

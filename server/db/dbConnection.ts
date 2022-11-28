@@ -1,11 +1,5 @@
 import { GlobalServerError, dbConstructor } from '../types';
-// import * as pg from 'pg';
-// const { Pool } = pg;
 import { Pool } from 'pg';
-import { stringify } from 'querystring';
-
-// const { stringify } = require('querystring');
-// const { GlobalServerError, dbConstructor } = require('../types');
 
 /* 
 create a func that accepts URI input and exports/returns query obj that's being exported (line 21), then export said func

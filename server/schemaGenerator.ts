@@ -25,9 +25,6 @@ export const generateSchemas = async (
   // to create initial schemas per table
   for (let i = 0; i < tables.length; i++) {
     let tableName = tables[i].table_name;
-    // // TODO: don't make schemas for intersection tables
-    // let isInterTable = await isIntersectionTable(db, tableName)
-    // if (isInterTable === true) continue;
     const schema: schema = { table_name: tableName };
     let tableQuery = await db.queryTableLayout(tableName);
     for (let j = 0; j < tableQuery.length; j++) {
