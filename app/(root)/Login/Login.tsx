@@ -3,8 +3,6 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const Login = () => {
-  const [logged, setLogged] = useState<boolean>(false);
-
   const router = useRouter();
 
   const loginHandler = async (e: any) => {
@@ -31,7 +29,6 @@ const Login = () => {
       })
       .then((data) => {
         localStorage.setItem("token", data.data.signin.token);
-        setLogged(true);
         router.push("/");
       });
   };
