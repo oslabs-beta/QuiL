@@ -1,65 +1,66 @@
 import { inputObj, userObj } from "../../(root)/frontendTypes";
+import { useRouter } from "next/navigation";
 
 const Register = () => {
-  // const handleEmail = () => {
-  //   console.log('inside email');
-  // };
-
-  // const handleUsername = (e) => {
-  //   console.log('inside user');
-  // };
-
-  // const handlePassword = (e) => {
-  //   console.log('inside password');
-  // };
-
-  // const handleSubmit = (e) => {
-  //   console.log(e.target.value, ' handle the submit');
-  // };
+  const router = useRouter();
 
   const createUserHandler = async (e: any) => {
+    e.preventDefault();
     const userObj: userObj = {
       username: e.target.username.value,
-      password: e.target.password.value
+      password: e.target.password.value,
     };
-    console.log(userObj);
     let data = await fetch("http://localhost:4000/graphql", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          query: `mutation Mutation(${userObj.username}: String, ${userObj.password}: String) {
-            newUser(username: ${userObj.username}, password: ${userObj.password}) {
-              success
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query: `mutation {
+            newUser(username: "${userObj.username}", password: "${userObj.password}") {
               token
-              userId
             }
-          }`
-        })
+          }`,
+      }),
     })
-    .then((data) => {
+      .then((data) => {
         return data.json();
-    })
-    .then((data) => {
-        localStorage.setItem('token', data.token);
-    })
+      })
+      .then((data) => {
+        if (data.data.newUser.token) localStorage.setItem("token", data.data.newUser.token);
+        router.push("/");
+      });
   };
 
   return (
     <div className="grid h-screen place-items-center">
       <form className="SignUpForm" onSubmit={createUserHandler}>
-        
         <label htmlFor="username">Username: </label>
         <input name="username" type="text" placeholder="username"></input>
 
-        <label htmlFor="password">Password: </label> 
+        <label htmlFor="password">Password: </label>
         <input name="password" type="text" placeholder="password"></input>
 
-        <button onClick={createUserHandler}>Create Account</button>
+        <button type="submit">Create Account</button>
       </form>
     </div>
   );
 };
 
+{
+  /* <button type='submit'>Create Account</button> */
+}
+{
+  /* <button type='submit' onClick={createUserHandler}>Create Account</button> */
+}
+
 export default Register;
+
+/*
+mutation ($password: String, $username: String, $newUserUsername2: String, $newUserPassword2: String) newUser {
+            newUser ($password: String, $username: String, $newUserUsername2: String, $newUserPassword2: String) {
+              newUser(password: "${userObj.password}" username: "${userObj.username}") {
+              token
+            }
+          }
+*/

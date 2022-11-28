@@ -102,10 +102,7 @@ const makeNodes = async (db: dbConstructor): Promise<objectOfArrOfNodes> => {
       node.columns = parseColumns(unparsedColumns);
       let unparsedFKeys = await db.queryFKeys();
       node.edges = parseFKeys(unparsedFKeys, node.name);
-
-      if (await isIntersectionTable(db, node.name))
-        node.isIntersectionTable = true;
-
+      if (await isIntersectionTable(db, node.name)) node.isIntersectionTable = true;
       arrOfNodes.push(node);
 
       // test console logs to run these logs when invoked instead of having to write async-await tester func
