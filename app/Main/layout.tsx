@@ -8,7 +8,6 @@ export default function MainLayout({
   return (
     <html lang='en'>
       <body>
-        <NavigationBar />
         {children}
       </body>
     </html>

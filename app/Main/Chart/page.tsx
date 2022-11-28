@@ -1,7 +1,7 @@
-import MainContainer from './(components)/MainContainer';
-import createNodes from './(flow)/Nodes';
-import createEdges from './(flow)/Edges';
-import { resQL } from '../../(root)/fronendTypes';
+import MainContainer from "./(components)/MainContainer";
+import createNodes from "./(flow)/Nodes";
+import createEdges from "./(flow)/Edges";
+import { resQL } from "../../(root)/frontendTypes";
 async function getData(URI: string) {
   let data = await fetch('http://localhost:4000/graphql', {
     method: 'POST',

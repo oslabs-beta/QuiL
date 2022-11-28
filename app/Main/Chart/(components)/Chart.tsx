@@ -1,6 +1,6 @@
 import Flow from "../(flow)/Flow";
 import React from "react";
-import { ChartProps } from "../../../(root)/fronendTypes";
+import { ChartProps } from "../../../(root)/frontendTypes";
 
 const Chart = ({
   nodes,

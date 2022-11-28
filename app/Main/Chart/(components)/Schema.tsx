@@ -1,4 +1,4 @@
-import { SchemaProps } from "../../../(root)/fronendTypes";
+import { SchemaProps } from "../../../(root)/frontendTypes";
 import React, { useState } from "react";
 import { Card } from "./ResolverDisplay";
 import { SchemaType, SingleSchemaType } from "../../../../server/types";
@@ -23,10 +23,10 @@ const Schema = ({ resQL }: SchemaProps): JSX.Element => {
   };
 
   return (
-    <div className=''>
+    <div className="">
       <div style={{ display: "flex", flexDirection: "row-reverse" }}>
-        <div className='tooltip' data-tip={copyStatus}>
-          <button className='btn btn-xs' onClick={onClick}>
+        <div className="tooltip" data-tip={copyStatus}>
+          <button className="btn btn-xs" onClick={onClick}>
             Copy All
           </button>
         </div>

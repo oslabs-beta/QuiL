@@ -5,5 +5,7 @@ import React from 'react';
 import RootContainer from './RootContainer';
 
 export default function Page() {
-  return <RootContainer />;
+  return (
+    <RootContainer />
+  );
 }

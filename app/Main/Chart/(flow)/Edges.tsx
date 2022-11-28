@@ -1,5 +1,5 @@
 import { Edge, StepEdge, StraightEdge } from "reactflow";
-import { edge, resQL } from "../../../(root)/fronendTypes";
+import { edge, resQL } from "../../../(root)/frontendTypes";
 
 const createEdges = (res: resQL): Edge[] => {
   // edges array to be populated and sent to Flow to render
@@ -22,7 +22,6 @@ const createEdges = (res: resQL): Edge[] => {
           targetHandle: edge.refTable,
           target: edge.refTable,
         };
-        console.log(newEdge.sourceHandle);
         edges.push(newEdge);
       });
     }

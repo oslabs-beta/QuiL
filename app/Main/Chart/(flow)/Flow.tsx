@@ -12,7 +12,7 @@ import ReactFlow, {
 } from "reactflow";
 import TableNode from "./TableNode";
 import "reactflow/dist/style.css";
-import { FlowProps } from "../../../(root)/fronendTypes";
+import { FlowProps } from "../../../(root)/frontendTypes";
 import { motion } from "framer-motion";
 
 const nodeTypes = { tableNode: TableNode };
@@ -46,7 +46,7 @@ const Flow = ({ nodes, edges, handleSetNodes, handleSetEdges }: FlowProps) => {
         onConnect={onConnect}
         nodeTypes={nodeTypes}
       >
-        <Background className='bg-base-content' size={4} />
+        <Background className="bg-base-content" size={4} />
         <Controls />
       </ReactFlow>
     </div>

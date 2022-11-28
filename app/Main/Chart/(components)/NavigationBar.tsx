@@ -1,13 +1,40 @@
 "use client";
+import Link from 'next/link'
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useSearchParams } from "next/navigation";
-const NavigationBar = (): JSX.Element => {
+const NavigationBar = ({ loggedUser }: object | null): JSX.Element => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const URIfromRoot = searchParams.get("URI");
   const [uriParam, setUriParam] = useState(URIfromRoot);
 
+  // return (
+  //   <div className='navbar'>
+  //     <div className='navbar bg-base-100'>
+  //       <div className='flex-1'>
+  //         <div className=''>
+  //           <ul>
+  //             <li>
+  //               <Link href={`/Main/Chart?URI=${uriParam}`}>Home</Link>
+  //             </li>
+  //             <li>
+  //               <Link href="/Main/Login">Login</Link>
+  //             </li>
+  //             <li>
+  //               <Link href="/Main/Register">Register</Link>
+  //             </li>
+  //             <li>
+  //               <Link href="/Main/About">About</Link>
+  //             </li>
+              
+  //           </ul>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   </div>
+  // )
+  
   return (
     <div className='navbar'>
       <div className='navbar bg-base-100'>
@@ -24,13 +51,15 @@ const NavigationBar = (): JSX.Element => {
             </button>
             <button
               className='btn btn-secondary'
-              onClick={() => router.push("/Main/Login")}
+              onClick={() => {
+                router.push("/Login")
+              }}
             >
               Login
             </button>
             <button
               className='btn btn-accent'
-              onClick={() => router.push("/Main/Register")}
+              onClick={() => router.push("/Register")}
             >
               Register
             </button>

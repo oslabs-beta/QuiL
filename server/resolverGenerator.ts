@@ -1,6 +1,6 @@
 const pluralize = require('pluralize');
 // TODO: Combine and refactor Type definitions
-import { node } from '../app/(root)/fronendTypes';
+import { node } from '../app/(root)/frontendTypes';
 import { ArgType, ResolverStrings, TableResolver } from './types';
 import { quilDbConnection as db } from './db/quilDBConnection';
 
