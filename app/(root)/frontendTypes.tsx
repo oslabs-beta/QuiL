@@ -1,7 +1,11 @@
 import { type } from "os";
 import { Node, Edge, NodeChange, EdgeChange } from "reactflow";
 import { StringMappingType } from "typescript";
-import { nodeShape, ResolverStrings, SchemaType } from "../../server/types";
+import {
+  nodeShape,
+  ResolverStrings,
+  SingleSchemaType,
+} from "../../server/types";
 
 export type DisplayContainerProps = {
   displayMode: string;
@@ -66,7 +70,7 @@ export type resQL = {
 export type getAllData = {
   nodes: nodeShape[];
   resolvers: ResolverStrings[];
-  schemas: [SchemaType];
+  schemas: [SingleSchemaType];
 };
 
 export type nodes = node[];
@@ -108,16 +112,16 @@ export type MainContainerProps = {
   initialNodes: Node[];
   initialEdges: Edge[];
   data: resQL;
-}
+};
 
 export type userObj = {
-  [k: string]: string
-}
+  [k: string]: string;
+};
 
 export type inputObj = {
-  name: string
-}
+  name: string;
+};
 
 export type loggedUser = {
-  [k: string]: any
-}
+  [k: string]: any;
+};
