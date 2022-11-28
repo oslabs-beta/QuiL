@@ -5,14 +5,17 @@ import { motion } from 'framer-motion';
 import jwt_decode from 'jwt-decode';
 import router from 'next/router';
 import Register from './Register/Register';
+import { decoded } from './frontendTypes';
 
 const RootContainer = () => {
   const [initialURI, setInitialURI] = useState<string>(null);
   const [sampleURI, setSampleURI] = useState<string>(null);
   // undefined/null = not logged in
-  const [loggedUser, setLoggedUser] = useState<{}>(null);
+  // const [loggedUser, setLoggedUser] = useState<{}>(null);
+  const [userJWT, setUserJWT] = useState<any>(null);
 
   const router = useRouter();
+  
   const handleUserURI = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setInitialURI(e.target.value);
   };
@@ -25,19 +28,18 @@ const RootContainer = () => {
     router.push(`/Main/Chart?URI=${URI}`);
   };
 
-  // useEffect(() => {
-  //   let JWT = window.localStorage.getItem('token');
-  //   let decoded;
-  //   if (JWT) {
-  //     decoded = jwt_decode(JWT);
-  //   }
-  //   // if JWT doesnt exist, set loggedUser to null
-  //   if (!decoded) setLoggedUser(null);
-  //   // otherwise decode it and set loggedInUser
-  //   else {
-  //     setLoggedUser({username: 'username'});
-  //   }
-  // }, []);
+  useEffect(() => {
+    let currJWT = window.localStorage.getItem('token');
+    let decoded: decoded;
+    if (currJWT) {
+      decoded = jwt_decode(currJWT);
+      console.log(decoded);
+    }
+    // if JWT doesnt exist, set userJWT to null
+    if (!decoded) setUserJWT(null);
+    // otherwise decode it and set userJWT object
+    else setUserJWT(decoded);
+  }, []);
 
   return (
     <div className="hero min-h-screen bg-base-200">
@@ -73,9 +75,9 @@ const RootContainer = () => {
           className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100"
         >
           <div className="card-body">
-            {(loggedUser) ? (<h1>Welcome {5 + 5}</h1>) : (
+            {(userJWT) ? (<h1>Welcome {userJWT.username}</h1>) : (
             <div className='form-control justify-end w-full min-w-full'>
-              <button className="btn btn-primary min-w-1/2" onClick={() => router.push("/Login")}>Login</button> 
+              <button className="btn btn-primary min-w-1/2" setUserJWT={setUserJWT} onClick={() => router.push("/Login")}>Login</button> 
               <button className="btn btn-primary min-w-1/2" onClick={() => router.push("/Register")}>Register</button>
             </div>)}
             <div className="form-control">
