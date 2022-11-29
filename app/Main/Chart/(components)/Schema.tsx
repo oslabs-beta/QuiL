@@ -1,10 +1,14 @@
-import { SchemaProps } from "../../../(root)/frontendTypes";
-import React, { useState } from "react";
-import { Card } from "./ResolverDisplay";
-import { SchemaType, SingleSchemaType } from "../../../../server/types";
+import { SchemaProps } from '../../../(root)/frontendTypes';
+import React, { useState } from 'react';
+import { Card } from './ResolverDisplay';
+import { SingleSchemaType } from '../../../../server/types';
 
 const Schema = ({ resQL }: SchemaProps): JSX.Element => {
-  const [copyStatus, setCopyStatus] = useState("Copy");
+  const [copyStatus, setCopyStatus] = useState('Copy');
+
+  if (!resQL) console.log('REQQL ', resQL);
+
+  if (Object.keys(resQL).length === 0) return;
 
   const { schemas } = resQL.data.getAllData;
   const onClick = () => {
@@ -14,24 +18,24 @@ const Schema = ({ resQL }: SchemaProps): JSX.Element => {
 
     // const formatted = `Query {` + allResolvers + `\n }`;
     navigator.clipboard.writeText(
-      schemas.reduce((a, b: SingleSchemaType) => a + b.schemas, "")
+      schemas.reduce((a, b: SingleSchemaType) => a + b.schemas, '')
     );
-    setCopyStatus("Copied!");
+    setCopyStatus('Copied!');
     setTimeout(() => {
-      setCopyStatus("Copy");
+      setCopyStatus('Copy');
     }, 5000);
   };
 
   return (
     <div className="">
-      <div style={{ display: "flex", flexDirection: "row-reverse" }}>
+      <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
         <div className="tooltip" data-tip={copyStatus}>
           <button className="btn btn-xs" onClick={onClick}>
             Copy All
           </button>
         </div>
       </div>
-      {schemas.map((e: SchemaType) => (
+      {schemas.map((e: SingleSchemaType) => (
         <Card value={e.schemas} tableName={e.tableName} />
       ))}
     </div>

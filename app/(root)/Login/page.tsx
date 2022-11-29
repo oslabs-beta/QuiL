@@ -1,46 +1,46 @@
 'use client';
-import Link from 'next/link';
+
 import Login from './Login';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
-import jwtDecode from 'jwt-decode';
-
-const clientId = '99436692da0716eb1c22';
-
-export default function Page({ searchParams }) {
+export default function Page({ searchParams }: any) {
   const [code, setCode] = useState(searchParams.code);
-
-  const gitHubAuth = `https://github.com/login/oauth/authorize?client_id=${clientId}`;
+  const router = useRouter();
 
   useEffect(() => {
     if (code) {
       const handleOAuth = async (code: string) => {
-        const { data } = await fetch('http://localhost:4000/graphql', {
+        const oauthResponse = await fetch('http://localhost:4000/graphql', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            query: `mutation HandleOAuthToken {
-              handleOAuth (code: "${code}") {
-                token
-              }
-            }`,
+            query: `mutation {
+                postOAuth(code: "${code}", oauthType: "signin") {
+                  token
+                }
+              }`,
           }),
         }).then(res => res.json());
+        console.log('OAUTH RESPONSE', oauthResponse);
+        localStorage.setItem('token', oauthResponse.data.postOAuth.token);
+        router.push('/');
       };
       handleOAuth(code);
     }
   }, [code]);
 
+  if (code) {
+    return (
+      <div>
+        <h1>Authorizing OAuth</h1>
+      </div>
+    );
+  }
   return (
     <div>
-      <h1>
-        <Link href={gitHubAuth}>
-          <button className="btn btn-accent">OAuth</button>
-        </Link>
-      </h1>
       <Login />
     </div>
   );

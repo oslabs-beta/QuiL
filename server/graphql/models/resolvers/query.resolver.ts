@@ -35,6 +35,13 @@ export const Query = {
   the nodes, resolvers, and schemas
   */
   getAllData: async (_: any, args: ArgType): Promise<QuiLData> => {
+    console.log('URI', args.uri);
+    if (args.uri === 'undefined')
+      return {
+        nodes: null,
+        resolvers: null,
+        schemas: null,
+      };
     const dataBase = new (dbInstance as any)(args.uri);
     const { nodes } = await makeNodes(dataBase);
     const queryString = await generateSchemas(dataBase);
@@ -54,11 +61,6 @@ export const Query = {
   // TODO: Fix the arg type. The arg will be arg.id
   getUserProjects: async (_: any, arg: Number): Promise<GetUserProjectRes> => {
     return await userController.getUserProject(arg);
-  },
-  testResolver: (): {} => {
-    return {
-      test: 'hii',
-    };
   },
 };
 

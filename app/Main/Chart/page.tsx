@@ -1,7 +1,8 @@
-import MainContainer from "./(components)/MainContainer";
-import createNodes from "./(flow)/Nodes";
-import createEdges from "./(flow)/Edges";
-import { resQL } from "../../(root)/frontendTypes";
+import MainContainer from './(components)/MainContainer';
+import createNodes from './(flow)/Nodes';
+import createEdges from './(flow)/Edges';
+import { nodeShape } from '../../../server/types';
+
 async function getData(URI: string) {
   let data = await fetch('http://localhost:4000/graphql', {
     method: 'POST',
@@ -37,6 +38,7 @@ async function getData(URI: string) {
     }`,
     }),
   });
+
   const res = await data.json();
 
   return res;
@@ -47,9 +49,19 @@ export default async function Page({
 }: {
   searchParams: { URI: string };
 }) {
-  const data = await getData(searchParams.URI);
-  const initialNodes = createNodes(data);
-  const initialEdges = createEdges(data);
+  let initialNodes: any;
+  let initialEdges: any;
+  let data: any;
+
+  if (!searchParams.URI) {
+    initialNodes = [];
+    initialEdges = [];
+    data = {};
+  } else {
+    data = await getData(searchParams.URI);
+    initialNodes = createNodes(data);
+    initialEdges = createEdges(data);
+  }
 
   return (
     // Parent component of reactflow needs a height and width in order to display
@@ -62,4 +74,25 @@ export default async function Page({
       <div style={{ height: '500px', width: '500px' }}></div>
     </div>
   );
+
+  // const data = await getData(searchParams.URI);
+  // if (!data.getAllData) {
+  //   return <h1>Loading</h1>;
+  // } else {
+  //   const { nodes } = data.getAllData;
+  //   const initialNodes = createNodes(nodes);
+  //   const initialEdges = createEdges(nodes);
+
+  //   return (
+  //     // Parent component of reactflow needs a height and width in order to display
+  //     <div>
+  //       <MainContainer
+  //         data={data}
+  //         initialNodes={initialNodes}
+  //         initialEdges={initialEdges}
+  //       />
+  //       <div style={{ height: '500px', width: '500px' }}></div>
+  //     </div>
+  //   );
+  // }
 }

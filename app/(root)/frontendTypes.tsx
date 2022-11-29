@@ -1,11 +1,11 @@
-import { type } from "os";
-import { Node, Edge, NodeChange, EdgeChange } from "reactflow";
-import { StringMappingType } from "typescript";
+import { type } from 'os';
+import { Node, Edge, NodeChange, EdgeChange } from 'reactflow';
+import { StringMappingType } from 'typescript';
 import {
   nodeShape,
   ResolverStrings,
   SingleSchemaType,
-} from "../../server/types";
+} from '../../server/types';
 
 export type DisplayContainerProps = {
   displayMode: string;
@@ -22,8 +22,7 @@ export type DisplayContainerProps = {
 
 export type NavigationBarProps = {
   userJWT: object | null;
-  setUserJWT: () => void;
-  theme: string;
+  theme?: string;
   handleSetTheme?: (e: string) => void;
 };
 
@@ -71,7 +70,7 @@ export type resQL = {
 export type getAllData = {
   nodes: nodeShape[];
   resolvers: ResolverStrings[];
-  schemas: [SingleSchemaType];
+  schemas: [SchemaType];
 };
 
 export type nodes = node[];
@@ -129,5 +128,5 @@ export type loggedUser = {
 
 
 export type decoded = {
-  [k: string]: any
-}
+  [k: string]: any;
+};

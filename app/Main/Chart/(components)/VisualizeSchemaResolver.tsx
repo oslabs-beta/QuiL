@@ -1,19 +1,19 @@
-"use client";
-import React, { useState } from "react";
-import Schema from "./Schema";
-import Resolver from "./Resolver";
-import { VisualizeSchemaResolverProps } from "../../../(root)/frontendTypes";
+'use client';
+import React, { useState } from 'react';
+import Schema from './Schema';
+import Resolver from './Resolver';
+import { VisualizeSchemaResolverProps } from '../../../(root)/frontendTypes';
 const VisualizeSchemaResolver = ({
   displayMode,
   resQL,
 }: VisualizeSchemaResolverProps): JSX.Element => {
   let modeComponent;
   switch (displayMode) {
-    case "schemaMode":
+    case 'schemaMode':
       modeComponent = <Schema resQL={resQL} />;
 
       break;
-    case "resolverMode":
+    case 'resolverMode':
       modeComponent = <Resolver resQL={resQL} />;
       break;
     default:

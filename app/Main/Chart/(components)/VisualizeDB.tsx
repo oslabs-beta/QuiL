@@ -1,7 +1,7 @@
-import { VisualizeDBProps } from "../../../(root)/frontendTypes";
-import Chart from "./Chart";
-import React from "react";
-import { motion } from "framer-motion";
+import { VisualizeDBProps } from '../../../(root)/frontendTypes';
+import Chart from './Chart';
+import React from 'react';
+import { motion } from 'framer-motion';
 const VisualizeDB = ({
   nodes,
   edges,

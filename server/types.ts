@@ -1,6 +1,3 @@
-import { type } from 'os';
-import Resolver from '../app/Main/Chart/(components)/Resolver';
-
 export type GlobalServerError = {
   log: string;
   status: number;
@@ -73,15 +70,15 @@ export type TableResolver = {
 };
 
 export type ResolverStrings = {
-  tableName: String;
+  tableName: string;
   resolver: string;
 };
 
 export type TableResolver1 = Function;
 
 export interface ArgType {
-  uri?: String;
-  _id?: String;
+  uri?: string;
+  _id?: string;
   node?: nodeShape;
 }
 

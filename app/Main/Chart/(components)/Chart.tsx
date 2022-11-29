@@ -1,15 +1,15 @@
-import Flow from "../(flow)/Flow";
-import React from "react";
-import { ChartProps } from "../../../(root)/frontendTypes";
+import Flow from '../(flow)/Flow';
+import React from 'react';
+import { ChartProps } from '../../../(root)/frontendTypes';
 
 const Chart = ({
-  nodes,
-  edges,
+  nodes = null,
+  edges = null,
   handleSetNodes,
   handleSetEdges,
 }: ChartProps): JSX.Element => {
   return (
-    <div style={{ height: "75rem", width: "120rem" }}>
+    <div style={{ height: '75rem', width: '120rem' }}>
       <Flow
         nodes={nodes}
         edges={edges}
