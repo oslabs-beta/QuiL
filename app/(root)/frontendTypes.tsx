@@ -21,9 +21,10 @@ export type DisplayContainerProps = {
 };
 
 export type NavigationBarProps = {
-  isLogged: boolean;
+  userJWT: object | null;
+  setUserJWT: () => void;
   theme: string;
-  handleSetTheme: (e: string) => void;
+  handleSetTheme?: (e: string) => void;
 };
 
 export type VisualizeSchemaResolverProps = {
@@ -125,3 +126,8 @@ export type inputObj = {
 export type loggedUser = {
   [k: string]: any;
 };
+
+
+export type decoded = {
+  [k: string]: any
+}

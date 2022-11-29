@@ -22,24 +22,20 @@ const MainContainer = ({
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
   const [edges, setEdges] = useState<Edge[]>(initialEdges);
   const [theme, setTheme] = useState<string>("night");
-  // const [loggedUser, setLoggedUser] = useState<any>(localStorage.getItem('token'));
-  const LoggedUserProps = {
-    username: 'Daniel'
-  }
+  const [userJWT, setUserJWT] = useState<any>(null);
 
-  // useEffect(() => {
-  //   let JWT = localStorage.getItem('token');
-  //   let decoded;
-  //   if (JWT) {
-  //     decoded = jwt_decode(JWT);
-  //   }
-  //   // if JWT doesnt exist, set loggedUser to null
-  //   if (!decoded) setLoggedUser(null);
-  //   // otherwise decode it and set loggedInUser
-  //   else {
-  //     setLoggedUser({username: 'Daniel'});
-  //   }
-  // }, []);
+  useEffect(() => {
+    let currJWT = window.localStorage.getItem('token');
+    let decoded: decoded;
+    if (currJWT) {
+      decoded = jwt_decode(currJWT);
+      console.log(decoded);
+    }
+    // if JWT doesnt exist, set userJWT to null
+    if (!decoded) setUserJWT(null);
+    // otherwise decode it and set userJWT object
+    else setUserJWT(decoded);
+  }, []);
 
   //invoked in VisualizeSchemaResolver
   const schemaGen = (): void => {
@@ -103,6 +99,7 @@ const MainContainer = ({
 
   // invoked inside visualizeDB. users input (uri)
   const userInputURI = (e: string): void => {
+    e.trim();
     setURI(e);
   };
 
@@ -113,7 +110,8 @@ const MainContainer = ({
   return (
     <div data-theme={theme}>
       <NavigationBar
-        // loggedUser={loggedUser}
+        setUserJWT={setUserJWT}
+        userJWT={userJWT}
       />
       <DisplayContainer
         edges={edges}
