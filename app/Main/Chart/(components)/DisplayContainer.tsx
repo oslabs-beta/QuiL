@@ -4,10 +4,6 @@ import VisualizeDB from './VisualizeDB';
 import VisualizeSchemaResolver from './VisualizeSchemaResolver';
 import { DisplayContainerProps } from '../../../(root)/frontendTypes';
 import { motion } from 'framer-motion';
-<<<<<<< HEAD
-=======
-import { PopUp } from './PopUp';
->>>>>>> dev
 
 const DisplayContainer = ({
   displayMode,

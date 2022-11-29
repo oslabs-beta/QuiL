@@ -6,7 +6,8 @@
   "scripts": {
     "build": "next build",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "concurrently \"next dev\" \"ts-node-dev server/server.ts\""
+    "dev": "concurrently \"next dev\" \"ts-node-dev server/server.ts\"",
+    "start": "next start"
   },
   "repository": {
     "type": "git",

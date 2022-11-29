@@ -5,7 +5,7 @@ import { ResolverStrings } from '../../../../server/types';
 
 const Resolver = ({ resQL }: ResolverProps): JSX.Element => {
   const [copyStatus, setCopyStatus] = useState('Copy');
-
+  if (Object.keys(resQL).length === 0) return;
   const { resolvers } = resQL.data.getAllData;
 
   const onClick = () => {

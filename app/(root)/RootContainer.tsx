@@ -121,7 +121,6 @@ const RootContainer = ({ authCode }: { authCode: string }) => {
                 <button
                   style={{ marginBottom: '15px' }}
                   className="btn btn-primary min-w-1/2"
-                  setUserJWT={setUserJWT}
                   onClick={() => router.push('/Login')}
                 >
                   Login

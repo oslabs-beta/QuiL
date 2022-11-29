@@ -22,8 +22,7 @@ export type DisplayContainerProps = {
 
 export type NavigationBarProps = {
   userJWT: object | null;
-  setUserJWT: () => void;
-  theme: string;
+  theme?: string;
   handleSetTheme?: (e: string) => void;
 };
 
@@ -124,9 +123,9 @@ export type inputObj = {
 };
 
 export type loggedUser = {
-  [k: string]: any
-}
+  [k: string]: any;
+};
 
 export type decoded = {
-  [k: string]: any
-}
+  [k: string]: any;
+};

@@ -1,9 +1,8 @@
 import { Node } from 'reactflow';
 import { position, resQL } from '../../../(root)/frontendTypes';
-import { nodes } from '../../../(root)/frontendTypes';
-import { nodeShape } from '../../../../server/types';
 
 const createNodes = (res: resQL): Node[] => {
+  if (!res.data.getAllData.nodes) return [];
   const positions: position[] = [
     { x: 0, y: 0 },
     { x: 500, y: 0 },

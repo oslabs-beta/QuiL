@@ -1,11 +1,11 @@
-"use client";
-import Link from 'next/link'
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
-import { useSearchParams } from "next/navigation";
+'use client';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { NavigationBarProps } from '../../../(root)/frontendTypes';
 
-const NavigationBar = ({ userJWT, setJWT, theme }: NavigationBarProps): JSX.Element => {
+const NavigationBar = ({ userJWT }: NavigationBarProps): JSX.Element => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const URIfromRoot = searchParams.get('URI');
@@ -51,39 +51,43 @@ const NavigationBar = ({ userJWT, setJWT, theme }: NavigationBarProps): JSX.Elem
             >
               Main
             </button>
-            {(userJWT) ?
-            (<div>
-            <button
-            className='btn btn-secondary'
-            onClick={() => router.push("/Account")}
-            >
-              My Account
-              </button>
-              <button
-              className='btn btn-secondary'
-              onClick={() => {
-                window.localStorage.removeItem("token")
-                window.location.reload(true)}}>
-                Log Out
-              </button>
-            </div>) :
-            (<div>
-              <button
-              className='btn btn-secondary'
-              onClick={() => {
-                router.push('/Login');
-              }}
-            >
-              Login
-            </button>
-            <button
-              className="btn btn-accent"
-              onClick={() => router.push('/Register')}
-            >
-              Register
-            </button>
-            </div>)}
-            <button className='btn' onClick={() => router.push("/Main/About")}>
+            {userJWT ? (
+              <div>
+                <button
+                  className="btn btn-secondary"
+                  onClick={() => router.push('/Account')}
+                >
+                  My Account
+                </button>
+                <button
+                  className="btn btn-secondary"
+                  onClick={() => {
+                    window.localStorage.removeItem('token');
+                    window.location.reload();
+                  }}
+                >
+                  Log Out
+                </button>
+              </div>
+            ) : (
+              <div>
+                <button
+                  className="btn btn-secondary"
+                  onClick={() => {
+                    router.push('/Login');
+                  }}
+                >
+                  Login
+                </button>
+                <button
+                  className="btn btn-accent"
+                  onClick={() => router.push('/Register')}
+                >
+                  Register
+                </button>
+              </div>
+            )}
+            <button className="btn" onClick={() => router.push('/Main/About')}>
               About
             </button>
             <select className="select w-full max-w-xs">
