@@ -125,7 +125,6 @@ export async function handleOAuth(
     if (!gitHubToken) throw new Error('Bad credentials');
 
     const { gitHubUserData } = await getGitHubUserData(gitHubToken);
-    console.log('Github user data', gitHubUserData);
 
     if (type === 'register') {
       const exisitingUser = await userController.getQuilUser(
@@ -147,8 +146,6 @@ export async function handleOAuth(
       const { login } = gitHubUserData;
       const user = await userController.getQuilUser(login);
       if (user.success) {
-        console.log('JWT', generateJWT(user));
-
         return generateJWT(user);
       } else throw new Error('Error creating account');
     }

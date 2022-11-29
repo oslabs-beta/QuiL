@@ -3,8 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import jwt_decode from 'jwt-decode';
-import router from 'next/router';
-import Register from './Register/Register';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { decoded } from './frontendTypes';

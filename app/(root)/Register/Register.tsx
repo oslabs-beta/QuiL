@@ -6,10 +6,8 @@ const randomstring = require('randomstring');
 
 const Register = () => {
   const router = useRouter();
-  const clientId = '99436692da0716eb1c22';
-  const RANDOM = randomstring.generate();
-  const gitHubAuth = `https://github.com/login/oauth/authorize?client_id=${clientId}&state=${RANDOM}`;
-  const REGISTER_ENCODE = 'cmVnaXN0ZXI';
+  const REGISTER_STATE_CODE = 'cmVnaXN0ZXI';
+
   const createUserHandler = async (e: any) => {
     e.preventDefault();
     const userObj: userObj = {
@@ -68,7 +66,15 @@ const Register = () => {
         </div>
       </form>
       <p style={{ display: 'flex', justifyContent: 'center' }}>OR</p>
-      <Link href={gitHubAuth + REGISTER_ENCODE}>
+      <Link
+        href={{
+          pathname: 'https://github.com/login/oauth/authorize',
+          query: {
+            client_id: '99436692da0716eb1c22',
+            state: randomstring.generate() + REGISTER_STATE_CODE,
+          },
+        }}
+      >
         <button className="btn btn-success" style={{ width: '100%' }}>
           <img
             style={{ width: '2em', marginRight: '5px' }}
