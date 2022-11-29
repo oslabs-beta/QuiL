@@ -5,12 +5,11 @@ import DisplayContainer from './DisplayContainer';
 import { Node, Edge } from 'reactflow';
 import createNodes from '../(flow)/Nodes';
 import createEdges from '../(flow)/Edges';
-import { resQL } from '../../../(root)/frontendTypes';
-import { MainContainerProps, loggedUser } from '../../../(root)/frontendTypes';
 import NavigationBar from './NavigationBar';
 import jwt_decode from 'jwt-decode';
-import { useAnimationFrame } from 'framer-motion';
 import { toast, ToastContainer } from 'react-toastify';
+import { MainContainerProps, resQL } from '../../../(root)/frontendTypes';
+
 import 'react-toastify/dist/ReactToastify.css';
 const MainContainer = ({
   initialNodes,
@@ -22,20 +21,22 @@ const MainContainer = ({
   const [resQL, setResQL] = useState<resQL>(data);
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
   const [edges, setEdges] = useState<Edge[]>(initialEdges);
-  const [theme, setTheme] = useState<string>("night");
+  const [theme, setTheme] = useState<string>('night');
   const [userJWT, setUserJWT] = useState<any>(null);
 
   useEffect(() => {
-    let currJWT = window.localStorage.getItem('token');
-    let decoded: decoded;
-    if (currJWT) {
-      decoded = jwt_decode(currJWT);
-      console.log(decoded);
-    }
-    // if JWT doesnt exist, set userJWT to null
-    if (!decoded) setUserJWT(null);
-    // otherwise decode it and set userJWT object
-    else setUserJWT(decoded);
+    try {
+      let currJWT = window.localStorage.getItem('token');
+      let decoded: any;
+      if (currJWT) {
+        decoded = jwt_decode(currJWT);
+        console.log(decoded);
+      }
+      // if JWT doesnt exist, set userJWT to null
+      if (!decoded) setUserJWT(null);
+      // otherwise decode it and set userJWT object
+      else setUserJWT(decoded);
+    } catch (error) {}
   }, []);
 
   //invoked in VisualizeSchemaResolver
@@ -126,10 +127,7 @@ const MainContainer = ({
 
   return (
     <div data-theme={theme}>
-      <NavigationBar
-        setUserJWT={setUserJWT}
-        userJWT={userJWT}
-      />
+      <NavigationBar userJWT={userJWT} />
 
       <ToastContainer
         position="top-center"

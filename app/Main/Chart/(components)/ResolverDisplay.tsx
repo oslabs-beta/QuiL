@@ -1,15 +1,17 @@
-"use client";
-import { CopyTwoTone } from "@ant-design/icons";
-import { javascript } from "@codemirror/lang-javascript";
-import { dracula } from "@uiw/codemirror-theme-dracula";
-import ReactCodeMirror from "@uiw/react-codemirror";
-import React, { useState } from "react";
-import { ResolverProps } from "../../../(root)/frontendTypes";
-import { ResolverStrings } from "../../../../server/types";
+'use client';
+import { CopyTwoTone } from '@ant-design/icons';
+import { javascript } from '@codemirror/lang-javascript';
+import { dracula } from '@uiw/codemirror-theme-dracula';
+import ReactCodeMirror from '@uiw/react-codemirror';
+import React, { useState } from 'react';
+
+type CardProps = {
+  tableName: string;
+  value: any;
+};
 
 type ResolverMirrorProps = {
   value: any;
-  tableName: any;
 };
 
 export const ResolverMirror = ({ value }: ResolverMirrorProps) => {
@@ -26,21 +28,21 @@ export const ResolverMirror = ({ value }: ResolverMirrorProps) => {
   );
 };
 
-export const Card = ({ value, tableName }: ResolverMirrorProps) => {
-  const [copyStatus, setCopyStatus] = useState("Copy");
+export const Card = ({ value, tableName }: CardProps) => {
+  const [copyStatus, setCopyStatus] = useState('Copy');
 
   const onClick = () => {
     navigator.clipboard.writeText(value);
-    setCopyStatus("Copied!");
+    setCopyStatus('Copied!');
     setTimeout(() => {
-      setCopyStatus("Copy");
+      setCopyStatus('Copy');
     }, 5000);
   };
   return (
-    <div style={{ margin: "25px" }}>
+    <div style={{ margin: '25px' }}>
       <div>
         <div>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <h3 className="font-bold">
               {tableName[0].toUpperCase() +
                 tableName.substring(1, tableName.length)}

@@ -4,7 +4,6 @@ import VisualizeDB from './VisualizeDB';
 import VisualizeSchemaResolver from './VisualizeSchemaResolver';
 import { DisplayContainerProps } from '../../../(root)/frontendTypes';
 import { motion } from 'framer-motion';
-import { PopUp } from './PopUp';
 
 const DisplayContainer = ({
   displayMode,
@@ -52,7 +51,7 @@ const DisplayContainer = ({
               >
                 <input
                   type="text"
-                  onChange={(e) => userInputURI(e.target.value)}
+                  onChange={e => userInputURI(e.target.value)}
                   className="input input-sm  input-bordered w-full mx-1"
                   placeholder="insert URI"
                 ></input>

@@ -9,9 +9,10 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { decoded } from './frontendTypes';
 
-const RootContainer = () => {
+const RootContainer = ({ authCode }: { authCode: string }) => {
   const [initialURI, setInitialURI] = useState<string>(null);
   const [sampleURI, setSampleURI] = useState<string>(null);
+  const [code, setCode] = useState(authCode);
   // undefined/null = not logged in
   // const [loggedUser, setLoggedUser] = useState<{}>(null);
   const [userJWT, setUserJWT] = useState<any>(null);
@@ -43,16 +44,38 @@ const RootContainer = () => {
   };
 
   useEffect(() => {
-    let currJWT = window.localStorage.getItem('token');
-    let decoded: decoded;
-    if (currJWT) {
-      decoded = jwt_decode(currJWT);
-      console.log(decoded);
-    }
-    // if JWT doesnt exist, set userJWT to null
-    if (!decoded) setUserJWT(null);
-    // otherwise decode it and set userJWT object
-    else setUserJWT(decoded);
+    const handleLogin = async (code: string) => {
+      let currJWT = window.localStorage.getItem('token');
+
+      if ((code && currJWT === 'null') || !currJWT) {
+        const oauthResponse = await fetch('http://localhost:4000/graphql', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            query: `mutation {
+                  postOAuth(code: "${code}", oauthType: "signin") {
+                    token
+                  }
+                }`,
+          }),
+        }).then(res => res.json());
+        localStorage.setItem('token', oauthResponse.data.postOAuth.token);
+      }
+      currJWT = window.localStorage.getItem('token');
+      let decoded: decoded;
+
+      if (currJWT !== 'null') {
+        decoded = jwt_decode(currJWT);
+        console.log(decoded);
+      }
+      // if JWT doesnt exist, set userJWT to null
+      if (!decoded) setUserJWT(null);
+      // otherwise decode it and set userJWT object
+      else setUserJWT(decoded);
+    };
+    handleLogin(code);
   }, []);
 
   return (
@@ -96,8 +119,8 @@ const RootContainer = () => {
             ) : (
               <div className="form-control justify-end w-full min-w-full">
                 <button
+                  style={{ marginBottom: '15px' }}
                   className="btn btn-primary min-w-1/2"
-                  setUserJWT={setUserJWT}
                   onClick={() => router.push('/Login')}
                 >
                   Login

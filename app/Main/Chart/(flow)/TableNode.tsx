@@ -1,25 +1,25 @@
-import { Handle, Position } from "reactflow";
-import TableRow from "./TableRow";
-import React from "react";
-import { motion } from "framer-motion";
+import { Handle, Position } from 'reactflow';
+import TableRow from './TableRow';
+import React from 'react';
+import { motion } from 'framer-motion';
 
-const TableNode = ({ data }) => {
+const TableNode = ({ data }: any) => {
   const handles: JSX.Element[] = [];
   const arrOfFKeys = [];
   let pixels = 130;
-  const tableFields = data.columns.map((column) => {
+  const tableFields = data.columns.map((column: any) => {
     // if the columnName is a foreign key, give it a source handle at the correct key
     if (data.arrFKeys.includes(column.columnName)) {
       const handleStyle = {
         top: `${pixels.toString()}px`,
-        bottom: "auto",
-        height: "8px",
-        width: "8px",
+        bottom: 'auto',
+        height: '8px',
+        width: '8px',
       };
       pixels += 42;
       handles.push(
         <Handle
-          type='source'
+          type="source"
           position={Position.Left}
           id={`${column.columnName}`}
           style={handleStyle}
@@ -30,10 +30,10 @@ const TableNode = ({ data }) => {
     if (data.refTables.includes(data.name)) {
       handles.push(
         <Handle
-          type='target'
+          type="target"
           position={Position.Right}
           id={`${data.name}`}
-          style={{ top: "20px", height: "10px", width: "10px" }}
+          style={{ top: '20px', height: '10px', width: '10px' }}
         />
       );
     }
@@ -43,17 +43,15 @@ const TableNode = ({ data }) => {
   });
 
   return (
-    <motion.div
-      className='border-2 border-secondary rounded-md shadow-2xl'
-    >
+    <motion.div className="border-2 border-secondary rounded-md shadow-2xl">
       {handles}
-      <div className='flex flex-start bg-secondary-focus w-full py-2 font-mono text-base-content text-xl pl-3'>
+      <div className="flex flex-start bg-secondary-focus w-full py-2 font-mono text-base-content text-xl pl-3">
         {data.name}
       </div>
-      <table className='table-auto font-mono text-neutral-focus'>
-        <tr className='py-6 border-b border-secondary-focus'>
-          <th className='py-5 bg-neutral-content'>Column</th>
-          <th className='py-5 bg-neutral-content'>Type</th>
+      <table className="table-auto font-mono text-neutral-focus">
+        <tr className="py-6 border-b border-secondary-focus">
+          <th className="py-5 bg-neutral-content">Column</th>
+          <th className="py-5 bg-neutral-content">Type</th>
         </tr>
         {tableFields}
       </table>
