@@ -25,6 +25,7 @@ const RootContainer = () => {
 
   const sanitizeLaunch = (e) => {
     if (sampleURI || initialURI.includes('postgres')) {
+      toast.loading('loading content..');
       handleLaunch(e);
     } else {
       toast.error('Not a valid PostgreSQL URL');
@@ -33,7 +34,7 @@ const RootContainer = () => {
 
   const handleLaunch = (e: React.MouseEvent<HTMLElement>): void => {
     const URI = initialURI ? initialURI : sampleURI;
-    toast.loading('loading content..');
+    toast.dismiss();
     router.push(`/Main/Chart?URI=${URI}`);
   };
 
@@ -124,9 +125,7 @@ const RootContainer = () => {
                 disabled={initialURI ? true : false}
                 className="select select-bordered"
               >
-                <option disabled selected>
-                  Pick one
-                </option>
+                <option value="">Pick one</option>
                 <option value="postgres://lkdxllvk:GTIkPygxpPOx0ZVNJ3luQHEfApEIJekP@heffalump.db.elephantsql.com/lkdxllvk">
                   Star Wars
                 </option>
@@ -146,7 +145,7 @@ const RootContainer = () => {
             </button>
             <ToastContainer
               position="top-center"
-              autoClose={3500}
+              autoClose={3000}
               hideProgressBar={false}
               newestOnTop={false}
               closeOnClick
