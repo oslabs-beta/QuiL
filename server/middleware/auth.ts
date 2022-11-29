@@ -127,11 +127,19 @@ export async function handleOAuth(
     const { gitHubUserData } = await getGitHubUserData(gitHubToken);
 
     if (type === 'register') {
-      const newUserObj = buildNewGitHubUserData(gitHubUserData);
-      const createdUser = await userController.createAccount(newUserObj);
-      if (createdUser.success) {
-        return generateJWT(createdUser);
-      } else throw new Error('Error creating account');
+      const exisitingUser = await userController.getQuilUser(
+        gitHubUserData.login
+      );
+
+      if (exisitingUser) {
+        return generateJWT(exisitingUser);
+      } else {
+        const newUserObj = buildNewGitHubUserData(gitHubUserData);
+        const createdUser = await userController.createAccount(newUserObj);
+        if (createdUser.success) {
+          return generateJWT(createdUser);
+        } else throw new Error('Error creating account');
+      }
     }
 
     if (type === 'signin') {

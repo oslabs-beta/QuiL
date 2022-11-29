@@ -11,32 +11,6 @@ const NavigationBar = ({ userJWT }: NavigationBarProps): JSX.Element => {
   const URIfromRoot = searchParams.get('URI');
   const [uriParam, setUriParam] = useState(URIfromRoot);
 
-  // return (
-  //   <div className='navbar'>
-  //     <div className='navbar bg-base-100'>
-  //       <div className='flex-1'>
-  //         <div className=''>
-  //           <ul>
-  //             <li>
-  //               <Link href={`/Main/Chart?URI=${uriParam}`}>Home</Link>
-  //             </li>
-  //             <li>
-  //               <Link href="/Main/Login">Login</Link>
-  //             </li>
-  //             <li>
-  //               <Link href="/Main/Register">Register</Link>
-  //             </li>
-  //             <li>
-  //               <Link href="/Main/About">About</Link>
-  //             </li>
-
-  //           </ul>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   </div>
-  // )
-
   return (
     <div className="navbar">
       <div className="navbar bg-base-100">
