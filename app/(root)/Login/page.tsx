@@ -1,6 +1,8 @@
 'use client';
 import Link from 'next/link';
+import Login from './Login';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 import jwtDecode from 'jwt-decode';
 
@@ -39,6 +41,7 @@ export default function Page({ searchParams }) {
           <button className="btn btn-accent">OAuth</button>
         </Link>
       </h1>
+      <Login />
     </div>
   );
 }
