@@ -10,7 +10,8 @@ import { MainContainerProps, loggedUser } from '../../../(root)/frontendTypes';
 import NavigationBar from './NavigationBar';
 import jwt_decode from 'jwt-decode';
 import { useAnimationFrame } from 'framer-motion';
-
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const MainContainer = ({
   initialNodes,
   initialEdges,
@@ -55,11 +56,12 @@ const MainContainer = ({
     if (uri.includes('postgres')) {
       launchUri();
     } else {
-      alert('invalid postgres uri');
+      toast.error('Not a valid PostgreSQL URL');
     }
   };
   const launchUri = async (): Promise<void> => {
     console.log(uri);
+    const toastLoading = toast.loading('loading content');
     let data = await fetch('http://localhost:4000/graphql', {
       method: 'POST',
       headers: {
@@ -94,7 +96,14 @@ const MainContainer = ({
       }),
     });
     let res = await data.json();
-    console.log('this is res, ', res);
+    toast.dismiss(toastLoading);
+    if (
+      res.data.getAllData.nodes.length === 0 &&
+      res.data.getAllData.resolvers.length === 0 &&
+      res.data.getAllData.schemas.length === 0
+    ) {
+      toast.error('Empty database or bad URL');
+    }
     setResQL(res);
     setNodes(createNodes(res));
     setEdges(createEdges(res));
@@ -124,6 +133,20 @@ const MainContainer = ({
       <NavigationBar
       // loggedUser={loggedUser}
       />
+
+      <ToastContainer
+        position="top-center"
+        autoClose={3500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+
       <DisplayContainer
         edges={edges}
         handleSetEdges={handleSetEdges}

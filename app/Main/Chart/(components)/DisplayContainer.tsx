@@ -1,9 +1,10 @@
-"use client";
-import React from "react";
-import VisualizeDB from "./VisualizeDB";
-import VisualizeSchemaResolver from "./VisualizeSchemaResolver";
-import { DisplayContainerProps } from "../../../(root)/frontendTypes";
-import { motion } from "framer-motion";
+'use client';
+import React from 'react';
+import VisualizeDB from './VisualizeDB';
+import VisualizeSchemaResolver from './VisualizeSchemaResolver';
+import { DisplayContainerProps } from '../../../(root)/frontendTypes';
+import { motion } from 'framer-motion';
+import { PopUp } from './PopUp';
 
 const DisplayContainer = ({
   displayMode,
@@ -17,14 +18,14 @@ const DisplayContainer = ({
   handleSetEdges,
   handleSetNodes,
 }: DisplayContainerProps): JSX.Element => {
-  let schemaTabStyle = "tab tab-bordered";
-  let resolverTabStyle = "tab tab-bordered";
+  let schemaTabStyle = 'tab tab-bordered';
+  let resolverTabStyle = 'tab tab-bordered';
   switch (displayMode) {
-    case "schemaMode":
-      schemaTabStyle = "tab tab-bordered tab-active";
+    case 'schemaMode':
+      schemaTabStyle = 'tab tab-bordered tab-active';
       break;
-    case "resolverMode":
-      resolverTabStyle = "tab tab-bordered tab-active";
+    case 'resolverMode':
+      resolverTabStyle = 'tab tab-bordered tab-active';
       break;
   }
   return (
@@ -55,6 +56,7 @@ const DisplayContainer = ({
                   className="input input-sm  input-bordered w-full mx-1"
                   placeholder="insert URI"
                 ></input>
+
                 <button
                   className="btn btn-success btn-outline btn-sm"
                   type="submit"

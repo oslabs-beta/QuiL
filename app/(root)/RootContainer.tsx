@@ -5,7 +5,8 @@ import { motion } from 'framer-motion';
 import jwt_decode from 'jwt-decode';
 import router from 'next/router';
 import Register from './Register/Register';
-
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const RootContainer = () => {
   const [initialURI, setInitialURI] = useState<string>(null);
   const [sampleURI, setSampleURI] = useState<string>(null);
@@ -14,14 +15,25 @@ const RootContainer = () => {
 
   const router = useRouter();
   const handleUserURI = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setInitialURI(e.target.value);
+    let sanitize = e.target.value.trim();
+    console.log(sanitize);
+    setInitialURI(sanitize);
   };
   const handleSampleURI = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     setSampleURI(e.target.value);
   };
 
+  const sanitizeLaunch = (e) => {
+    if (sampleURI || initialURI.includes('postgres')) {
+      handleLaunch(e);
+    } else {
+      toast.error('Not a valid PostgreSQL URL');
+    }
+  };
+
   const handleLaunch = (e: React.MouseEvent<HTMLElement>): void => {
     const URI = initialURI ? initialURI : sampleURI;
+    toast.loading('loading content..');
     router.push(`/Main/Chart?URI=${URI}`);
   };
 
@@ -127,11 +139,23 @@ const RootContainer = () => {
           <div className="form-control mt-6">
             <button
               disabled={initialURI || sampleURI ? false : true}
-              onClick={handleLaunch}
+              onClick={sanitizeLaunch}
               className="btn btn-primary"
             >
               Launch
             </button>
+            <ToastContainer
+              position="top-center"
+              autoClose={3500}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="dark"
+            />
           </div>
         </motion.div>
       </div>
