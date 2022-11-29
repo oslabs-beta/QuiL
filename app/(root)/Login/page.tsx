@@ -1,13 +1,10 @@
 'use client';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
-
-import jwtDecode from 'jwt-decode';
 
 const clientId = '99436692da0716eb1c22';
 
-export default function Page({ searchParams }) {
+export default function Page({ searchParams }: any) {
   const [code, setCode] = useState(searchParams.code);
 
   const gitHubAuth = `https://github.com/login/oauth/authorize?client_id=${clientId}`;

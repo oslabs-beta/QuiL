@@ -31,9 +31,9 @@ const RootContainer = () => {
   //   if (JWT) {
   //     decoded = jwt_decode(JWT);
   //   }
-  //   // if JWT doesnt exist, set loggedUser to null
+    // if JWT doesnt exist, set loggedUser to null
   //   if (!decoded) setLoggedUser(null);
-  //   // otherwise decode it and set loggedInUser
+    // otherwise decode it and set loggedInUser
   //   else {
   //     setLoggedUser({username: 'username'});
   //   }

@@ -4,6 +4,7 @@
   "description": "",
   "main": "./dist/server.js",
   "scripts": {
+    "build": "next build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "concurrently \"next dev\" \"ts-node-dev server/server.ts\""
   },
@@ -22,6 +23,7 @@
     "@uiw/codemirror-themes": "^4.13.2",
     "@uiw/react-codemirror": "^4.13.2",
     "axios": "^1.1.3",
+    "bcrypt": "^5.1.0",
     "body-parser": "^1.20.1",
     "cors": "^2.8.5",
     "daisyui": "^2.40.1",
@@ -52,7 +54,6 @@
     "@types/pg": "^8.6.5",
     "@types/react": "18.0.25",
     "autoprefixer": "^10.4.13",
-    "bcrypt": "^5.1.0",
     "concurrently": "^7.5.0",
     "nodemon": "^2.0.20",
     "postcss": "^8.4.18",

@@ -1,15 +1,12 @@
-import "../(root)/globals.css";
-import NavigationBar from "./Chart/(components)/NavigationBar";
+import '../(root)/globals.css';
 export default function MainLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang='en'>
-      <body>
-        {children}
-      </body>
+    <html lang="en">
+      <body>{children}</body>
     </html>
   );
 }

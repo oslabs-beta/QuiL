@@ -1,6 +1,7 @@
-import { Node } from "reactflow";
-import { position, resQL } from "../../../(root)/frontendTypes";
-import { nodes } from "../../../(root)/frontendTypes";
+import { Node } from 'reactflow';
+import { position, resQL } from '../../../(root)/frontendTypes';
+import { nodes } from '../../../(root)/frontendTypes';
+import { nodeShape } from '../../../../server/types';
 
 const createNodes = (res: resQL): Node[] => {
   const positions: position[] = [
@@ -35,14 +36,14 @@ const createNodes = (res: resQL): Node[] => {
     // check to see if current node has any edges
     if (node.edges.length !== 0) {
       // if so, loop through edges and push the name refTable to 'refTables'
-      node.edges.forEach((edge) => {
+      node.edges.forEach(edge => {
         refTables.push(edge.refTable);
         arrFKeys.push(edge.fKey);
       });
     }
     return {
       id: node.name,
-      type: "tableNode",
+      type: 'tableNode',
       position: positions[i],
       data: {
         name: node.name,

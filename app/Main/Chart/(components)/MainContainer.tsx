@@ -1,31 +1,28 @@
-"use client";
+'use client';
 //      postgres://lkdxllvk:GTIkPygxpPOx0ZVNJ3luQHEfApEIJekP@heffalump.db.elephantsql.com/lkdxllvk
-import React, { useEffect, useState } from "react";
-import DisplayContainer from "./DisplayContainer";
-import { Node, Edge } from "reactflow";
-import createNodes from "../(flow)/Nodes";
-import createEdges from "../(flow)/Edges";
-import { resQL } from "../../../(root)/frontendTypes";
-import { MainContainerProps, loggedUser } from "../../../(root)/frontendTypes";
-import NavigationBar from "./NavigationBar";
-import jwt_decode from 'jwt-decode';
-import { useAnimationFrame } from "framer-motion";
+import React, { useEffect, useState } from 'react';
+import DisplayContainer from './DisplayContainer';
+import { Node, Edge } from 'reactflow';
+import createNodes from '../(flow)/Nodes';
+import createEdges from '../(flow)/Edges';
+import { MainContainerProps, resQL } from '../../../(root)/frontendTypes';
+import NavigationBar from './NavigationBar';
 
 const MainContainer = ({
   initialNodes,
   initialEdges,
   data,
 }: MainContainerProps): JSX.Element => {
-  const [displayMode, setDisplayMode] = useState<string>("schemaMode");
-  const [uri, setURI] = useState<string>("");
+  const [displayMode, setDisplayMode] = useState<string>('schemaMode');
+  const [uri, setURI] = useState<string>('');
   const [resQL, setResQL] = useState<resQL>(data);
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
   const [edges, setEdges] = useState<Edge[]>(initialEdges);
-  const [theme, setTheme] = useState<string>("night");
+  const [theme, setTheme] = useState<string>('night');
   // const [loggedUser, setLoggedUser] = useState<any>(localStorage.getItem('token'));
   const LoggedUserProps = {
-    username: 'Daniel'
-  }
+    username: 'Daniel',
+  };
 
   // useEffect(() => {
   //   let JWT = localStorage.getItem('token');
@@ -43,20 +40,20 @@ const MainContainer = ({
 
   //invoked in VisualizeSchemaResolver
   const schemaGen = (): void => {
-    setDisplayMode("schemaMode");
+    setDisplayMode('schemaMode');
   };
   //invoked in VisualizeSchemaResolver
   const resolverGen = (): void => {
-    setDisplayMode("resolverMode");
+    setDisplayMode('resolverMode');
   };
   //invoked in visualizeDB.
   const uriLaunch = async (): Promise<void> => {
     // e.preventDefault();
-    let data = await fetch("http://localhost:4000/graphql", {
-      method: "POST",
+    let data = await fetch('http://localhost:4000/graphql', {
+      method: 'POST',
 
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
 
       body: JSON.stringify({
@@ -112,9 +109,7 @@ const MainContainer = ({
 
   return (
     <div data-theme={theme}>
-      <NavigationBar
-        // loggedUser={loggedUser}
-      />
+      <NavigationBar loggedUser={false} />
       <DisplayContainer
         edges={edges}
         handleSetEdges={handleSetEdges}

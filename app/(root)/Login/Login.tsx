@@ -1,4 +1,4 @@
-import { inputObj, userObj } from "../../(root)/frontendTypes";
+import { userObj } from "../../(root)/frontendTypes";
 
 const Login = () => {
   const loginHandler = async (e: any) => {
