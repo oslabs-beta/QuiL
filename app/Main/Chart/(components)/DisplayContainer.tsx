@@ -4,6 +4,10 @@ import VisualizeDB from './VisualizeDB';
 import VisualizeSchemaResolver from './VisualizeSchemaResolver';
 import { DisplayContainerProps } from '../../../(root)/frontendTypes';
 import { motion } from 'framer-motion';
+<<<<<<< HEAD
+=======
+import { PopUp } from './PopUp';
+>>>>>>> dev
 
 const DisplayContainer = ({
   displayMode,
@@ -55,6 +59,7 @@ const DisplayContainer = ({
                   className="input input-sm  input-bordered w-full mx-1"
                   placeholder="insert URI"
                 ></input>
+
                 <button
                   className="btn btn-success btn-outline btn-sm"
                   type="submit"

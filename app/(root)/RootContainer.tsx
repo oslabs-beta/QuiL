@@ -5,6 +5,8 @@ import { motion } from 'framer-motion';
 import jwt_decode from 'jwt-decode';
 import router from 'next/router';
 import Register from './Register/Register';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { decoded } from './frontendTypes';
 
 const RootContainer = ({ authCode }: { authCode: string }) => {
@@ -18,14 +20,26 @@ const RootContainer = ({ authCode }: { authCode: string }) => {
   const router = useRouter();
 
   const handleUserURI = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setInitialURI(e.target.value);
+    let sanitize = e.target.value.trim();
+    console.log(sanitize);
+    setInitialURI(sanitize);
   };
   const handleSampleURI = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     setSampleURI(e.target.value);
   };
 
+  const sanitizeLaunch = (e: any) => {
+    if (sampleURI || initialURI.includes('postgres')) {
+      toast.loading('loading content..');
+      handleLaunch(e);
+    } else {
+      toast.error('Not a valid PostgreSQL URL');
+    }
+  };
+
   const handleLaunch = (e: React.MouseEvent<HTMLElement>): void => {
     const URI = initialURI ? initialURI : sampleURI;
+    toast.dismiss();
     router.push(`/Main/Chart?URI=${URI}`);
   };
 
@@ -143,9 +157,7 @@ const RootContainer = ({ authCode }: { authCode: string }) => {
                 className="select select-bordered"
                 data-cy="select-sample-db"
               >
-                <option disabled selected>
-                  Pick one
-                </option>
+                <option value="">Pick one</option>
                 <option value="postgres://lkdxllvk:GTIkPygxpPOx0ZVNJ3luQHEfApEIJekP@heffalump.db.elephantsql.com/lkdxllvk">
                   Star Wars
                 </option>
@@ -158,12 +170,24 @@ const RootContainer = ({ authCode }: { authCode: string }) => {
           <div className="form-control mt-6">
             <button
               disabled={initialURI || sampleURI ? false : true}
-              onClick={handleLaunch}
+              onClick={sanitizeLaunch}
               className="btn btn-primary"
               data-cy="root-launch"
             >
               Launch
             </button>
+            <ToastContainer
+              position="top-center"
+              autoClose={3000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="dark"
+            />
           </div>
         </motion.div>
       </div>

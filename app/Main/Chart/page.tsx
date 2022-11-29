@@ -4,6 +4,7 @@ import createEdges from './(flow)/Edges';
 import { nodeShape } from '../../../server/types';
 
 async function getData(URI: string) {
+  
   let data = await fetch('http://localhost:4000/graphql', {
     method: 'POST',
 
