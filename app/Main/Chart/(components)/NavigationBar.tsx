@@ -1,11 +1,11 @@
-'use client';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
-import { useSearchParams } from 'next/navigation';
-const NavigationBar = ({
-  loggedUser,
-}: { loggedUser: boolean } | null): JSX.Element => {
+"use client";
+import Link from 'next/link'
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { NavigationBarProps } from '../../../(root)/frontendTypes';
+
+const NavigationBar = ({ userJWT, setJWT, theme }: NavigationBarProps): JSX.Element => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const URIfromRoot = searchParams.get('URI');
@@ -51,8 +51,25 @@ const NavigationBar = ({
             >
               Main
             </button>
+            {(userJWT) ?
+            (<div>
             <button
-              className="btn btn-secondary"
+            className='btn btn-secondary'
+            onClick={() => router.push("/Account")}
+            >
+              My Account
+              </button>
+              <button
+              className='btn btn-secondary'
+              onClick={() => {
+                window.localStorage.removeItem("token")
+                window.location.reload(true)}}>
+                Log Out
+              </button>
+            </div>) :
+            (<div>
+              <button
+              className='btn btn-secondary'
               onClick={() => {
                 router.push('/Login');
               }}
@@ -65,7 +82,8 @@ const NavigationBar = ({
             >
               Register
             </button>
-            <button className="btn" onClick={() => router.push('/Main/About')}>
+            </div>)}
+            <button className='btn' onClick={() => router.push("/Main/About")}>
               About
             </button>
             <select className="select w-full max-w-xs">

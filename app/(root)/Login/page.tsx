@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import Login from './Login';
 import { useEffect, useState } from 'react';
 
 const clientId = '99436692da0716eb1c22';
@@ -37,6 +38,7 @@ export default function Page({ searchParams }: any) {
           <button className="btn btn-accent">OAuth</button>
         </Link>
       </h1>
+      <Login />
     </div>
   );
 }
