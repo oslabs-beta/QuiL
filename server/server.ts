@@ -17,6 +17,7 @@ Apollo here builds on top of an express server
 */
 async function startApolloServer() {
   const app = express();
+  app.use(express.urlencoded({ extended: false }));
   app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
