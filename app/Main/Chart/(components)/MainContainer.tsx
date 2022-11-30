@@ -24,6 +24,7 @@ const MainContainer = ({
   const [theme, setTheme] = useState<string>("night");
   const [userJWT, setUserJWT] = useState<any>({ userId: null });
   const [userProjects, setUserProjects] = useState<projectType[]>([]);
+  const [toastTheme, setToastTheme] = useState<string>('dark');
 
   useEffect(() => {
     try {
@@ -71,14 +72,17 @@ const MainContainer = ({
   console.log(userProjects);
 
   //invoked in VisualizeSchemaResolver
+  // Schema Mode is to display the Schemas (drawer) generated
   const schemaGen = (): void => {
     setDisplayMode("schemaMode");
   };
   //invoked in VisualizeSchemaResolver
+  // Resolver Mode is to display the Resolvers (drawer) generated
   const resolverGen = (): void => {
     setDisplayMode("resolverMode");
   };
   //invoked in visualizeDB.
+  // Checks for error in the users before invoking the fetch
   const uriLaunch = async (): Promise<void> => {
     // e.preventDefault();
     if (uri.includes("postgres")) {
@@ -87,6 +91,7 @@ const MainContainer = ({
       toast.error("Not a valid PostgreSQL URL");
     }
   };
+
   const launchUri = async (): Promise<void> => {
     console.log(uri);
     const toastLoading = toast.loading("loading content");
@@ -135,7 +140,6 @@ const MainContainer = ({
     setResQL(res);
     setNodes(createNodes(res));
     setEdges(createEdges(res));
-    // setLoading(false);
   };
 
   // handleSetNodes takes in a callback (cb). That callback takes in
@@ -152,14 +156,17 @@ const MainContainer = ({
     setURI(test);
   };
 
+  // changing the themes for Toast(notifications) and Tailwind/app
   const handleSetTheme = (e: string): void => {
     setTheme(e);
+    if (theme !== 'light' && theme !== 'night') {
+      setToastTheme('colored');
+    } else setToastTheme(e);
   };
 
   return (
     <div data-theme={theme}>
-      <NavigationBar userJWT={userJWT} />
-
+      <NavigationBar handleSetTheme={handleSetTheme} userJWT={userJWT} />
       <ToastContainer
         position="top-center"
         autoClose={3000}
@@ -170,9 +177,8 @@ const MainContainer = ({
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="dark"
+        theme={toastTheme}
       />
-
       <DisplayContainer
         edges={edges}
         handleSetEdges={handleSetEdges}

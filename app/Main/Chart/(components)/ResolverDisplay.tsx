@@ -39,21 +39,23 @@ export const Card = ({ value, tableName }: CardProps) => {
     }, 5000);
   };
   return (
-    <div style={{ margin: '25px' }}>
-      <div>
+    <div className="min-w-full max-w-fit">
+      <div style={{ margin: '25px' }}>
         <div>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <h3 className="font-bold">
-              {tableName[0].toUpperCase() +
-                tableName.substring(1, tableName.length)}
-            </h3>
-            <div className="tooltip" data-tip={copyStatus}>
-              <button className="btn btn-xs sm:btn-sm" onClick={onClick}>
-                <CopyTwoTone />
-              </button>
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <h3 className="font-bold">
+                {tableName[0].toUpperCase() +
+                  tableName.substring(1, tableName.length)}
+              </h3>
+              <div className="tooltip" data-tip={copyStatus}>
+                <button className="btn btn-xs sm:btn-sm" onClick={onClick}>
+                  <CopyTwoTone />
+                </button>
+              </div>
             </div>
+            <ResolverMirror value={value} />
           </div>
-          <ResolverMirror value={value} />
         </div>
       </div>
     </div>
