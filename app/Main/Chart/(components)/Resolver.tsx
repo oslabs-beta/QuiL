@@ -22,7 +22,7 @@ const Resolver = ({ resQL }: ResolverProps): JSX.Element => {
   };
 
   return (
-    <div className="">
+    <div className="min-w-full max-w-fit ">
       <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
         <div className="tooltip" data-tip={copyStatus}>
           <button className="btn btn-xs" onClick={onClick}>
