@@ -40,6 +40,7 @@ const DisplayContainer = ({
                 transition={{ duration: 1, delay: 3.25 }}
                 htmlFor="my-drawer"
                 className="btn btn-accent btn-outline btn-sm drawer-button ml-12 my-2 py-0"
+                data-cy='view-schemas-resolvers-btn'
               >
                 View Schemas/Resolvers
               </motion.label>
@@ -54,12 +55,14 @@ const DisplayContainer = ({
                   onChange={e => userInputURI(e.target.value)}
                   className="input input-sm  input-bordered w-full mx-1"
                   placeholder="insert URI"
+                  data-cy='insert-uri-main'
                 ></input>
 
                 <button
                   className="btn btn-success btn-outline btn-sm"
                   type="submit"
                   onClick={() => uriLaunch()}
+                  data-cy='main-launch-btn'
                 >
                   Launch
                 </button>

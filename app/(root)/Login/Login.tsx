@@ -39,7 +39,7 @@ const Login = () => {
 
   return (
     <div className="card-body grid h-full place-items-center">
-      <form onSubmit={loginHandler}>
+      <form onSubmit={loginHandler} data-cy='login-form'>
         <label className="label" htmlFor="username">
           Username:{' '}
         </label>
@@ -48,6 +48,7 @@ const Login = () => {
           name="username"
           type="text"
           placeholder="username"
+          data-cy='login-username'
         ></input>
 
         <label className="label" htmlFor="password">
@@ -58,10 +59,11 @@ const Login = () => {
           name="password"
           type="text"
           placeholder="password"
+          data-cy='login-password'
         ></input>
 
         <div className="form-control mt-6">
-          <button className="btn btn-primary" type="submit">
+          <button className="btn btn-primary" type="submit" data-cy='login-button'>
             Login
           </button>
           <p style={{ display: 'flex', justifyContent: 'center' }}>OR</p>

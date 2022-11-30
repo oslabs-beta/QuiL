@@ -39,7 +39,7 @@ const Register = () => {
 
   return (
     <div className="card-body grid h-full place-items-center">
-      <form className="SignUpForm" onSubmit={createUserHandler}>
+      <form className="SignUpForm" onSubmit={createUserHandler} data-cy='register-form'>
         <label className="label" htmlFor="username">
           Username:
         </label>
@@ -48,6 +48,7 @@ const Register = () => {
           name="username"
           type="text"
           placeholder="username"
+          data-cy='register-username-input'
         ></input>
 
         <label className="label" htmlFor="password">
@@ -60,7 +61,7 @@ const Register = () => {
           placeholder="password"
         ></input>
         <div className="form-control mt-6">
-          <button className="btn btn-primary" type="submit">
+          <button className="btn btn-primary" type="submit" data-cy='create-account-btn'>
             Create Account
           </button>
         </div>
@@ -74,6 +75,7 @@ const Register = () => {
             state: randomstring.generate() + REGISTER_STATE_CODE,
           },
         }}
+        data-cy='register-github-btn'
       >
         <button className="btn btn-success" style={{ width: '100%' }}>
           <img

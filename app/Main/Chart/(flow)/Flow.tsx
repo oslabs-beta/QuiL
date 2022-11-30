@@ -45,6 +45,7 @@ const Flow = ({ nodes, edges, handleSetNodes, handleSetEdges }: FlowProps) => {
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         nodeTypes={nodeTypes}
+        data-cy='react-flow'
       >
         <Background className="bg-base-content" size={4} />
         <Controls />

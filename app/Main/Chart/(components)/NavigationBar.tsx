@@ -12,7 +12,7 @@ const NavigationBar = ({ userJWT }: NavigationBarProps): JSX.Element => {
   const [uriParam, setUriParam] = useState(URIfromRoot);
 
   return (
-    <div className="navbar">
+    <div className="navbar" data-cy='nav-bar'>
       <div className="navbar bg-base-100">
         <div className="flex-1">
           <a className="btn btn-ghost normal-case text-xl">QuiL 🐺</a>
