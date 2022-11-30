@@ -63,7 +63,7 @@ const DisplayContainer = ({
     LoadComponents.push(
       <LoadItem
         id={userProjects[i]._id}
-        key={userProjects.length}
+        key={`${i}`}
         userProject={userProjects[i]}
       />
     );

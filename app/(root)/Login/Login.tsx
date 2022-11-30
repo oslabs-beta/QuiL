@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 const randomstring = require('randomstring');
 
-
 const Login = () => {
   const router = useRouter();
 

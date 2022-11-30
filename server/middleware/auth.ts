@@ -147,7 +147,7 @@ export async function handleOAuth(
       const user = await userController.getQuilUser(login);
       if (user.success) {
         return generateJWT(user);
-      } else throw new Error('Error creating account');
+      } else throw new Error('Error fetching account');
     }
   } catch (error) {
     return { token: null };

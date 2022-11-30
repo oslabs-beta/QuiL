@@ -1,7 +1,12 @@
 {
   "compilerOptions": {
     "target": "es2020",
-    "lib": ["dom", "dom.iterable", "esnext", "es2020"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext",
+      "es2020"
+    ],
     "noImplicitAny": true,
     "allowJs": true,
     "sourceMap": true,
@@ -14,7 +19,9 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "types": ["node"],
+    "types": [
+      "node"
+    ],
     "jsx": "preserve",
     "outDir": "./dist",
     "plugins": [
@@ -35,5 +42,7 @@
     "app/Main/Chart/page.jsx",
     "app/Main/Chart/page.jsx"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }
