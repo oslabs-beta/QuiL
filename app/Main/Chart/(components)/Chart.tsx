@@ -9,7 +9,7 @@ const Chart = ({
   handleSetEdges,
 }: ChartProps): JSX.Element => {
   return (
-    <div style={{ height: '75rem', width: '120rem' }}>
+    <div style={{ height: '60rem', width: '111rem'}}> 
       <Flow
         nodes={nodes}
         edges={edges}
