@@ -9,8 +9,8 @@ import NavigationBar from './NavigationBar';
 import jwt_decode from 'jwt-decode';
 import { toast, ToastContainer } from 'react-toastify';
 import { MainContainerProps, resQL } from '../../../(root)/frontendTypes';
-
 import 'react-toastify/dist/ReactToastify.css';
+import { info } from 'node:console';
 const MainContainer = ({
   initialNodes,
   initialEdges,
@@ -23,7 +23,14 @@ const MainContainer = ({
   const [edges, setEdges] = useState<Edge[]>(initialEdges);
   const [theme, setTheme] = useState<string>('night');
   const [userJWT, setUserJWT] = useState<any>(null);
-
+  const [toastTheme, setToastTheme] = useState<string>('dark');
+  /*
+displayMode different drawers (schemas/resolvers)
+uri saves the users input
+resQL is the response from invoking the fetch request on the users input(database)
+theme is for all the tailwind themes
+toastTheme is toast's theme
+*/
   useEffect(() => {
     try {
       let currJWT = window.localStorage.getItem('token');
@@ -40,24 +47,26 @@ const MainContainer = ({
   }, []);
 
   //invoked in VisualizeSchemaResolver
+  // Schema Mode is to display the Schemas (drawer) generated
   const schemaGen = (): void => {
     setDisplayMode('schemaMode');
   };
   //invoked in VisualizeSchemaResolver
+  // Resolver Mode is to display the Resolvers (drawer) generated
   const resolverGen = (): void => {
     setDisplayMode('resolverMode');
   };
   //invoked in visualizeDB.
+  // Checks for error in the users before invoking the fetch
   const uriLaunch = async (): Promise<void> => {
-    // e.preventDefault();
     if (uri.includes('postgres')) {
       launchUri();
     } else {
       toast.error('Not a valid PostgreSQL URL');
     }
   };
+
   const launchUri = async (): Promise<void> => {
-    console.log(uri);
     const toastLoading = toast.loading('loading content');
     let data = await fetch('http://localhost:4000/graphql', {
       method: 'POST',
@@ -104,7 +113,6 @@ const MainContainer = ({
     setResQL(res);
     setNodes(createNodes(res));
     setEdges(createEdges(res));
-    // setLoading(false);
   };
 
   // handleSetNodes takes in a callback (cb). That callback takes in
@@ -121,14 +129,17 @@ const MainContainer = ({
     setURI(test);
   };
 
+  // changing the themes for Toast(notifications) and Tailwind/app
   const handleSetTheme = (e: string): void => {
     setTheme(e);
+    if (theme !== 'light' && theme !== 'night') {
+      setToastTheme('colored');
+    } else setToastTheme(e);
   };
 
   return (
     <div data-theme={theme}>
-      <NavigationBar userJWT={userJWT} />
-
+      <NavigationBar handleSetTheme={handleSetTheme} userJWT={userJWT} />
       <ToastContainer
         position="top-center"
         autoClose={3000}
@@ -139,9 +150,8 @@ const MainContainer = ({
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="dark"
+        theme={toastTheme}
       />
-
       <DisplayContainer
         edges={edges}
         handleSetEdges={handleSetEdges}

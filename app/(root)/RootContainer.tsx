@@ -21,17 +21,16 @@ const RootContainer = ({ authCode }: { authCode: string }) => {
 
   const handleUserURI = (e: React.ChangeEvent<HTMLInputElement>): void => {
     let sanitize = e.target.value.trim();
-    console.log(sanitize);
     setInitialURI(sanitize);
   };
   const handleSampleURI = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     setSampleURI(e.target.value);
   };
-
+  let rootLoading: any;
   const sanitizeLaunch = (e: any) => {
     if (sampleURI || initialURI.includes('postgres')) {
-      toast.loading('loading content..');
       handleLaunch(e);
+      rootLoading = toast.loading('loading content..');
     } else {
       toast.error('Not a valid PostgreSQL URL');
     }
@@ -39,8 +38,8 @@ const RootContainer = ({ authCode }: { authCode: string }) => {
 
   const handleLaunch = (e: React.MouseEvent<HTMLElement>): void => {
     const URI = initialURI ? initialURI : sampleURI;
-    toast.dismiss();
     router.push(`/Main/Chart?URI=${URI}`);
+    toast.dismiss(rootLoading);
   };
 
   useEffect(() => {
@@ -60,7 +59,7 @@ const RootContainer = ({ authCode }: { authCode: string }) => {
                   }
                 }`,
           }),
-        }).then(res => res.json());
+        }).then((res) => res.json());
         localStorage.setItem('token', oauthResponse.data.postOAuth.token);
       }
       currJWT = window.localStorage.getItem('token');

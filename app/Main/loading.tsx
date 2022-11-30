@@ -1,13 +1,9 @@
-import React from "react";
-
+import React, { Suspense } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
 function Loading() {
   return (
-    <div className="grid h-screen place-items-center">
-      <img
-        // src="https://media4.giphy.com/media/kHsNGykRSXwhPw4Q7M/giphy.gif"
-        src="https://media.tenor.com/INNMFPEpExwAAAAC/writing-quill-magic.gif"
-        alt="Loading..."
-      />
+    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+      <div className="btn loading">loading</div>
     </div>
   );
 }
