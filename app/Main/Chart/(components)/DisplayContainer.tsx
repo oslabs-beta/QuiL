@@ -1,12 +1,12 @@
-"use client";
-import React, { useState } from "react";
-import VisualizeDB from "./VisualizeDB";
-import VisualizeSchemaResolver from "./VisualizeSchemaResolver";
-import { DisplayContainerProps } from "../../../(root)/frontendTypes";
-import { motion } from "framer-motion";
-import SaveContainer from "./SaveContainer";
-import LoadContainer from "./LoadContainer";
-import LoadItem from "./LoadItem";
+'use client';
+import React, { useState } from 'react';
+import VisualizeDB from './VisualizeDB';
+import VisualizeSchemaResolver from './VisualizeSchemaResolver';
+import { DisplayContainerProps } from '../../../(root)/frontendTypes';
+import { motion } from 'framer-motion';
+import SaveContainer from './SaveContainer';
+import LoadContainer from './LoadContainer';
+import LoadItem from './LoadItem';
 
 const DisplayContainer = ({
   displayMode,
@@ -20,16 +20,16 @@ const DisplayContainer = ({
   handleSetEdges,
   handleSetNodes,
   userJWT,
-  userProjects
+  userProjects,
 }: DisplayContainerProps): JSX.Element => {
-  let schemaTabStyle = "tab tab-bordered";
-  let resolverTabStyle = "tab tab-bordered";
+  let schemaTabStyle = 'tab tab-bordered';
+  let resolverTabStyle = 'tab tab-bordered';
   switch (displayMode) {
-    case "schemaMode":
-      schemaTabStyle = "tab tab-bordered tab-active";
+    case 'schemaMode':
+      schemaTabStyle = 'tab tab-bordered tab-active';
       break;
-    case "resolverMode":
-      resolverTabStyle = "tab tab-bordered tab-active";
+    case 'resolverMode':
+      resolverTabStyle = 'tab tab-bordered tab-active';
       break;
   }
 
@@ -47,20 +47,26 @@ const DisplayContainer = ({
             projectName
             success
           }
-        }`
+        }`,
+      }),
+    })
+      .then(data => {
+        return data.json();
       })
-    })
-    .then(data => {
-      return data.json();
-    })
-    .then(data => {
-      console.log('userJWT.userId', userJWT)
-    })
-  }
+      .then(data => {
+        console.log('userJWT.userId', userJWT);
+      });
+  };
 
   const LoadComponents = [];
   for (let i = 0; i < userProjects.length; i++) {
-    LoadComponents.push(<LoadItem id={userProjects[i]._id} key={userProjects.length} userProject={userProjects[i]}/>)
+    LoadComponents.push(
+      <LoadItem
+        id={userProjects[i]._id}
+        key={`${i}`}
+        userProject={userProjects[i]}
+      />
+    );
   }
 
   return (
@@ -88,7 +94,7 @@ const DisplayContainer = ({
               >
                 <input
                   type="text"
-                  onChange={(e) => userInputURI(e.target.value)}
+                  onChange={e => userInputURI(e.target.value)}
                   className="input input-sm  input-bordered w-full mx-1"
                   placeholder="insert URI"
                   data-cy='insert-uri-main'
@@ -126,7 +132,7 @@ const DisplayContainer = ({
                       <h3 className="text-lg font-bold">Save Your Database</h3>
                       <form onSubmit={saveURIHandler}>
                         <label className="label" htmlFor="username">
-                          URI Nickname:{" "}
+                          URI Nickname:{' '}
                         </label>
                         <input
                           className="input input-bordered w-full max-w-xs"
@@ -136,7 +142,7 @@ const DisplayContainer = ({
                         ></input>
 
                         <label className="label" htmlFor="password">
-                          URI String:{" "}
+                          URI String:{' '}
                         </label>
                         <input
                           className="input input-bordered w-full max-w-xs"
@@ -184,9 +190,7 @@ const DisplayContainer = ({
                               <th>URI</th>
                             </tr>
                           </thead>
-                          <tbody>
-                            {LoadComponents}
-                          </tbody>
+                          <tbody>{LoadComponents}</tbody>
                         </table>
                       </div>
                     </div>

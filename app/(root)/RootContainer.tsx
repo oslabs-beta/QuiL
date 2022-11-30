@@ -52,10 +52,12 @@ const RootContainer = ({
       let currJWT = window.localStorage.getItem('token');
 
       let oauthType;
+
       if (stateString) {
         if (stateString.includes('c2lnbmlu')) oauthType = 'signin';
         if (stateString.includes('cmVnaXN0ZXI')) oauthType = 'register';
       }
+
       if ((code && currJWT === 'null') || !currJWT) {
         const queryValue = `mutation {
           postOAuth(code: "${code}", oauthType: "${oauthType}") {
@@ -71,9 +73,11 @@ const RootContainer = ({
           body: JSON.stringify({
             query: queryValue,
           }),
-        }).then((res) => res.json());
+        }).then(res => res.json());
+        
         localStorage.setItem('token', oauthResponse.data.postOAuth.token);
       }
+      
       currJWT = window.localStorage.getItem('token');
       let decoded: decoded;
 
