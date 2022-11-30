@@ -1,9 +1,12 @@
-'use client';
-import React from 'react';
-import VisualizeDB from './VisualizeDB';
-import VisualizeSchemaResolver from './VisualizeSchemaResolver';
-import { DisplayContainerProps } from '../../../(root)/frontendTypes';
-import { motion } from 'framer-motion';
+"use client";
+import React, { useState } from "react";
+import VisualizeDB from "./VisualizeDB";
+import VisualizeSchemaResolver from "./VisualizeSchemaResolver";
+import { DisplayContainerProps } from "../../../(root)/frontendTypes";
+import { motion } from "framer-motion";
+import SaveContainer from "./SaveContainer";
+import LoadContainer from "./LoadContainer";
+import LoadItem from "./LoadItem";
 
 const DisplayContainer = ({
   displayMode,
@@ -16,17 +19,50 @@ const DisplayContainer = ({
   nodes,
   handleSetEdges,
   handleSetNodes,
+  userJWT,
+  userProjects
 }: DisplayContainerProps): JSX.Element => {
-  let schemaTabStyle = 'tab tab-bordered';
-  let resolverTabStyle = 'tab tab-bordered';
+  let schemaTabStyle = "tab tab-bordered";
+  let resolverTabStyle = "tab tab-bordered";
   switch (displayMode) {
-    case 'schemaMode':
-      schemaTabStyle = 'tab tab-bordered tab-active';
+    case "schemaMode":
+      schemaTabStyle = "tab tab-bordered tab-active";
       break;
-    case 'resolverMode':
-      resolverTabStyle = 'tab tab-bordered tab-active';
+    case "resolverMode":
+      resolverTabStyle = "tab tab-bordered tab-active";
       break;
   }
+
+  const saveURIHandler = async (e: any) => {
+    e.preventDefault();
+    let data = await fetch('http://localhost:4000/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query: `mutation {
+          saveData(projectName: "${e.target.URInickname.value}", projectData: "${e.target.URIstring.value}", userId: ${userJWT.userId}) {
+            projectId
+            projectName
+            success
+          }
+        }`
+      })
+    })
+    .then(data => {
+      return data.json();
+    })
+    .then(data => {
+      console.log('userJWT.userId', userJWT)
+    })
+  }
+
+  const LoadComponents = [];
+  for (let i = 0; i < userProjects.length; i++) {
+    LoadComponents.push(<LoadItem id={userProjects[i]._id} key={userProjects.length} userProject={userProjects[i]}/>)
+  }
+
   return (
     <>
       <div className="DisplayContainer">
@@ -52,7 +88,7 @@ const DisplayContainer = ({
               >
                 <input
                   type="text"
-                  onChange={e => userInputURI(e.target.value)}
+                  onChange={(e) => userInputURI(e.target.value)}
                   className="input input-sm  input-bordered w-full mx-1"
                   placeholder="insert URI"
                   data-cy='insert-uri-main'
@@ -66,6 +102,96 @@ const DisplayContainer = ({
                 >
                   Launch
                 </button>
+                {/* Save Button and Modal */}
+                <label
+                  htmlFor="my-modal-3"
+                  className="btn btn-success btn-outline btn-sm"
+                >
+                  Save
+                </label>
+                <div>
+                  <input
+                    type="checkbox"
+                    id="my-modal-3"
+                    className="modal-toggle"
+                  />
+                  <div className="modal">
+                    <div className="modal-box relative">
+                      <label
+                        htmlFor="my-modal-3"
+                        className="btn btn-sm btn-circle absolute right-2 top-2"
+                      >
+                        ✕
+                      </label>
+                      <h3 className="text-lg font-bold">Save Your Database</h3>
+                      <form onSubmit={saveURIHandler}>
+                        <label className="label" htmlFor="username">
+                          URI Nickname:{" "}
+                        </label>
+                        <input
+                          className="input input-bordered w-full max-w-xs"
+                          name="URInickname"
+                          type="text"
+                          placeholder="nickname"
+                        ></input>
+
+                        <label className="label" htmlFor="password">
+                          URI String:{" "}
+                        </label>
+                        <input
+                          className="input input-bordered w-full max-w-xs"
+                          name="URIstring"
+                          type="text"
+                          placeholder="string"
+                        ></input>
+
+                        <div className="form-control mt-6">
+                          <button className="btn btn-primary" type="submit">
+                            Save
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                {/* Load Button and Modal */}
+                <label
+                  htmlFor="my-modal-2"
+                  className="btn btn-success btn-outline btn-sm"
+                >
+                  Load
+                </label>
+                <div>
+                  <input
+                    type="checkbox"
+                    id="my-modal-2"
+                    className="modal-toggle"
+                  />
+                  <div className="modal">
+                    <div className="modal-box relative">
+                      <label
+                        htmlFor="my-modal-2"
+                        className="btn btn-sm btn-circle absolute right-2 top-2"
+                      >
+                        ✕
+                      </label>
+                      <div className="overflow-x-auto">
+                        <table className="table w-full">
+                          <thead>
+                            <tr>
+                              <th></th>
+                              <th>URI Nickname</th>
+                              <th>URI</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {LoadComponents}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </motion.div>
             </div>
             <VisualizeDB

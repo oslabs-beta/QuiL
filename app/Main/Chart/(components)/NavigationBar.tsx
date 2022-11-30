@@ -4,8 +4,13 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { NavigationBarProps } from '../../../(root)/frontendTypes';
+import test from 'node:test';
+import { setSyntheticLeadingComments } from 'typescript';
 
-const NavigationBar = ({ userJWT }: NavigationBarProps): JSX.Element => {
+const NavigationBar = ({
+  userJWT,
+  handleSetTheme,
+}: NavigationBarProps): JSX.Element => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const URIfromRoot = searchParams.get('URI');
@@ -26,13 +31,6 @@ const NavigationBar = ({ userJWT }: NavigationBarProps): JSX.Element => {
               Main
             </button>
             {userJWT ? (
-              <div>
-                <button
-                  className="btn btn-secondary"
-                  onClick={() => router.push('/Account')}
-                >
-                  My Account
-                </button>
                 <button
                   className="btn btn-secondary"
                   onClick={() => {
@@ -42,9 +40,8 @@ const NavigationBar = ({ userJWT }: NavigationBarProps): JSX.Element => {
                 >
                   Log Out
                 </button>
-              </div>
             ) : (
-              <div>
+              <div className='btn-group flex space-x-1 font-mono'>
                 <button
                   className="btn btn-secondary"
                   onClick={() => {
@@ -68,12 +65,30 @@ const NavigationBar = ({ userJWT }: NavigationBarProps): JSX.Element => {
               <option disabled selected>
                 Theme
               </option>
-              <option value="light">light</option>
-              <option value="night">night</option>
-              <option value="retro">retro</option>
-              <option value="cyberpunk">cyberpunk</option>
-              <option value="synthwave">synthwave</option>
-              <option value="pastel">pastel</option>
+              <option value="light" onClick={() => handleSetTheme('light')}>
+                light
+              </option>
+              <option value="night" onClick={() => handleSetTheme('night')}>
+                night
+              </option>
+              <option value="retro" onClick={() => handleSetTheme('retro')}>
+                retro
+              </option>
+              <option
+                value="cyberpunk"
+                onClick={() => handleSetTheme('cyberpunk')}
+              >
+                cyberpunk
+              </option>
+              <option
+                value="synthwave"
+                onClick={() => handleSetTheme('synthwave')}
+              >
+                synthwave
+              </option>
+              <option value="pastel" onClick={() => handleSetTheme('pastel')}>
+                pastel
+              </option>
             </select>
           </div>
         </div>
