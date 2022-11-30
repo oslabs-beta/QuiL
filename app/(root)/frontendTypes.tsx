@@ -18,6 +18,8 @@ export type DisplayContainerProps = {
   nodes: Node[];
   handleSetEdges: (cb: (eds: Edge[]) => Edge[]) => void;
   handleSetNodes: (cb: (nds: Node[]) => Node[]) => void;
+  userJWT: any;
+  userProjects: projectType[] | [],
 };
 
 export type NavigationBarProps = {
@@ -129,3 +131,10 @@ export type loggedUser = {
 export type decoded = {
   [k: string]: any;
 };
+
+export type projectType = {
+  name: string, 
+  owner_id: string, 
+  saved_db: string[],
+  _id: string
+}
