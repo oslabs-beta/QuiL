@@ -125,7 +125,18 @@ const RootContainer = ({
         >
           <div className="card-body">
             {userJWT ? (
+              <div>
               <h1>Welcome {userJWT.username}</h1>
+              <button
+              className="btn btn-secondary"
+              onClick={() => {
+                window.localStorage.removeItem('token');
+                window.location.reload();
+              }}
+            >
+              Log Out
+            </button>
+            </div>
             ) : (
               <>
                 <div className="form-control justify-end w-full min-w-full">
