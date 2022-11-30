@@ -2,13 +2,12 @@ import { inputObj, userObj } from '../../(root)/frontendTypes';
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+const randomstring = require('randomstring');
 
 const Register = () => {
   const router = useRouter();
-  const clientId = '99436692da0716eb1c22';
-  const gitHubAuth = `https://github.com/login/oauth/authorize?client_id=${clientId}`;
+  const REGISTER_STATE_CODE = 'cmVnaXN0ZXI';
 
-  const REGISTER_ENCODE = 'cmVnaXN0ZXI';
   const createUserHandler = async (e: any) => {
     e.preventDefault();
     const userObj: userObj = {
@@ -41,7 +40,7 @@ const Register = () => {
   };
 
   return (
-    <div className="card-body grid h-screen place-items-center">
+    <div className="card-body grid h-full place-items-center">
       <form className="SignUpForm" onSubmit={createUserHandler}>
         <label className="label" htmlFor="username">
           Username:
@@ -66,18 +65,26 @@ const Register = () => {
           <button className="btn btn-primary" type="submit">
             Create Account
           </button>
-          <p style={{ display: 'flex', justifyContent: 'center' }}>OR</p>
-          <Link href={gitHubAuth}>
-            <button className="btn btn-success" style={{ width: '100%' }}>
-              <img
-                style={{ width: '2em', marginRight: '5px' }}
-                src="https://cdn.iconscout.com/icon/free/png-256/github-163-761603.png"
-              />
-              Register with Github
-            </button>
-          </Link>
         </div>
       </form>
+      <p style={{ display: 'flex', justifyContent: 'center' }}>OR</p>
+      <Link
+        href={{
+          pathname: 'https://github.com/login/oauth/authorize',
+          query: {
+            client_id: '99436692da0716eb1c22',
+            state: randomstring.generate() + REGISTER_STATE_CODE,
+          },
+        }}
+      >
+        <button className="btn btn-success" style={{ width: '100%' }}>
+          <img
+            style={{ width: '2em', marginRight: '5px' }}
+            src="https://cdn.iconscout.com/icon/free/png-256/github-163-761603.png"
+          />
+          Register with Github
+        </button>
+      </Link>
     </div>
   );
 };

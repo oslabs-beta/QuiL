@@ -62,11 +62,6 @@ export const Query = {
   getUserProjects: async (_: any, arg: {userId: number}): Promise<GetUserProjectRes> => {
     return await userController.getUserProject(arg.userId);
   },
-  testResolver: (): {} => {
-    return {
-      test: 'hii',
-    };
-  },
 };
 
 // Define all of our mutations for the GQL backend
