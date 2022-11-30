@@ -52,13 +52,6 @@ const NavigationBar = ({ userJWT }: NavigationBarProps): JSX.Element => {
               Main
             </button>
             {userJWT ? (
-              <div>
-                <button
-                  className="btn btn-secondary"
-                  onClick={() => router.push('/Account')}
-                >
-                  My Account
-                </button>
                 <button
                   className="btn btn-secondary"
                   onClick={() => {
@@ -68,9 +61,8 @@ const NavigationBar = ({ userJWT }: NavigationBarProps): JSX.Element => {
                 >
                   Log Out
                 </button>
-              </div>
             ) : (
-              <div>
+              <div className='btn-group flex space-x-1 font-mono'>
                 <button
                   className="btn btn-secondary"
                   onClick={() => {

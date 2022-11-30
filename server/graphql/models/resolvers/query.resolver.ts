@@ -59,8 +59,8 @@ export const Query = {
   },
   // Returns all of the user's projects with a user id
   // TODO: Fix the arg type. The arg will be arg.id
-  getUserProjects: async (_: any, arg: Number): Promise<GetUserProjectRes> => {
-    return await userController.getUserProject(arg);
+  getUserProjects: async (_: any, arg: {userId: number}): Promise<GetUserProjectRes> => {
+    return await userController.getUserProject(arg.userId);
   },
   testResolver: (): {} => {
     return {
@@ -98,6 +98,11 @@ export const Mutation = {
   saveData: async (_: any, obj: SaveProject): Promise<SavedProjectRes> => {
     return await userController.saveProject(obj);
   },
+  // Deletes a project from database
+  deleteProject:  async (_: any, args: {projectId: number} ): Promise<any> => {
+    return await userController.deleteProject(args.projectId)
+  },
+
   // Handles both login and register GitHub OAuth Requests
   postOAuth: async (_: any, args: OAuthArgs): Promise<JWTResponse> => {
     try {

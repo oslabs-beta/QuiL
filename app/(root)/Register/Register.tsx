@@ -32,9 +32,11 @@ const Register = () => {
         return data.json();
       })
       .then(data => {
-        if (data.data.newUser.token)
+        if (data.data.newUser.token) {
           localStorage.setItem('token', data.data.newUser.token);
-        router.push('/');
+          router.push('/');
+        }
+        else throw new Error;
       });
   };
 
