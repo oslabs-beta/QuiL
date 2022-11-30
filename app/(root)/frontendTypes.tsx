@@ -72,7 +72,7 @@ export type resQL = {
 export type getAllData = {
   nodes: nodeShape[];
   resolvers: ResolverStrings[];
-  schemas: [SingleSchemaType];
+  schemas: [SchemaType];
 };
 
 export type nodes = node[];
@@ -127,6 +127,7 @@ export type inputObj = {
 export type loggedUser = {
   [k: string]: any;
 };
+
 
 export type decoded = {
   [k: string]: any;

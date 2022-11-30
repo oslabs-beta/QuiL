@@ -144,12 +144,14 @@ const RootContainer = ({
                     style={{ marginBottom: '15px' }}
                     className="btn btn-primary min-w-1/2"
                     onClick={() => router.push('/Login')}
+                    data-cy='root-login-btn'
                   >
                     Login
                   </button>
                   <button
                     className="btn btn-primary min-w-1/2"
                     onClick={() => router.push('/Register')}
+                    data-cy='root-register-btn'
                   >
                     Register
                   </button>
@@ -181,7 +183,7 @@ const RootContainer = ({
                 data-cy="select-sample-db"
               >
                 <option value="">Pick one</option>
-                <option value="postgres://lkdxllvk:GTIkPygxpPOx0ZVNJ3luQHEfApEIJekP@heffalump.db.elephantsql.com/lkdxllvk">
+                <option value="postgres://lkdxllvk:GTIkPygxpPOx0ZVNJ3luQHEfApEIJekP@heffalump.db.elephantsql.com/lkdxllvk" data-cy='sample-starwars'>
                   Star Wars
                 </option>
                 <option value="postgres://nsjouiot:4nVVHLiARTADoIiwArtQLG-HfkhQR03k@peanut.db.elephantsql.com/nsjouiot">
