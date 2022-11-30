@@ -1,52 +1,54 @@
-"use client";
+'use client';
 //      postgres://lkdxllvk:GTIkPygxpPOx0ZVNJ3luQHEfApEIJekP@heffalump.db.elephantsql.com/lkdxllvk
-import React, { useEffect, useState } from "react";
-import DisplayContainer from "./DisplayContainer";
-import { Node, Edge } from "reactflow";
-import createNodes from "../(flow)/Nodes";
-import createEdges from "../(flow)/Edges";
-import NavigationBar from "./NavigationBar";
-import jwt_decode from "jwt-decode";
-import { toast, ToastContainer } from "react-toastify";
-import { MainContainerProps, projectType, resQL } from "../../../(root)/frontendTypes";
+import React, { useEffect, useState } from 'react';
+import DisplayContainer from './DisplayContainer';
+import { Node, Edge } from 'reactflow';
+import createNodes from '../(flow)/Nodes';
+import createEdges from '../(flow)/Edges';
+import NavigationBar from './NavigationBar';
+import jwt_decode from 'jwt-decode';
+import { toast, ToastContainer } from 'react-toastify';
+import {
+  MainContainerProps,
+  projectType,
+  resQL,
+} from '../../../(root)/frontendTypes';
 
-import "react-toastify/dist/ReactToastify.css";
+import 'react-toastify/dist/ReactToastify.css';
 const MainContainer = ({
   initialNodes,
   initialEdges,
   data,
 }: MainContainerProps): JSX.Element => {
-  const [displayMode, setDisplayMode] = useState<string>("schemaMode");
-  const [uri, setURI] = useState<string>("");
+  const [displayMode, setDisplayMode] = useState<string>('schemaMode');
+  const [uri, setURI] = useState<string>('');
   const [resQL, setResQL] = useState<resQL>(data);
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
   const [edges, setEdges] = useState<Edge[]>(initialEdges);
-  const [theme, setTheme] = useState<string>("night");
-  const [userJWT, setUserJWT] = useState<any>({ userId: null });
+  const [theme, setTheme] = useState<string>('night');
+  const [userJWT, setUserJWT] = useState<any>();
   const [userProjects, setUserProjects] = useState<projectType[]>([]);
 
   useEffect(() => {
     try {
-      let currJWT = window.localStorage.getItem("token");
-      let decoded: any;
-      if (currJWT) {
-        decoded = jwt_decode(currJWT);
-      }
-      // if JWT doesnt exist, set userJWT to null
-      if (!decoded) setUserJWT(null);
-      // otherwise decode it and set userJWT object
-      else setUserJWT(decoded);
-
       const getUserProjects = async (): Promise<void> => {
-        if (!userJWT) console.log("userJWT does not exist");
-        let data = await fetch("http://localhost:4000/graphql", {
-          method: "POST",
+        let currJWT = window.localStorage.getItem('token');
+        let decoded: any;
+        if (currJWT) {
+          decoded = await jwt_decode(currJWT);
+          setUserJWT(decoded);
+        }
+        // if JWT doesnt exist, set userJWT to null
+        if (!decoded) setUserJWT(null);
+        // otherwise decode it and set userJWT object
+        let data = await fetch('http://localhost:4000/graphql', {
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             query: `query {
-              getUserProjects(userId: ${userJWT.userId}) {
+              getUserProjects(userId: ${decoded.userId}) {
                 db {
                   name
                   owner_id
@@ -57,10 +59,10 @@ const MainContainer = ({
             }`,
           }),
         })
-          .then((data) => {
+          .then(data => {
             return data.json();
           })
-          .then((data) => {
+          .then(data => {
             setUserProjects(data.data.getUserProjects.db);
           });
       };
@@ -68,32 +70,30 @@ const MainContainer = ({
     } catch (error) {}
   }, []);
 
-  console.log(userProjects);
-
   //invoked in VisualizeSchemaResolver
   const schemaGen = (): void => {
-    setDisplayMode("schemaMode");
+    setDisplayMode('schemaMode');
   };
   //invoked in VisualizeSchemaResolver
   const resolverGen = (): void => {
-    setDisplayMode("resolverMode");
+    setDisplayMode('resolverMode');
   };
   //invoked in visualizeDB.
   const uriLaunch = async (): Promise<void> => {
     // e.preventDefault();
-    if (uri.includes("postgres")) {
+    if (uri.includes('postgres')) {
       launchUri();
     } else {
-      toast.error("Not a valid PostgreSQL URL");
+      toast.error('Not a valid PostgreSQL URL');
     }
   };
   const launchUri = async (): Promise<void> => {
     console.log(uri);
-    const toastLoading = toast.loading("loading content");
-    let data = await fetch("http://localhost:4000/graphql", {
-      method: "POST",
+    const toastLoading = toast.loading('loading content');
+    let data = await fetch('http://localhost:4000/graphql', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
 
       body: JSON.stringify({
@@ -130,7 +130,7 @@ const MainContainer = ({
       res.data.getAllData.resolvers.length === 0 &&
       res.data.getAllData.schemas.length === 0
     ) {
-      toast.error("Empty database or bad URL");
+      toast.error('Empty database or bad URL');
     }
     setResQL(res);
     setNodes(createNodes(res));
