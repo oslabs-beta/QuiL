@@ -3,16 +3,21 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import jwt_decode from 'jwt-decode';
-import router from 'next/router';
-import Register from './Register/Register';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { decoded } from './frontendTypes';
 
-const RootContainer = ({ authCode }: { authCode: string }) => {
+const RootContainer = ({
+  authCode,
+  stateCode,
+}: {
+  authCode: string;
+  stateCode: string;
+}) => {
   const [initialURI, setInitialURI] = useState<string>(null);
   const [sampleURI, setSampleURI] = useState<string>(null);
   const [code, setCode] = useState(authCode);
+  const [stateString, setStateCode] = useState(stateCode);
   // undefined/null = not logged in
   // const [loggedUser, setLoggedUser] = useState<{}>(null);
   const [userJWT, setUserJWT] = useState<any>(null);
@@ -46,18 +51,25 @@ const RootContainer = ({ authCode }: { authCode: string }) => {
     const handleLogin = async (code: string) => {
       let currJWT = window.localStorage.getItem('token');
 
+      let oauthType;
+      if (stateString) {
+        if (stateString.includes('c2lnbmlu')) oauthType = 'signin';
+        if (stateString.includes('cmVnaXN0ZXI')) oauthType = 'register';
+      }
       if ((code && currJWT === 'null') || !currJWT) {
+        const queryValue = `mutation {
+          postOAuth(code: "${code}", oauthType: "${oauthType}") {
+            token
+          }
+        }`;
+
         const oauthResponse = await fetch('http://localhost:4000/graphql', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            query: `mutation {
-                  postOAuth(code: "${code}", oauthType: "signin") {
-                    token
-                  }
-                }`,
+            query: queryValue,
           }),
         }).then((res) => res.json());
         localStorage.setItem('token', oauthResponse.data.postOAuth.token);
@@ -67,7 +79,6 @@ const RootContainer = ({ authCode }: { authCode: string }) => {
 
       if (currJWT !== 'null') {
         decoded = jwt_decode(currJWT);
-        console.log(decoded);
       }
       // if JWT doesnt exist, set userJWT to null
       if (!decoded) setUserJWT(null);
@@ -114,23 +125,37 @@ const RootContainer = ({ authCode }: { authCode: string }) => {
         >
           <div className="card-body">
             {userJWT ? (
+              <div>
               <h1>Welcome {userJWT.username}</h1>
+              <button
+              className="btn btn-secondary"
+              onClick={() => {
+                window.localStorage.removeItem('token');
+                window.location.reload();
+              }}
+            >
+              Log Out
+            </button>
+            </div>
             ) : (
-              <div className="form-control justify-end w-full min-w-full">
-                <button
-                  style={{ marginBottom: '15px' }}
-                  className="btn btn-primary min-w-1/2"
-                  onClick={() => router.push('/Login')}
-                >
-                  Login
-                </button>
-                <button
-                  className="btn btn-primary min-w-1/2"
-                  onClick={() => router.push('/Register')}
-                >
-                  Register
-                </button>
-              </div>
+              <>
+                <div className="form-control justify-end w-full min-w-full">
+                  <button
+                    style={{ marginBottom: '15px' }}
+                    className="btn btn-primary min-w-1/2"
+                    onClick={() => router.push('/Login')}
+                  >
+                    Login
+                  </button>
+                  <button
+                    className="btn btn-primary min-w-1/2"
+                    onClick={() => router.push('/Register')}
+                  >
+                    Register
+                  </button>
+                </div>
+                <p style={{ display: 'flex', justifyContent: 'center' }}>OR</p>
+              </>
             )}
             <div className="form-control">
               <label className="label">

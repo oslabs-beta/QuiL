@@ -16,32 +16,6 @@ const NavigationBar = ({
   const URIfromRoot = searchParams.get('URI');
   const [uriParam, setUriParam] = useState(URIfromRoot);
 
-  // return (
-  //   <div className='navbar'>
-  //     <div className='navbar bg-base-100'>
-  //       <div className='flex-1'>
-  //         <div className=''>
-  //           <ul>
-  //             <li>
-  //               <Link href={`/Main/Chart?URI=${uriParam}`}>Home</Link>
-  //             </li>
-  //             <li>
-  //               <Link href="/Main/Login">Login</Link>
-  //             </li>
-  //             <li>
-  //               <Link href="/Main/Register">Register</Link>
-  //             </li>
-  //             <li>
-  //               <Link href="/Main/About">About</Link>
-  //             </li>
-
-  //           </ul>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   </div>
-  // )
-
   return (
     <div className="navbar">
       <div className="navbar bg-base-100">
@@ -57,13 +31,6 @@ const NavigationBar = ({
               Main
             </button>
             {userJWT ? (
-              <div>
-                <button
-                  className="btn btn-secondary"
-                  onClick={() => router.push('/Account')}
-                >
-                  My Account
-                </button>
                 <button
                   className="btn btn-secondary"
                   onClick={() => {
@@ -73,9 +40,8 @@ const NavigationBar = ({
                 >
                   Log Out
                 </button>
-              </div>
             ) : (
-              <div>
+              <div className='btn-group flex space-x-1 font-mono'>
                 <button
                   className="btn btn-secondary"
                   onClick={() => {

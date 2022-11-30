@@ -1,17 +1,13 @@
 import { inputObj, userObj } from '../../(root)/frontendTypes';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
-import { random } from 'cypress/types/lodash';
 const randomstring = require('randomstring');
+
 
 const Login = () => {
   const router = useRouter();
 
-  const RANDOM = randomstring.generate();
-  const SIGNIN_ENCODE = 'c2lnbmlu';
-  const clientId = '99436692da0716eb1c22';
-  const gitHubAuth = `https://github.com/login/oauth/authorize?client_id=${clientId}&state=${RANDOM}`;
+  const SIGNIN_STATE_CODE = 'c2lnbmlu';
 
   const loginHandler = async (e: any) => {
     e.preventDefault();
@@ -71,7 +67,15 @@ const Login = () => {
           <p style={{ display: 'flex', justifyContent: 'center' }}>OR</p>
         </div>
       </form>
-      <Link href={gitHubAuth + SIGNIN_ENCODE}>
+      <Link
+        href={{
+          pathname: 'https://github.com/login/oauth/authorize',
+          query: {
+            client_id: '99436692da0716eb1c22',
+            state: randomstring.generate() + SIGNIN_STATE_CODE,
+          },
+        }}
+      >
         <button className="btn btn-success" style={{ width: '100%' }}>
           <img
             style={{ width: '2em', marginRight: '5px' }}
