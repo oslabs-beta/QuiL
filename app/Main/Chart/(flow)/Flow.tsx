@@ -1,5 +1,5 @@
-"use client";
-import React, { useCallback } from "react";
+'use client';
+import React, { useCallback } from 'react';
 import ReactFlow, {
   Controls,
   Background,
@@ -9,11 +9,11 @@ import ReactFlow, {
   EdgeChange, // TS Generic
   Connection, // TS Generic
   addEdge,
-} from "reactflow";
-import TableNode from "./TableNode";
-import "reactflow/dist/style.css";
-import { FlowProps } from "../../../(root)/frontendTypes";
-import { motion } from "framer-motion";
+} from 'reactflow';
+import TableNode from './TableNode';
+import 'reactflow/dist/style.css';
+import { FlowProps } from '../../../(root)/frontendTypes';
+import { motion } from 'framer-motion';
 
 const nodeTypes = { tableNode: TableNode };
 
@@ -37,7 +37,7 @@ const Flow = ({ nodes, edges, handleSetNodes, handleSetEdges }: FlowProps) => {
   );
 
   return (
-    <div style={{ height: "100%", background: "grey" }}>
+    <div style={{ height: '100%', background: 'grey' }}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -45,6 +45,7 @@ const Flow = ({ nodes, edges, handleSetNodes, handleSetEdges }: FlowProps) => {
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         nodeTypes={nodeTypes}
+        data-cy='react-flow'
       >
         <Background className="bg-base-content" size={4} />
         <Controls />

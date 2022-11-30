@@ -31,11 +31,11 @@ const RootContainer = ({
   const handleSampleURI = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     setSampleURI(e.target.value);
   };
-
+  let rootLoading: any;
   const sanitizeLaunch = (e: any) => {
     if (sampleURI || initialURI.includes('postgres')) {
-      toast.loading('loading content..');
       handleLaunch(e);
+      rootLoading = toast.loading('loading content..');
     } else {
       toast.error('Not a valid PostgreSQL URL');
     }
@@ -43,8 +43,8 @@ const RootContainer = ({
 
   const handleLaunch = (e: React.MouseEvent<HTMLElement>): void => {
     const URI = initialURI ? initialURI : sampleURI;
-    toast.dismiss();
     router.push(`/Main/Chart?URI=${URI}`);
+    toast.dismiss(rootLoading);
   };
 
   useEffect(() => {
@@ -148,12 +148,14 @@ const RootContainer = ({
                     style={{ marginBottom: '15px' }}
                     className="btn btn-primary min-w-1/2"
                     onClick={() => router.push('/Login')}
+                    data-cy='root-login-btn'
                   >
                     Login
                   </button>
                   <button
                     className="btn btn-primary min-w-1/2"
                     onClick={() => router.push('/Register')}
+                    data-cy='root-register-btn'
                   >
                     Register
                   </button>
@@ -185,7 +187,7 @@ const RootContainer = ({
                 data-cy="select-sample-db"
               >
                 <option value="">Pick one</option>
-                <option value="postgres://lkdxllvk:GTIkPygxpPOx0ZVNJ3luQHEfApEIJekP@heffalump.db.elephantsql.com/lkdxllvk">
+                <option value="postgres://lkdxllvk:GTIkPygxpPOx0ZVNJ3luQHEfApEIJekP@heffalump.db.elephantsql.com/lkdxllvk" data-cy='sample-starwars'>
                   Star Wars
                 </option>
                 <option value="postgres://nsjouiot:4nVVHLiARTADoIiwArtQLG-HfkhQR03k@peanut.db.elephantsql.com/nsjouiot">
