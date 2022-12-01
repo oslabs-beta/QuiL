@@ -6,7 +6,6 @@ import { SingleSchemaType } from '../../../../server/types';
 const Schema = ({ resQL }: SchemaProps): JSX.Element => {
   const [copyStatus, setCopyStatus] = useState('Copy');
 
-  if (!resQL) console.log('REQQL ', resQL);
 
   if (Object.keys(resQL).length === 0) return;
 

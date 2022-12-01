@@ -24,7 +24,6 @@ export default function Page({ searchParams }: any) {
               }`,
           }),
         }).then(res => res.json());
-        console.log('OAUTH RESPONSE', oauthResponse);
         localStorage.setItem('token', oauthResponse.data.postOAuth.token);
         router.push('/');
       };

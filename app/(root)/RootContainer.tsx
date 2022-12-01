@@ -46,8 +46,6 @@ const RootContainer = ({
     toast.dismiss(rootLoading);
   };
   useEffect(() => {
-    console.log('Do we get inside the useEffect?');
-
     const handleLogin = async (code: string) => {
       let currJWT = window.localStorage.getItem('token');
 

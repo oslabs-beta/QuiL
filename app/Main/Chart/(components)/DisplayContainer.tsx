@@ -61,7 +61,6 @@ const DisplayContainer = ({
         return data.json();
       })
       .then(data => {
-        console.log('userJWT.userId', userJWT);
         setSaveModalVisible(false);
       });
   };

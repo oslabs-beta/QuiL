@@ -69,7 +69,6 @@ export const userController = {
       rows.forEach((el: any) => {
         resObj.db.push(el);
       });
-      console.log(resObj);
       return resObj;
     } catch (err) {
       return { success: false };
@@ -77,10 +76,6 @@ export const userController = {
   },
   validateUser: async (isUser: GetUser): Promise<CreateNewAccountResponse> => {
     try {
-      console.log(
-        'DOES THIS LOG IN THE DB VALIDATE',
-        process.env.QUIL_DB_CONNECTION_STRING
-      );
       const { username, password } = isUser;
       const query = `SELECT * FROM users WHERE username = $1;`;
       const values = [username];
