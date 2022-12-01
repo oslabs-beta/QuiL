@@ -8,6 +8,7 @@ import test from "node:test";
 import { setSyntheticLeadingComments } from "typescript";
 import quil from "./quil.png";
 import { motion } from "framer-motion";
+import Image from "next/image";
 const NavigationBar = ({
   userJWT,
   handleSetTheme,
@@ -21,17 +22,14 @@ const NavigationBar = ({
 
   return (
     <motion.div
-      whileHover={{ backgroundColor: "accent", scale: 1.01 }}
+      whileHover={{ backgroundColor: "accent", scale: 0.95 }}
       className='navbar'
       data-cy='nav-bar'
     >
       <div className='navbar'>
-        <div className='flex-1'>
-          <img
-            src='https://files.slack.com/files-pri/T03N6QNVCES-F04D7PJ2GHZ/quillogo_2.png'
-            alt=''
-          />
-        </div>
+        <motion.div className='flex-1 ml-5'>
+          <Image width='60' height='60' src='/logo.png' alt='' />
+        </motion.div>
         <div className='flex-none'>
           <div className='btn-group flex space-x-1 font-mono'>
             <motion.button
@@ -79,7 +77,8 @@ const NavigationBar = ({
             >
               About
             </motion.button>
-            <select
+            <motion.select
+              whileHover={{ scale: 1.1 }}
               onChange={(e: any) => handleSetTheme(e.target.value)}
               className='select bg-neutral-content w-1/3 max-w-xs text-base-300 mr-9'
             >
@@ -92,7 +91,7 @@ const NavigationBar = ({
               <option value='cyberpunk'>cyberpunk</option>
               <option value='synthwave'>synthwave</option>
               <option value='pastel'>pastel</option>
-            </select>
+            </motion.select>
           </div>
         </div>
       </div>
