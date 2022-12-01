@@ -51,12 +51,12 @@ Powered by QuiL's database analyzation algorithm, QuiL is able to use a database
 
 ### Contributors
 
-  -Brian Tran                 LinkedIn    Git Hub
+  -Brian Tran             
   
-  -Stephen Fitzsimmons        LinkedIn    Git Hub
+  -Stephen Fitzsimmons     
   
-  -Daniel An                  LinkedIn    Git Hub
+  -Daniel An 
   
-  -Andres Jaramillo           LinkedIn    Git Hub
+  -Andres Jaramillo
 
 
