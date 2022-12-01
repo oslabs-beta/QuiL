@@ -34,6 +34,8 @@ const Login = () => {
         return data.json();
       })
       .then(data => {
+        console.log('data', data);
+
         localStorage.setItem('token', data.data.signin.token);
         router.push('/');
       });

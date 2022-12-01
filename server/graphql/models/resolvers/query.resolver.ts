@@ -35,7 +35,6 @@ export const Query = {
   the nodes, resolvers, and schemas
   */
   getAllData: async (_: any, args: ArgType): Promise<QuiLData> => {
-    console.log('URI', args.uri);
     if (args.uri === 'undefined')
       return {
         nodes: null,

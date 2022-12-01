@@ -180,7 +180,6 @@ const MainContainer = ({
 
   // changing the themes for Toast(notifications) and Tailwind/app
   const handleSetTheme = (value: any): void => {
-    console.log('clicked');
     setTheme(value);
     if (theme !== 'light' && theme !== 'night') {
       setToastTheme('colored');

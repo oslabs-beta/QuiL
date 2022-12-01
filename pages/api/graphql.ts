@@ -8,10 +8,9 @@ export default async function handler(
   request: NextApiRequest,
   response: NextApiResponse
 ) {
-  const { data } = await axios.post(uri, request.body);
-  console.log('DATA ', data);
+  console.log('here');
 
-  response.status(200).json({
-    data,
-  });
+  const { data } = await axios.post(uri, request.body);
+
+  response.status(200).json(data);
 }
