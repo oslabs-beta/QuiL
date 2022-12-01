@@ -2,6 +2,7 @@ import { inputObj, userObj } from "../../(root)/frontendTypes";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import AnimationLogin from "./AnimateLogin";
 const randomstring = require("randomstring");
 
 const Login = () => {
@@ -40,16 +41,7 @@ const Login = () => {
   return (
     <div className='hero min-h-screen bg-base-200'>
       <div className='hero-content flex-col lg:flex-row-reverse'>
-        <div className='text-center lg:text-left'>
-          <motion.h1
-            className='text-5xl font-bold'
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1 }}
-          >
-            Login into QuiL
-          </motion.h1>
-        </div>
+        <AnimationLogin />
         <motion.div
           className='card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100'
           initial={{ opacity: 0, scale: 0.5 }}
