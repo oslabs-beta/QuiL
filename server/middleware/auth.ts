@@ -20,7 +20,7 @@ const { GITHUB_OAUTH_CLIENT_ID, GITHUB_OAUTH_CLIENT_SECRET, JWT_SECRET } =
 /*
 Uses a github oauth code to exchange for an OAuth access token. 
 This allows subsequent funcs to use this OAuth token to query the
- GitHub api on the authenticated user's behalf.
+ GitHub api on the authenticated user's behalf...
 */
 export async function getOAuthToken(
   code: string
