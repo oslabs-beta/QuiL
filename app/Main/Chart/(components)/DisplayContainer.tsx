@@ -42,21 +42,24 @@ const DisplayContainer = ({
 
   const saveURIHandler = async (e: any) => {
     e.preventDefault();
-    let data = await fetch('http://quilbackend1-env.eba-52zmdsmp.us-east-1.elasticbeanstalk.com/graphql', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        query: `mutation {
+    let data = await fetch(
+      'https://quilbackend1-env.eba-52zmdsmp.us-east-1.elasticbeanstalk.com/graphql',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: `mutation {
           saveData(projectName: "${e.target.URInickname.value}", projectData: "${e.target.URIstring.value}", userId: ${userJWT.userId}) {
             projectId
             projectName
             success
           }
         }`,
-      }),
-    })
+        }),
+      }
+    )
       .then(data => {
         return data.json();
       })

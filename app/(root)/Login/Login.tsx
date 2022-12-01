@@ -1,9 +1,9 @@
-import { inputObj, userObj } from "../../(root)/frontendTypes";
-import Link from "next/link";
-import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
-import AnimationLogin from "./AnimateLogin";
-const randomstring = require("randomstring");
+import { inputObj, userObj } from '../../(root)/frontendTypes';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';
+import AnimationLogin from './AnimateLogin';
+const randomstring = require('randomstring');
 
 const Login = () => {
   const router = useRouter();
@@ -18,7 +18,7 @@ const Login = () => {
     };
 
     let data = await fetch(
-      'http://quilbackend1-env.eba-52zmdsmp.us-east-1.elasticbeanstalk.com/graphql',
+      'https://quilbackend1-env.eba-52zmdsmp.us-east-1.elasticbeanstalk.com/graphql',
       {
         method: 'POST',
         headers: {
@@ -43,8 +43,8 @@ const Login = () => {
   };
 
   return (
-    <div className='hero min-h-screen bg-base-200'>
-      <div className='hero-content flex-col lg:flex-row-reverse'>
+    <div className="hero min-h-screen bg-base-200">
+      <div className="hero-content flex-col lg:flex-row-reverse">
         <AnimationLogin />
         <motion.div
           className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100"
@@ -80,11 +80,11 @@ const Login = () => {
               Password:{' '}
             </label>
             <input
-              className='input input-bordered w-5/6 max-w-xs ml-7'
-              name='password'
-              type='password'
-              placeholder='password'
-              data-cy='login-password'
+              className="input input-bordered w-5/6 max-w-xs ml-7"
+              name="password"
+              type="password"
+              placeholder="password"
+              data-cy="login-password"
             ></input>
             <div className="form-control mt-6">
               <button

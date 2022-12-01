@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 async function getData(URI: string) {
   let data = await fetch(
-    'http://quilbackend1-env.eba-52zmdsmp.us-east-1.elasticbeanstalk.com/graphql',
+    'https://quilbackend1-env.eba-52zmdsmp.us-east-1.elasticbeanstalk.com/graphql',
     {
       method: 'POST',
 
