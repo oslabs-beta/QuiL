@@ -41,7 +41,7 @@ async function getData(URI: string) {
     }),
   });
 
-  const res = await data.json();
+  const res = await data?.json();
   return res;
 }
 

@@ -1,11 +1,11 @@
-import { type } from 'os';
-import { Node, Edge, NodeChange, EdgeChange } from 'reactflow';
-import { StringMappingType } from 'typescript';
+import { type } from "os";
+import { Node, Edge, NodeChange, EdgeChange } from "reactflow";
+import { StringMappingType } from "typescript";
 import {
   nodeShape,
   ResolverStrings,
   SingleSchemaType,
-} from '../../server/types';
+} from "../../server/types";
 
 export type DisplayContainerProps = {
   displayMode: string;
@@ -61,6 +61,9 @@ export type ChartProps = {
   handleSetNodes: (cb: (nds: Node[]) => Node[]) => void;
 };
 
+export type AboutPageProps = {
+  theme: string;
+};
 // handleSetNodes/handleSetEdges may need to change
 export type FlowProps = {
   nodes: Node[];

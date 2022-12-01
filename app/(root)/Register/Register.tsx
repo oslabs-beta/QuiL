@@ -93,7 +93,7 @@ const Register = () => {
             <input
               className='input input-bordered w-5/6 max-w-xs ml-7'
               name='password'
-              type='text'
+              type='password'
               placeholder='password'
             ></input>
             <div className='form-control mt-6 mx-2'>

@@ -7,6 +7,7 @@ since return value is query obj, we can import it into helperFuncs
 */
 
 function dbInstance(this: dbConstructor, inputURI: string): void {
+  console.log(inputURI);
   if (inputURI.includes('postgres')) this.dbType = 'PostgreSQL';
   this.pool = new Pool({ connectionString: inputURI });
   this.query = (text: string, params?: object, callback?: Function): Object => {

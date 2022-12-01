@@ -85,7 +85,7 @@ const Login = () => {
             <input
               className='input input-bordered w-5/6 max-w-xs ml-7'
               name='password'
-              type='text'
+              type='password'
               placeholder='password'
               data-cy='login-password'
             ></input>

@@ -19,11 +19,11 @@ const NavigationBar = ({
   const [uriParam, setUriParam] = useState(URIfromRoot);
 
   return (
-    <div className="navbar" data-cy="nav-bar">
-      <div className="navbar bg-base-100">
+    <div className="navbar bg-base-200" data-cy="nav-bar">
+      <div className="navbar">
         <div className="flex-1">
           <img
-            src="https://cdn.discordapp.com/attachments/1036015925679378457/1047680349406236733/My_project.png"
+            src="https://files.slack.com/files-pri/T03N6QNVCES-F04D7PJ2GHZ/quillogo_2.png"
             alt=""
           />
         </div>
@@ -65,7 +65,7 @@ const NavigationBar = ({
             </button>
             <select
               onChange={(e: any) => handleSetTheme(e.target.value)}
-              className="select bg-neutral-content w-1/4 max-w-xs text-base-300"
+              className="select bg-neutral-content w-1/3 max-w-xs text-base-300 mr-9"
             >
               <option disabled selected>
                 Theme
