@@ -58,8 +58,8 @@ export const userController = {
   },
   getUserProject: async (userId: Number) => {
     try {
-      const query = `SELECT name, owner_id, saved_db FROM projects WHERE owner_id = $1;`;
-      const values = [userId]
+      const query = `SELECT * FROM projects WHERE owner_id = $1;`;
+      const values = [userId];
       const { rows } = await quilDbConnection.query(query, values);
       const resObj: any = {
         db: [],
@@ -122,10 +122,8 @@ export const userController = {
       const values = [projectId];
       const { rows } = await quilDbConnection.query(queryString, values);
       return {
-        deleted: true, 
-      }
-    } catch (error) {
-      
-    }
-  }
+        deleted: true,
+      };
+    } catch (error) {}
+  },
 };

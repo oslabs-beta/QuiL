@@ -30,8 +30,9 @@ type ResolverStrings {
 
 type ProjectData {
   name: String,
-   owner_id: Int,
-saved_db: String
+  owner_id: Int,
+  saved_db: String,
+  _id: Int
 }
 
 type SchemasObject {

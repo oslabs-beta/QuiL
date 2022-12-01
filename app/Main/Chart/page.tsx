@@ -68,6 +68,7 @@ export default async function Page({
     // Parent component of reactflow needs a height and width in order to display
     <div>
       <MainContainer
+        URI={searchParams.URI}
         data={data}
         initialNodes={initialNodes}
         initialEdges={initialEdges}
