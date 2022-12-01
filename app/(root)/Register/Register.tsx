@@ -15,7 +15,7 @@ const Register = () => {
       password: e.target.password.value,
     };
     let data = await fetch(
-      'http://quilbackend1-env.eba-52zmdsmp.us-east-1.elasticbeanstalk.com/graphql',
+      'https://quilbackend1-env.eba-52zmdsmp.us-east-1.elasticbeanstalk.com/graphql',
       {
         method: 'POST',
         headers: {
@@ -94,10 +94,10 @@ const Register = () => {
               Password:
             </label>
             <input
-              className='input input-bordered w-5/6 max-w-xs ml-7'
-              name='password'
-              type='password'
-              placeholder='password'
+              className="input input-bordered w-5/6 max-w-xs ml-7"
+              name="password"
+              type="password"
+              placeholder="password"
             ></input>
             <div className="form-control mt-6 mx-2">
               <button

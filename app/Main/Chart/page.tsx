@@ -1,12 +1,12 @@
 import MainContainer from './(components)/MainContainer';
-import createNodes from './(flow)/Nodes';
 import createEdges from './(flow)/Edges';
+import createNodes from './(flow)/Nodes';
 
 import 'react-toastify/dist/ReactToastify.css';
 
 async function getData(URI: string) {
   let data = await fetch(
-    'http://quilbackend1-env.eba-52zmdsmp.us-east-1.elasticbeanstalk.com/graphql',
+    'https://quilbackend1-env.eba-52zmdsmp.us-east-1.elasticbeanstalk.com/graphql',
     {
       method: 'POST',
 

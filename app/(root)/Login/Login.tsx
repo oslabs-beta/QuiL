@@ -1,7 +1,7 @@
-import { inputObj, userObj } from '../../(root)/frontendTypes';
-import Link from 'next/link';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { inputObj, userObj } from '../../(root)/frontendTypes';
 const randomstring = require('randomstring');
 
 const Login = () => {
@@ -17,7 +17,7 @@ const Login = () => {
     };
 
     let data = await fetch(
-      'http://quilbackend1-env.eba-52zmdsmp.us-east-1.elasticbeanstalk.com/graphql',
+      'https://quilbackend1-env.eba-52zmdsmp.us-east-1.elasticbeanstalk.com/graphql',
       {
         method: 'POST',
         headers: {
@@ -32,10 +32,10 @@ const Login = () => {
         }),
       }
     )
-      .then(data => {
+      .then((data) => {
         return data.json();
       })
-      .then(data => {
+      .then((data) => {
         localStorage.setItem('token', data.data.signin.token);
         router.push('/');
       });
@@ -87,11 +87,11 @@ const Login = () => {
               Password:{' '}
             </label>
             <input
-              className='input input-bordered w-5/6 max-w-xs ml-7'
-              name='password'
-              type='password'
-              placeholder='password'
-              data-cy='login-password'
+              className="input input-bordered w-5/6 max-w-xs ml-7"
+              name="password"
+              type="password"
+              placeholder="password"
+              data-cy="login-password"
             ></input>
             <div className="form-control mt-6">
               <button
