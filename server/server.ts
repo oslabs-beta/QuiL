@@ -60,8 +60,8 @@ async function startApolloServer() {
     })
   );
 
-  app.get('/viz', (req, res) => {
-    res.send('Hi');
+  app.get('/', (req, res) => {
+    res.send('hi');
   });
   // Modified server startup
   await new Promise<void>(resolve =>
