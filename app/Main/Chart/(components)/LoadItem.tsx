@@ -28,7 +28,7 @@ function LoadItem({
   };
 
   const deleteURIHandler = async (id: any): Promise<void> => {
-    let data = await fetch('http://quilbackend1-env.eba-52zmdsmp.us-east-1.elasticbeanstalk.com/graphql', {
+    let data = await fetch('/api/graphql', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

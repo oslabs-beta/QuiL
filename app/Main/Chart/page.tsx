@@ -5,17 +5,15 @@ import createEdges from './(flow)/Edges';
 import 'react-toastify/dist/ReactToastify.css';
 
 async function getData(URI: string) {
-  let data = await fetch(
-    'http://quilbackend1-env.eba-52zmdsmp.us-east-1.elasticbeanstalk.com/graphql',
-    {
-      method: 'POST',
+  let data = await fetch('/api/graphql', {
+    method: 'POST',
 
-      headers: {
-        'Content-Type': 'application/json',
-      },
+    headers: {
+      'Content-Type': 'application/json',
+    },
 
-      body: JSON.stringify({
-        query: `query GetData {
+    body: JSON.stringify({
+      query: `query GetData {
       getAllData(uri: "${URI}") {
         nodes {
             name,
@@ -39,9 +37,8 @@ async function getData(URI: string) {
           }
       }
     }`,
-      }),
-    }
-  );
+    }),
+  });
 
   const res = await data?.json();
   return res;

@@ -11,7 +11,7 @@ export default function Page({ searchParams }: any) {
   useEffect(() => {
     if (code) {
       const handleOAuth = async (code: string) => {
-        const oauthResponse = await fetch('http://quilbackend1-env.eba-52zmdsmp.us-east-1.elasticbeanstalk.com/graphql', {
+        const oauthResponse = await fetch('/api/graphql', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
