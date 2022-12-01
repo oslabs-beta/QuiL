@@ -1,37 +1,59 @@
 "use client";
 import { motion } from "framer-motion";
-
+import Image from "next/image";
 const AboutPage = (): JSX.Element => {
   return (
     <div>
-      <div className='flex flex-center stats shadow'>
+      <div className='flex'>
         <motion.div
-          initial={{ opacity: 0, y: -100 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0 }}
-          className='stat'
+          initial={{ opacity: 1 }}
+          animate={{ opacity: 0 }}
+          transition={{ duration: 3, delay: 5.5 }}
+          className='flex'
         >
-          <div className='stat-title flex justify-center'>
-            Meet the makers of
-          </div>
-          <div className='stat-value flex justify-center'>QuiL</div>
+          <motion.h2
+            initial={{ opacity: 0, y: -100 }}
+            animate={{ opacity: 1, y: 130 }}
+            transition={{ duration: 1, delay: 0.5 }}
+            className='stat-value flex flex-start mx-4 text-secondary'
+          >
+            Nice To Meet <a className='text-neutral-content ml-3'>You!</a>
+          </motion.h2>
+          <motion.h2
+            initial={{ opacity: 0, x: -100, y: 130 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, delay: 2 }}
+            className='stat-value flex flex-start justify-start text-secondary'
+          >
+            Here's How You Can Learn More
+          </motion.h2>
         </motion.div>
+        <motion.h2
+          initial={{ opacity: 0, x: -100, y: 130 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1, delay: 2 }}
+          className='stat-value flex flex-start justify-start ml-4 text-neutral-conent'
+        >
+          About Us
+        </motion.h2>
       </div>
       <main className='flex flex-row w-5/6 items-center justify-center space-x-2 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 '>
         <motion.div
           initial={{ opacity: 0, x: -100 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 1.75 }}
+          transition={{ duration: 1, delay: 3.75 }}
           className='card card-side bg-base-100 shadow-xl'
         >
           <motion.figure
-            whileHover={{ scale: 1.2 }}
+            whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 1 }}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
           >
-            <img
+            <Image
+              width='1080'
+              height='1080'
               className='w-52 h-72'
-              src='https://ca.slack-edge.com/T03N6QNVCES-U03S0B9B32L-8c8a9f347a77-512'
+              src='/brian.png'
               alt='Brian img'
             />
           </motion.figure>
@@ -81,18 +103,20 @@ const AboutPage = (): JSX.Element => {
         <motion.div
           initial={{ opacity: 0, x: -100 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 1.75 }}
+          transition={{ duration: 1, delay: 4 }}
           className='card card-side bg-base-100 shadow-xl'
         >
           <motion.figure
-            whileHover={{ scale: 1.2 }}
+            whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 1 }}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
           >
-            <img
+            <Image
+              width='1080'
+              height='1080'
               className='w-52 h-72'
-              src='https://media-exp1.licdn.com/dms/image/C4E03AQE2WoT00WDxRg/profile-displayphoto-shrink_800_800/0/1612872499242?e=1675296000&v=beta&t=m0ffGs-oRTlhAgCnbKnimf0fDMzsRyD1ibIFCHT-J2U'
-              alt='Stephen img'
+              src='/stephen.png'
+              alt='stephen img'
             />
           </motion.figure>
           <div className='flex flex-start w-52 card-body'>
@@ -139,18 +163,20 @@ const AboutPage = (): JSX.Element => {
         <motion.div
           initial={{ opacity: 0, x: -100 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 1.5 }}
+          transition={{ duration: 1, delay: 4.25 }}
           className='card card-side bg-base-100 shadow-xl'
         >
           <motion.figure
-            whileHover={{ scale: 1.2 }}
+            whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 1 }}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
           >
-            <img
+            <Image
+              width='1080'
+              height='1080'
               className='w-52 h-72'
-              src='https://media-exp1.licdn.com/dms/image/C4D03AQHKoJr4e28Rmg/profile-displayphoto-shrink_800_800/0/1567035931176?e=1675296000&v=beta&t=8BQb4QOizV3mwPSybdlUqhodTLeHKB0z5tJ-sEtDVu0'
-              alt='Daniel img'
+              src='/daniel.png'
+              alt='daniel img'
             />
           </motion.figure>
           <div className='flex flex-start w-52 card-body'>
@@ -199,18 +225,20 @@ const AboutPage = (): JSX.Element => {
         <motion.div
           initial={{ opacity: 0, x: -100 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 1.25 }}
+          transition={{ duration: 1, delay: 4.25 }}
           className='card card-side bg-base-100 shadow-xl'
         >
           <motion.figure
-            whileHover={{ scale: 1.2 }}
+            whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 1 }}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
           >
-            <img
+            <Image
+              width='1080'
+              height='1920'
               className='w-52 h-72'
-              src='https://scontent-lax3-2.xx.fbcdn.net/v/t1.6435-9/45423964_10156140008698924_6016303288163500032_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=I2YeLY8VOqEAX-Uk2DU&tn=_OvKFTD6c-P9P08f&_nc_ht=scontent-lax3-2.xx&oh=00_AfCQBRxbWQoCJSVTJPLEf4ghNPRLY6bHPgru70XVyMV5Gg&oe=63AF2FE4'
-              alt='Andres img'
+              src='/andres.jpeg'
+              alt='andres img'
             />
           </motion.figure>
           <div className='flex flex-start w-52 card-body'>

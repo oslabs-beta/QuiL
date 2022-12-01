@@ -22,18 +22,23 @@ const NavigationBar = ({
 
   return (
     <motion.div
-      whileHover={{ backgroundColor: "accent", scale: 0.95 }}
+      whileHover={{ backgroundColor: "accent", scale: 0.97 }}
       className='navbar'
       data-cy='nav-bar'
     >
       <div className='navbar'>
         <motion.div className='flex-1 ml-5'>
-          <Image width='60' height='60' src='/logo.png' alt='' />
+          <motion.button
+            whileHover={{ scale: 1.2 }}
+            onClick={() => mainPageMode()}
+          >
+            <Image width='55' height='55' src='/logo.png' alt='' />
+          </motion.button>
         </motion.div>
         <div className='flex-none'>
           <div className='btn-group flex space-x-1 font-mono'>
             <motion.button
-              whileHover={{ scale: 1.1 }}
+              whileHover={{ scale: 1.12 }}
               className='btn btn-primary'
               onClick={() => mainPageMode()}
             >
@@ -41,7 +46,7 @@ const NavigationBar = ({
             </motion.button>
             {userJWT ? (
               <motion.button
-                whileHover={{ scale: 1.1 }}
+                whileHover={{ scale: 1.12 }}
                 className='btn btn-secondary'
                 onClick={() => {
                   window.localStorage.removeItem("token");
@@ -53,7 +58,7 @@ const NavigationBar = ({
             ) : (
               <>
                 <motion.button
-                  whileHover={{ scale: 1.1 }}
+                  whileHover={{ scale: 1.12 }}
                   className='btn btn-secondary'
                   onClick={() => {
                     router.push("/Login");
@@ -62,7 +67,7 @@ const NavigationBar = ({
                   Login
                 </motion.button>
                 <motion.button
-                  whileHover={{ scale: 1.1 }}
+                  whileHover={{ scale: 1.12 }}
                   className='btn btn-accent'
                   onClick={() => router.push("/Register")}
                 >
@@ -71,14 +76,14 @@ const NavigationBar = ({
               </>
             )}
             <motion.button
-              whileHover={{ scale: 1.1 }}
+              whileHover={{ scale: 1.12 }}
               className='btn'
               onClick={() => aboutPageMode()}
             >
               About
             </motion.button>
             <motion.select
-              whileHover={{ scale: 1.1 }}
+              whileHover={{ scale: 1.12 }}
               onChange={(e: any) => handleSetTheme(e.target.value)}
               className='select bg-neutral-content w-1/3 max-w-xs text-base-300 mr-9'
             >
