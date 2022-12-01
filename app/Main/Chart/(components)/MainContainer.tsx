@@ -16,6 +16,7 @@ import {
 
 import 'react-toastify/dist/ReactToastify.css';
 const MainContainer = ({
+  URI,
   initialNodes,
   initialEdges,
   data,
@@ -34,6 +35,9 @@ const MainContainer = ({
     try {
       const getUserProjects = async (): Promise<void> => {
         let currJWT = window.localStorage.getItem('token');
+        console.log(typeof currJWT);
+        console.log(currJWT);
+
         let decoded: any;
         if (currJWT) {
           decoded = await jwt_decode(currJWT);
@@ -42,34 +46,43 @@ const MainContainer = ({
         // if JWT doesnt exist, set userJWT to null
         if (!decoded) setUserJWT(null);
         // otherwise decode it and set userJWT object
-        let data = await fetch('http://localhost:4000/graphql', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            query: `query {
-              getUserProjects(userId: ${decoded.userId}) {
-                db {
-                  name
-                  owner_id
-                  saved_db
+        if (currJWT) {
+          let data = await fetch('http://localhost:4000/graphql', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              query: `query {
+                getUserProjects(userId: ${decoded.userId}) {
+                  db {
+                    name
+                    owner_id
+                    saved_db
+                    _id
+                  }
+                  success
                 }
-                success
-              }
-            }`,
-          }),
-        })
-          .then(data => {
-            return data.json();
+              }`,
+            }),
           })
-          .then(data => {
-            setUserProjects(data.data.getUserProjects.db);
-          });
+            .then(data => {
+              return data.json();
+            })
+            .then(data => {
+              setUserProjects(data.data.getUserProjects.db);
+            });
+        }
       };
       getUserProjects();
     } catch (error) {}
   }, []);
+
+  const removeDeletedProject = (id: any) => {
+    setUserProjects(oldState => {
+      return oldState.filter((e: any) => e._id === id);
+    });
+  };
 
   //invoked in VisualizeSchemaResolver
   // Schema Mode is to display the Schemas (drawer) generated
@@ -83,18 +96,18 @@ const MainContainer = ({
   };
   //invoked in visualizeDB.
   // Checks for error in the users before invoking the fetch
-  const uriLaunch = async (): Promise<void> => {
+  const uriLaunch = async (e: any, uri: string): Promise<void> => {
     // e.preventDefault();
     if (uri.includes('postgres')) {
-      launchUri();
+      launchUri(uri);
     } else {
       toast.error('Not a valid PostgreSQL URL');
     }
   };
 
-  const launchUri = async (): Promise<void> => {
-    console.log(uri);
+  const launchUri = async (loadedUri: string): Promise<void> => {
     const toastLoading = toast.loading('loading content');
+    let launchURI = loadedUri || uri;
     let data = await fetch('http://localhost:4000/graphql', {
       method: 'POST',
       headers: {
@@ -103,7 +116,7 @@ const MainContainer = ({
 
       body: JSON.stringify({
         query: `query GetData {
-          getAllData(uri: "${uri}") {
+          getAllData(uri: "${launchURI}") {
             nodes {
                 name,
                 primaryKey,
@@ -180,6 +193,7 @@ const MainContainer = ({
         theme={toastTheme}
       />
       <DisplayContainer
+        URI={URI}
         edges={edges}
         handleSetEdges={handleSetEdges}
         handleSetNodes={handleSetNodes}
@@ -192,6 +206,7 @@ const MainContainer = ({
         resolverGen={resolverGen}
         userJWT={userJWT}
         userProjects={userProjects}
+        removeDeletedProject={removeDeletedProject}
       />
     </div>
   );

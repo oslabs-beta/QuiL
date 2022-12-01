@@ -41,7 +41,7 @@ const NavigationBar = ({
                   Log Out
                 </button>
             ) : (
-              <div className='btn-group flex space-x-1 font-mono'>
+              <>
                 <button
                   className="btn btn-secondary"
                   onClick={() => {
@@ -56,7 +56,7 @@ const NavigationBar = ({
                 >
                   Register
                 </button>
-              </div>
+              </>
             )}
             <button className="btn" onClick={() => router.push('/Main/About')}>
               About

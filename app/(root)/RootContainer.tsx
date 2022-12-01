@@ -18,8 +18,7 @@ const RootContainer = ({
   const [sampleURI, setSampleURI] = useState<string>(null);
   const [code, setCode] = useState(authCode);
   const [stateString, setStateCode] = useState(stateCode);
-  // undefined/null = not logged in
-  // const [loggedUser, setLoggedUser] = useState<{}>(null);
+
   const [userJWT, setUserJWT] = useState<any>(null);
 
   const router = useRouter();
@@ -35,7 +34,7 @@ const RootContainer = ({
   const sanitizeLaunch = (e: any) => {
     if (sampleURI || initialURI.includes('postgres')) {
       handleLaunch(e);
-      rootLoading = toast.loading('loading content..');
+      rootLoading = toast.loading('Loading content..');
     } else {
       toast.error('Not a valid PostgreSQL URL');
     }
@@ -46,9 +45,10 @@ const RootContainer = ({
     router.push(`/Main/Chart?URI=${URI}`);
     toast.dismiss(rootLoading);
   };
-
   useEffect(() => {
     const handleLogin = async (code: string) => {
+      // check if code run oauth
+      // check if theres a token if so set user object
       let currJWT = window.localStorage.getItem('token');
 
       let oauthType;
@@ -58,7 +58,9 @@ const RootContainer = ({
         if (stateString.includes('cmVnaXN0ZXI')) oauthType = 'register';
       }
 
-      if ((code && currJWT === 'null') || !currJWT) {
+      if (code) {
+        console.log('ARE WE FIRING!?');
+
         const queryValue = `mutation {
           postOAuth(code: "${code}", oauthType: "${oauthType}") {
             token
@@ -74,14 +76,18 @@ const RootContainer = ({
             query: queryValue,
           }),
         }).then(res => res.json());
-        
-        localStorage.setItem('token', oauthResponse.data.postOAuth.token);
+
+        console.log('line 82', typeof oauthResponse.data.postOAuth.token);
+
+        if (oauthResponse.data.postOAuth.token !== null) {
+          localStorage.setItem('token', oauthResponse.data.postOAuth.token);
+        }
       }
-      
+
       currJWT = window.localStorage.getItem('token');
       let decoded: decoded;
 
-      if (currJWT !== 'null') {
+      if (currJWT || currJWT !== null) {
         decoded = jwt_decode(currJWT);
       }
       // if JWT doesnt exist, set userJWT to null
@@ -130,17 +136,17 @@ const RootContainer = ({
           <div className="card-body">
             {userJWT ? (
               <div>
-              <h1>Welcome {userJWT.username}</h1>
-              <button
-              className="btn btn-secondary"
-              onClick={() => {
-                window.localStorage.removeItem('token');
-                window.location.reload();
-              }}
-            >
-              Log Out
-            </button>
-            </div>
+                <h1>Welcome {userJWT.username}</h1>
+                <button
+                  className="btn btn-secondary"
+                  onClick={() => {
+                    window.localStorage.removeItem('token');
+                    window.location.reload();
+                  }}
+                >
+                  Log Out
+                </button>
+              </div>
             ) : (
               <>
                 <div className="form-control justify-end w-full min-w-full">
@@ -148,14 +154,14 @@ const RootContainer = ({
                     style={{ marginBottom: '15px' }}
                     className="btn btn-primary min-w-1/2"
                     onClick={() => router.push('/Login')}
-                    data-cy='root-login-btn'
+                    data-cy="root-login-btn"
                   >
                     Login
                   </button>
                   <button
                     className="btn btn-primary min-w-1/2"
                     onClick={() => router.push('/Register')}
-                    data-cy='root-register-btn'
+                    data-cy="root-register-btn"
                   >
                     Register
                   </button>
@@ -187,7 +193,10 @@ const RootContainer = ({
                 data-cy="select-sample-db"
               >
                 <option value="">Pick one</option>
-                <option value="postgres://lkdxllvk:GTIkPygxpPOx0ZVNJ3luQHEfApEIJekP@heffalump.db.elephantsql.com/lkdxllvk" data-cy='sample-starwars'>
+                <option
+                  value="postgres://lkdxllvk:GTIkPygxpPOx0ZVNJ3luQHEfApEIJekP@heffalump.db.elephantsql.com/lkdxllvk"
+                  data-cy="sample-starwars"
+                >
                   Star Wars
                 </option>
                 <option value="postgres://nsjouiot:4nVVHLiARTADoIiwArtQLG-HfkhQR03k@peanut.db.elephantsql.com/nsjouiot">

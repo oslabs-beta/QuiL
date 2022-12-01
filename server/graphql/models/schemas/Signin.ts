@@ -15,7 +15,8 @@ type CreatedUserResponse {
   }
 type GetUserProjectRes {
     db: [ProjectData],
-    success: Boolean
+    success: Boolean,
+    projectId: Int
 }
 
 

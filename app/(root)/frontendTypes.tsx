@@ -19,7 +19,9 @@ export type DisplayContainerProps = {
   handleSetEdges: (cb: (eds: Edge[]) => Edge[]) => void;
   handleSetNodes: (cb: (nds: Node[]) => Node[]) => void;
   userJWT: any;
-  userProjects: projectType[] | [],
+  userProjects: projectType[] | [];
+  URI: string;
+  removeDeletedProject: Function;
 };
 
 export type NavigationBarProps = {
@@ -111,6 +113,7 @@ export type position = {
 };
 
 export type MainContainerProps = {
+  URI: string;
   initialNodes: Node[];
   initialEdges: Edge[];
   data: resQL;
@@ -128,14 +131,13 @@ export type loggedUser = {
   [k: string]: any;
 };
 
-
 export type decoded = {
   [k: string]: any;
 };
 
 export type projectType = {
-  name: string, 
-  owner_id: string, 
-  saved_db: string[],
-  _id: string
-}
+  name: string;
+  owner_id: string;
+  saved_db: string[];
+  _id: string;
+};
