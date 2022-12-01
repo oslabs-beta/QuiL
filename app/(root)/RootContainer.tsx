@@ -65,18 +65,15 @@ const RootContainer = ({
           }
         }`;
 
-        const oauthResponse = await fetch(
-          'https://quilbackend1-env.eba-52zmdsmp.us-east-1.elasticbeanstalk.com/graphql',
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              query: queryValue,
-            }),
-          }
-        ).then(res => res.json());
+        const oauthResponse = await fetch('/api/graphql', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            query: queryValue,
+          }),
+        }).then(res => res.json());
 
         if (oauthResponse.data.postOAuth.token !== null) {
           localStorage.setItem('token', oauthResponse.data.postOAuth.token);

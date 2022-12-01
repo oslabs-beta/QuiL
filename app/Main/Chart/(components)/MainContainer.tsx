@@ -47,15 +47,13 @@ const MainContainer = ({
         if (!decoded) setUserJWT(null);
         // otherwise decode it and set userJWT object
         if (currJWT) {
-          let data = await fetch(
-            'https://quilbackend1-env.eba-52zmdsmp.us-east-1.elasticbeanstalk.com/graphql',
-            {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                query: `query {
+          let data = await fetch('/api/graphql', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              query: `query {
                 getUserProjects(userId: ${decoded.userId}) {
                   db {
                     name
@@ -66,9 +64,8 @@ const MainContainer = ({
                   success
                 }
               }`,
-              }),
-            }
-          )
+            }),
+          })
             .then(data => {
               return data.json();
             })
@@ -120,16 +117,14 @@ const MainContainer = ({
   const launchUri = async (loadedUri: string): Promise<void> => {
     const toastLoading = toast.loading('loading content');
     let launchURI = loadedUri || uri;
-    let data = await fetch(
-      'https://quilbackend1-env.eba-52zmdsmp.us-east-1.elasticbeanstalk.com/graphql',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+    let data = await fetch('/api/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
 
-        body: JSON.stringify({
-          query: `query GetData {
+      body: JSON.stringify({
+        query: `query GetData {
           getAllData(uri: "${launchURI}") {
             nodes {
                 name,
@@ -153,9 +148,8 @@ const MainContainer = ({
               }
           }
         }`,
-        }),
-      }
-    );
+      }),
+    });
     let res = await data.json();
     toast.dismiss(toastLoading);
     if (

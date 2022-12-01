@@ -28,23 +28,20 @@ function LoadItem({
   };
 
   const deleteURIHandler = async (id: any): Promise<void> => {
-    let data = await fetch(
-      'https://quilbackend1-env.eba-52zmdsmp.us-east-1.elasticbeanstalk.com/graphql',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          query: `mutation {
+    let data = await fetch('/api/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query: `mutation {
                     deleteProject(projectId: ${id}) {
                       deleted
                     }
                   }
                 `,
-        }),
-      }
-    ).then(data => {
+      }),
+    }).then(data => {
       return data.json();
     });
     setProjectVisibility(false);

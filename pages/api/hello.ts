@@ -1,12 +1,17 @@
-export default function handler(req: any, res: any) {
-  const requestMethod = req.method;
-  switch (requestMethod) {
-    case 'GET':
-      
-      res.status(200).json({ message: `You submitted the following data: ` });
+import { NextApiRequest, NextApiResponse } from 'next';
+import axios from 'axios';
 
-    // handle other HTTP methods
-    default:
-      res.status(200).json({ message: 'Welcome to API Routes!' });
-  }
+const uri =
+  'http://quilbackend1-env.eba-52zmdsmp.us-east-1.elasticbeanstalk.com/graphql';
+
+export default async function handler(
+  request: NextApiRequest,
+  response: NextApiResponse
+) {
+  const { data } = await axios.post(uri, request.body);
+  console.log('DATA ', data);
+
+  response.status(200).json({
+    data,
+  });
 }
