@@ -103,7 +103,6 @@ const MainContainer = ({
   };
 
   const launchUri = async (): Promise<void> => {
-    console.log(uri);
     const toastLoading = toast.loading("loading content");
     let data = await fetch("http://localhost:4000/graphql", {
       method: "POST",
@@ -168,6 +167,7 @@ const MainContainer = ({
 
   // changing the themes for Toast(notifications) and Tailwind/app
   const handleSetTheme = (e: string): void => {
+    console.log("clicked");
     setTheme(e);
     if (theme !== "light" && theme !== "night") {
       setToastTheme("colored");

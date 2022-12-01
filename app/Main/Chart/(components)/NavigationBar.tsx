@@ -26,12 +26,6 @@ const NavigationBar = ({
         </div>
         <div className='flex-none'>
           <div className='btn-group flex space-x-1 font-mono'>
-            {/* <button
-              className='btn btn-primary'
-              onClick={() => router.push(`/Main/Chart?URI=${uriParam}`)}
-            >
-              Main
-            </button> */}
             <button className='btn btn-primary' onClick={() => mainPageMode()}>
               Main
             </button>
@@ -63,9 +57,6 @@ const NavigationBar = ({
                 </button>
               </>
             )}
-            {/* <button className="btn" onClick={() => router.push('/Main/About')}>
-              About
-            </button> */}
             <button className='btn' onClick={() => aboutPageMode()}>
               About
             </button>
@@ -76,7 +67,12 @@ const NavigationBar = ({
               <option value='light' onClick={() => handleSetTheme("light")}>
                 light
               </option>
-              <option value='night' onClick={() => handleSetTheme("night")}>
+              <option
+                value='night'
+                onClick={() => {
+                  handleSetTheme("night");
+                }}
+              >
                 night
               </option>
               <option value='retro' onClick={() => handleSetTheme("retro")}>
