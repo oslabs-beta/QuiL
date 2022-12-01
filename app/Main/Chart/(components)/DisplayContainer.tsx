@@ -83,14 +83,14 @@ const DisplayContainer = ({
       <div className="DisplayContainer">
         <div className="drawer">
           <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-          <div className="drawer-content">
-            <div className="flex flex-row justify-between items-center">
+          <div className="drawer-content min-w-full">
+            <div className="flex flex-row justify-around items-center">
               <motion.label
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 1, delay: 3.25 }}
+                transition={{ duration: 1, delay: 1.75 }}
                 htmlFor="my-drawer"
-                className="btn btn-accent btn-outline btn-sm drawer-button ml-32 my-2 py-0"
+                className="btn btn-accent btn-outline btn-sm drawer-button my-2 py-0 mr-36"
                 data-cy="view-schemas-resolvers-btn"
               >
                 View Schemas/Resolvers
@@ -98,8 +98,8 @@ const DisplayContainer = ({
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 1, delay: 2.75 }}
-                className="flex flex-row mr-32 w-2/5"
+                transition={{ duration: 1, delay: 2.25 }}
+                className="flex flex-row w-2/5 ml-36"
               >
                 <input
                   type="text"
@@ -228,7 +228,7 @@ const DisplayContainer = ({
 
                 <label
                   htmlFor="loadUri-modal"
-                  className="btn btn-success btn-outline btn-sm"
+                  className="btn btn-accent-content btn-outline btn-sm"
                   onClick={() => setLoadModalVisible(true)}
                 >
                   Load

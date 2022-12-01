@@ -87,11 +87,11 @@ const Login = () => {
               Password:{' '}
             </label>
             <input
-              className="input input-bordered w-5/6 max-w-xs ml-7"
-              name="password"
-              type="text"
-              placeholder="password"
-              data-cy="login-password"
+              className='input input-bordered w-5/6 max-w-xs ml-7'
+              name='password'
+              type='password'
+              placeholder='password'
+              data-cy='login-password'
             ></input>
             <div className="form-control mt-6">
               <button
