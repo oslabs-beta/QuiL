@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import SaveContainer from './SaveContainer';
 import LoadContainer from './LoadContainer';
 import LoadItem from './LoadItem';
+import AboutPage from './AboutPage';
 import Link from 'next/link';
 
 const DisplayContainer = ({
@@ -74,8 +75,10 @@ const DisplayContainer = ({
     LoadComponents.push();
   }
 
-  return (
-    <>
+  if (displayMode === 'aboutPage') {
+    return <AboutPage />;
+  } else
+    return (
       <div className="DisplayContainer">
         <div className="drawer">
           <input id="my-drawer" type="checkbox" className="drawer-toggle" />
@@ -86,7 +89,7 @@ const DisplayContainer = ({
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 1, delay: 3.25 }}
                 htmlFor="my-drawer"
-                className="btn btn-accent btn-outline btn-sm drawer-button ml-12 my-2 py-0"
+                className="btn btn-accent btn-outline btn-sm drawer-button ml-32 my-2 py-0"
                 data-cy="view-schemas-resolvers-btn"
               >
                 View Schemas/Resolvers
@@ -95,7 +98,7 @@ const DisplayContainer = ({
                 initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 1, delay: 2.75 }}
-                className="flex flex-row mr-12 w-2/5"
+                className="flex flex-row mr-32 w-2/5"
               >
                 <input
                   type="text"
@@ -106,7 +109,7 @@ const DisplayContainer = ({
                 ></input>
 
                 <button
-                  className="btn btn-success btn-outline btn-sm"
+                  className="btn btn-outline btn-warning btn-sm"
                   type="submit"
                   onClick={() => uriLaunch()}
                   data-cy="main-launch-btn"
@@ -116,7 +119,7 @@ const DisplayContainer = ({
                 {/* Save Button and Modal */}
                 <label
                   htmlFor="my-modal-3"
-                  className="btn btn-success btn-outline btn-sm"
+                  className="btn btn-success btn-outline btn-sm mx-1"
                   onClick={() => setSaveModalVisible(true)}
                 >
                   Save
@@ -230,7 +233,7 @@ const DisplayContainer = ({
                   Load
                 </label>
                 {loadModalVisible && (
-                  <div className="container max-width">
+                  <div className="">
                     <input
                       type="checkbox"
                       id="loadUri-modal"
@@ -244,29 +247,65 @@ const DisplayContainer = ({
                         >
                           ✕
                         </label>
-                        <div className="overflow-x-auto min-w-500px">
-                          <table className="table w-full">
-                            <thead>
-                              <tr>
-                                <th></th>
-                                <th>Project Name</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {userProjects.map((e: any, i: any) => (
-                                <LoadItem
-                                  id={userProjects[i]._id}
-                                  key={`${i}`}
-                                  userProject={userProjects[i]}
-                                  uriLaunch={uriLaunch}
-                                  setLoadVisibility={setLoadVisibility}
-                                  setLoadModalVisible={setLoadModalVisible}
-                                  removeDeletedProject={removeDeletedProject}
-                                />
-                              ))}
-                            </tbody>
-                          </table>
-                        </div>
+                        {userJWT ? (
+                          <div className="overflow-x-auto min-w-500px">
+                            <table className="table w-full">
+                              <thead>
+                                <tr>
+                                  <th></th>
+                                  <th>Project Name</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {userProjects.map((e: any, i: any) => (
+                                  <LoadItem
+                                    id={userProjects[i]._id}
+                                    key={`${i}`}
+                                    userProject={userProjects[i]}
+                                    uriLaunch={uriLaunch}
+                                    setLoadVisibility={setLoadVisibility}
+                                    setLoadModalVisible={setLoadModalVisible}
+                                    removeDeletedProject={removeDeletedProject}
+                                  />
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                        ) : (
+                          <>
+                            <h1
+                              style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                marginBottom: '5px',
+                              }}
+                            >
+                              Please login to load your project!!
+                            </h1>
+                            <div
+                              style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                              }}
+                            >
+                              <Link href="/Login">
+                                <button
+                                  style={{
+                                    marginRight: '25px',
+                                  }}
+                                  className="btn btn-active btn-primary"
+                                >
+                                  Login
+                                </button>
+                              </Link>
+                              <Link href="/Register">
+                                <button className="btn btn-active btn-secondary">
+                                  Register
+                                </button>
+                              </Link>
+                            </div>
+                          </>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -307,8 +346,7 @@ const DisplayContainer = ({
           </div>
         </div>
       </div>
-    </>
-  );
+    );
 };
 
 export default DisplayContainer;

@@ -7,6 +7,7 @@ import createNodes from '../(flow)/Nodes';
 import createEdges from '../(flow)/Edges';
 import NavigationBar from './NavigationBar';
 import jwt_decode from 'jwt-decode';
+import { motion } from 'framer-motion';
 import { toast, ToastContainer } from 'react-toastify';
 import {
   MainContainerProps,
@@ -35,9 +36,6 @@ const MainContainer = ({
     try {
       const getUserProjects = async (): Promise<void> => {
         let currJWT = window.localStorage.getItem('token');
-        console.log(typeof currJWT);
-        console.log(currJWT);
-
         let decoded: any;
         if (currJWT) {
           decoded = await jwt_decode(currJWT);
@@ -94,6 +92,15 @@ const MainContainer = ({
   const resolverGen = (): void => {
     setDisplayMode('resolverMode');
   };
+
+  const aboutPageMode = (): void => {
+    setDisplayMode('aboutPage');
+  };
+
+  const mainPageMode = (): void => {
+    setDisplayMode('mainPage');
+  };
+
   //invoked in visualizeDB.
   // Checks for error in the users before invoking the fetch
   const uriLaunch = async (e: any, uri: string): Promise<void> => {
@@ -170,16 +177,28 @@ const MainContainer = ({
   };
 
   // changing the themes for Toast(notifications) and Tailwind/app
-  const handleSetTheme = (e: string): void => {
-    setTheme(e);
+  const handleSetTheme = (value: any): void => {
+    console.log('clicked');
+    setTheme(value);
     if (theme !== 'light' && theme !== 'night') {
       setToastTheme('colored');
-    } else setToastTheme(e);
+    } else setToastTheme(value);
   };
 
   return (
     <div data-theme={theme}>
-      <NavigationBar handleSetTheme={handleSetTheme} userJWT={userJWT} />
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, delay: 1 }}
+      >
+        <NavigationBar
+          handleSetTheme={handleSetTheme}
+          userJWT={userJWT}
+          aboutPageMode={aboutPageMode}
+          mainPageMode={mainPageMode}
+        />
+      </motion.div>
       <ToastContainer
         position="top-center"
         autoClose={3000}

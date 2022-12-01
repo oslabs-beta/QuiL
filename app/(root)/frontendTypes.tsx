@@ -28,6 +28,8 @@ export type NavigationBarProps = {
   userJWT: object | null;
   theme?: string;
   handleSetTheme?: (e: string) => void;
+  aboutPageMode: () => void;
+  mainPageMode: () => void;
 };
 
 export type VisualizeSchemaResolverProps = {

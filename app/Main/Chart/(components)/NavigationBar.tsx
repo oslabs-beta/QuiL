@@ -6,10 +6,12 @@ import { useSearchParams } from 'next/navigation';
 import { NavigationBarProps } from '../../../(root)/frontendTypes';
 import test from 'node:test';
 import { setSyntheticLeadingComments } from 'typescript';
-
+import quil from './quil.png';
 const NavigationBar = ({
   userJWT,
   handleSetTheme,
+  aboutPageMode,
+  mainPageMode,
 }: NavigationBarProps): JSX.Element => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -17,29 +19,29 @@ const NavigationBar = ({
   const [uriParam, setUriParam] = useState(URIfromRoot);
 
   return (
-    <div className="navbar" data-cy='nav-bar'>
+    <div className="navbar" data-cy="nav-bar">
       <div className="navbar bg-base-100">
         <div className="flex-1">
-          <a className="btn btn-ghost normal-case text-xl">QuiL 🐺</a>
+          <img
+            src="https://cdn.discordapp.com/attachments/1036015925679378457/1047680349406236733/My_project.png"
+            alt=""
+          />
         </div>
         <div className="flex-none">
           <div className="btn-group flex space-x-1 font-mono">
-            <button
-              className="btn btn-primary"
-              onClick={() => router.push(`/Main/Chart?URI=${uriParam}`)}
-            >
+            <button className="btn btn-primary" onClick={() => mainPageMode()}>
               Main
             </button>
             {userJWT ? (
-                <button
-                  className="btn btn-secondary"
-                  onClick={() => {
-                    window.localStorage.removeItem('token');
-                    window.location.reload();
-                  }}
-                >
-                  Log Out
-                </button>
+              <button
+                className="btn btn-secondary"
+                onClick={() => {
+                  window.localStorage.removeItem('token');
+                  window.location.reload();
+                }}
+              >
+                Log Out
+              </button>
             ) : (
               <>
                 <button
@@ -58,37 +60,22 @@ const NavigationBar = ({
                 </button>
               </>
             )}
-            <button className="btn" onClick={() => router.push('/Main/About')}>
+            <button className="btn" onClick={() => aboutPageMode()}>
               About
             </button>
-            <select className="select w-full max-w-xs">
+            <select
+              onChange={(e: any) => handleSetTheme(e.target.value)}
+              className="select bg-neutral-content w-1/4 max-w-xs text-base-300"
+            >
               <option disabled selected>
                 Theme
               </option>
-              <option value="light" onClick={() => handleSetTheme('light')}>
-                light
-              </option>
-              <option value="night" onClick={() => handleSetTheme('night')}>
-                night
-              </option>
-              <option value="retro" onClick={() => handleSetTheme('retro')}>
-                retro
-              </option>
-              <option
-                value="cyberpunk"
-                onClick={() => handleSetTheme('cyberpunk')}
-              >
-                cyberpunk
-              </option>
-              <option
-                value="synthwave"
-                onClick={() => handleSetTheme('synthwave')}
-              >
-                synthwave
-              </option>
-              <option value="pastel" onClick={() => handleSetTheme('pastel')}>
-                pastel
-              </option>
+              <option value="light">light</option>
+              <option value="night">night</option>
+              <option value="retro">retro</option>
+              <option value="cyberpunk">cyberpunk</option>
+              <option value="synthwave">synthwave</option>
+              <option value="pastel">pastel</option>
             </select>
           </div>
         </div>

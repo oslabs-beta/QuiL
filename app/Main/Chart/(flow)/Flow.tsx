@@ -37,7 +37,7 @@ const Flow = ({ nodes, edges, handleSetNodes, handleSetEdges }: FlowProps) => {
   );
 
   return (
-    <div style={{ height: '100%', background: 'grey' }}>
+    <div style={{ height: '100%', background: 'grey' }}> 
       <ReactFlow
         nodes={nodes}
         edges={edges}

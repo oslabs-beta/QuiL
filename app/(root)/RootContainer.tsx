@@ -47,8 +47,6 @@ const RootContainer = ({
   };
   useEffect(() => {
     const handleLogin = async (code: string) => {
-      // check if code run oauth
-      // check if theres a token if so set user object
       let currJWT = window.localStorage.getItem('token');
 
       let oauthType;
@@ -59,8 +57,6 @@ const RootContainer = ({
       }
 
       if (code) {
-        console.log('ARE WE FIRING!?');
-
         const queryValue = `mutation {
           postOAuth(code: "${code}", oauthType: "${oauthType}") {
             token
@@ -76,8 +72,6 @@ const RootContainer = ({
             query: queryValue,
           }),
         }).then(res => res.json());
-
-        console.log('line 82', typeof oauthResponse.data.postOAuth.token);
 
         if (oauthResponse.data.postOAuth.token !== null) {
           localStorage.setItem('token', oauthResponse.data.postOAuth.token);
@@ -101,7 +95,7 @@ const RootContainer = ({
   return (
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:flex-row-reverse">
-        <div className="text-center lg:text-left">
+        {userJWT ? (
           <motion.h1
             initial={{ opacity: 0, y: -30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -110,22 +104,36 @@ const RootContainer = ({
             className="text-5xl font-bold"
             data-cy="root-h1"
           >
-            QuiL
+            Welcome back<a className="text-accent"></a>
+            <a className="text-primary"> {userJWT.username}</a>
           </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            exit={{ opacity: 0, y: -30 }}
-            className="py-6"
-            data-cy="root-p"
-          >
-            QuiL is a developer tool used to visualize an exisiting relational
-            database and generate the GraphQL schemas & resolvers for that data
-            base. This is intended to help developers see how to tranisition to
-            GraphQL from a traditional REST API architecture.
-          </motion.p>
-        </div>
+        ) : (
+          <div className="text-center lg:text-left">
+            <motion.h1
+              initial={{ opacity: 0, y: -30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1 }}
+              exit={{ opacity: 0, y: -30 }}
+              className="text-5xl font-bold"
+              data-cy="root-h1"
+            >
+              QuiL
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: -30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+              exit={{ opacity: 0, y: -30 }}
+              className="py-6"
+              data-cy="root-p"
+            >
+              QuiL is a developer tool used to visualize an exisiting relational
+              database and generate the GraphQL schemas & resolvers for that
+              data base. This is intended to help developers see how to
+              tranisition to GraphQL from a traditional REST API architecture.
+            </motion.p>
+          </div>
+        )}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
@@ -134,41 +142,6 @@ const RootContainer = ({
           className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100"
         >
           <div className="card-body">
-            {userJWT ? (
-              <div>
-                <h1>Welcome {userJWT.username}</h1>
-                <button
-                  className="btn btn-secondary"
-                  onClick={() => {
-                    window.localStorage.removeItem('token');
-                    window.location.reload();
-                  }}
-                >
-                  Log Out
-                </button>
-              </div>
-            ) : (
-              <>
-                <div className="form-control justify-end w-full min-w-full">
-                  <button
-                    style={{ marginBottom: '15px' }}
-                    className="btn btn-primary min-w-1/2"
-                    onClick={() => router.push('/Login')}
-                    data-cy="root-login-btn"
-                  >
-                    Login
-                  </button>
-                  <button
-                    className="btn btn-primary min-w-1/2"
-                    onClick={() => router.push('/Register')}
-                    data-cy="root-register-btn"
-                  >
-                    Register
-                  </button>
-                </div>
-                <p style={{ display: 'flex', justifyContent: 'center' }}>OR</p>
-              </>
-            )}
             <div className="form-control">
               <label className="label">
                 <span className="label-text">URI</span>
@@ -205,11 +178,11 @@ const RootContainer = ({
               </select>
             </div>
           </div>
-          <div className="form-control mt-6">
+          <div className="form-control mt-4">
             <button
               disabled={initialURI || sampleURI ? false : true}
               onClick={sanitizeLaunch}
-              className="btn btn-primary"
+              className="btn btn-success mx-7 mb-1"
               data-cy="root-launch"
             >
               Launch
@@ -226,6 +199,42 @@ const RootContainer = ({
               pauseOnHover
               theme="dark"
             />
+            {userJWT ? (
+              <div className="form-control mx-7 mt-1 mb-8">
+                <button
+                  className="btn btn-secondary btn-outline"
+                  onClick={() => {
+                    window.localStorage.removeItem('token');
+                    window.location.reload();
+                  }}
+                >
+                  Log Out
+                </button>
+              </div>
+            ) : (
+              <>
+                <div className="form-control justify-end w-full min-w-full mt-3">
+                  <p className="flex justify-center text-xs">OR</p>
+                  <div className="flex justify-center pt-2">
+                    <button
+                      style={{ marginBottom: '15px' }}
+                      className="btn btn-primary btn-outline w-2/5 mx-1"
+                      onClick={() => router.push('/Login')}
+                      data-cy="root-login-btn"
+                    >
+                      Login
+                    </button>
+                    <button
+                      className="btn btn-accent btn-outline w-2/5 mx-1"
+                      onClick={() => router.push('/Register')}
+                      data-cy="root-register-btn"
+                    >
+                      Register
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </motion.div>
       </div>
