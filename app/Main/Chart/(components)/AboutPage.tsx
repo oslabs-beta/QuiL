@@ -1,4 +1,6 @@
 'use client';
+import Image from 'next/image';
+
 const AboutPage = (): JSX.Element => {
   return (
     <div>
@@ -13,9 +15,11 @@ const AboutPage = (): JSX.Element => {
       <main className="flex flex-row w-5/6 items-center justify-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         <div className="card card-side bg-base-100 shadow-xl">
           <figure>
-            <img
+            <Image
+              width="1080"
+              height="1080"
               className="w-52 h-72"
-              src="https://ca.slack-edge.com/T03N6QNVCES-U03S0B9B32L-8c8a9f347a77-512"
+              src="/brian.png"
               alt="Brian img"
             />
           </figure>
@@ -54,10 +58,12 @@ const AboutPage = (): JSX.Element => {
         </div>
         <div className="card card-side bg-base-100 shadow-xl">
           <figure>
-            <img
+            <Image
+              width="1080"
+              height="1080"
               className="w-52 h-72"
-              src="https://media-exp1.licdn.com/dms/image/C4E03AQE2WoT00WDxRg/profile-displayphoto-shrink_800_800/0/1612872499242?e=1675296000&v=beta&t=m0ffGs-oRTlhAgCnbKnimf0fDMzsRyD1ibIFCHT-J2U"
-              alt="Stephen img"
+              src="/stephen.png"
+              alt="stephen img"
             />
           </figure>
           <div className="flex flex-start w-52 card-body">
@@ -93,10 +99,12 @@ const AboutPage = (): JSX.Element => {
         </div>
         <div className="card card-side bg-base-100 shadow-xl">
           <figure>
-            <img
+            <Image
+              width="1080"
+              height="1080"
               className="w-52 h-72"
-              src="https://media-exp1.licdn.com/dms/image/C4D03AQHKoJr4e28Rmg/profile-displayphoto-shrink_800_800/0/1567035931176?e=1675296000&v=beta&t=8BQb4QOizV3mwPSybdlUqhodTLeHKB0z5tJ-sEtDVu0"
-              alt="Daniel img"
+              src="/daniel.png"
+              alt="daniel img"
             />
           </figure>
           <div className="flex flex-start w-52 card-body">
@@ -134,10 +142,12 @@ const AboutPage = (): JSX.Element => {
         </div>
         <div className="card card-side bg-base-100 shadow-xl">
           <figure>
-            <img
+            <Image
+              width="1080"
+              height="1920"
               className="w-52 h-72"
-              src="https://scontent-lax3-2.xx.fbcdn.net/v/t1.6435-9/45423964_10156140008698924_6016303288163500032_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=I2YeLY8VOqEAX-Uk2DU&tn=_OvKFTD6c-P9P08f&_nc_ht=scontent-lax3-2.xx&oh=00_AfCQBRxbWQoCJSVTJPLEf4ghNPRLY6bHPgru70XVyMV5Gg&oe=63AF2FE4"
-              alt="Andres img"
+              src="/andres.jpeg"
+              alt="andres img"
             />
           </figure>
           <div className="flex flex-start w-52 card-body">
