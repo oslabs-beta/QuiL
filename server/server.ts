@@ -5,6 +5,8 @@ import express from 'express';
 import http from 'http';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 // Importing the combined type and resolver definitions to import to Apollo Server
 import { typeDefs, resolvers } from './graphql/modelsSetup';
@@ -58,12 +60,18 @@ async function startApolloServer() {
     })
   );
 
+  app.get('/viz', (req, res) => {
+    res.send('Hi');
+  });
   // Modified server startup
   await new Promise<void>(resolve =>
     httpServer.listen({ port: 4000 }, resolve)
   );
   // Display a log to notify that the GQL server is up and running
+  console.log('DOES THIS LOG', process.env.QUIL_DB_CONNECTION_STRING);
   console.log(`🪶 GraphQL server ready at http://localhost:4000/  🪶`);
 }
 
 startApolloServer();
+
+export { startApolloServer };

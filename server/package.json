@@ -7,7 +7,7 @@
     "build": "next build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "concurrently \"next dev\" \"ts-node-dev server/server.ts\"",
-    "start": "next start"
+    "start": "node dist/server/server.js"
   },
   "repository": {
     "type": "git",

@@ -30,7 +30,9 @@ const MainContainer = ({
   const [theme, setTheme] = useState<string>('night');
   const [userJWT, setUserJWT] = useState<any>();
   const [userProjects, setUserProjects] = useState<projectType[]>([]);
-  const [toastTheme, setToastTheme] = useState<string>('dark');
+  const [toastTheme, setToastTheme] = useState<'light' | 'dark' | 'colored'>(
+    'dark'
+  );
 
   useEffect(() => {
     try {
@@ -103,7 +105,7 @@ const MainContainer = ({
 
   //invoked in visualizeDB.
   // Checks for error in the users before invoking the fetch
-  const uriLaunch = async (e: any, uri: string): Promise<void> => {
+  const uriLaunch = async (e?: any, uri?: string): Promise<void> => {
     // e.preventDefault();
     if (uri.includes('postgres')) {
       launchUri(uri);
@@ -182,7 +184,7 @@ const MainContainer = ({
     setTheme(value);
     if (theme !== 'light' && theme !== 'night') {
       setToastTheme('colored');
-    } else setToastTheme(value);
+    } else setToastTheme('light');
   };
 
   return (

@@ -26,8 +26,6 @@ const DisplayContainer = ({
   URI,
   removeDeletedProject,
 }: DisplayContainerProps): JSX.Element => {
-  console.log('USER PORJS', userProjects);
-
   const [saveModalVisible, setSaveModalVisible] = useState<boolean>(true);
   const [loadModalVisible, setLoadModalVisible] = useState<boolean>(true);
 

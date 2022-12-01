@@ -1,6 +1,5 @@
 const pluralize = require('pluralize');
 // TODO: Combine and refactor Type definitions
-import { node } from '../app/(root)/frontendTypes';
 import { ArgType, ResolverStrings, TableResolver } from './types';
 import { quilDbConnection as db } from './db/quilDBConnection';
 
@@ -9,6 +8,25 @@ This function creates the actual function defintions for resolvers related to th
 This allows the functions definitions to be passed to makeResolverStrings which stringifies the 
 defintions so they can be sent to the frontend
 */
+
+export type node = {
+  name: string;
+  primaryKey: string;
+  columns: columns;
+  edges: edge[];
+};
+
+export type edge = {
+  fKey: string;
+  refTable: string;
+};
+export type columns = column[];
+
+export type column = {
+  columnName: string;
+  dataType: string;
+};
+
 const makeResolverFunctions = (node: node): TableResolver => {
   const getOne = async (_: any, args: ArgType) => {
     const query = `SELECT * FROM ${node.name} WHERE ${node.primaryKey} = $1`;

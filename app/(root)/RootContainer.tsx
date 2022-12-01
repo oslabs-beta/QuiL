@@ -46,8 +46,12 @@ const RootContainer = ({
     toast.dismiss(rootLoading);
   };
   useEffect(() => {
+    console.log('Do we get inside the useEffect?');
+
     const handleLogin = async (code: string) => {
+      console.log('Inside login', 'CODE:', code);
       let currJWT = window.localStorage.getItem('token');
+      console.log('Inside login', 'TOKEN:', code);
 
       let oauthType;
 
@@ -63,6 +67,8 @@ const RootContainer = ({
           }
         }`;
 
+        console.log('Inside login if (code)', 'query:', queryValue);
+        
         const oauthResponse = await fetch('http://localhost:4000/graphql', {
           method: 'POST',
           headers: {

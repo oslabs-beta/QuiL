@@ -1,0 +1,22 @@
+version: "3"
+services:
+  quilfrontend: 
+    image: 'quil-frontend'
+    container_name: quil-frontend
+    ports:
+      - 3000:3000
+    depends_on:
+      - quilserver
+    command: npm start
+  quilserver:
+    image: 'quil-backend'
+    container_name: quil-server
+    ports:
+      - 4000:4000
+    command: npm start
+    environment:
+      - GITHUB_OAUTH_CLIENT_ID=99436692da0716eb1c22
+      - GITHUB_OAUTH_CLIENT_SECRET=5fa9b64049117efb7af84af8db2b2b16934f015b
+      - JWT_SECRET=19da&0bVb1J4XTdg@fLsx^0117Is00
+      - QUIL_DB_CONNECTION_STRING=postgres://enajtcbr:Y8qxFs9nSsuK55SN-Rqgd1SUfvIMTOSE@heffalump.db.elephantsql.com/enajtcbr
+      - GITHUB_AUTHORIZE_URL=https://github.com/login/oauth/authorize

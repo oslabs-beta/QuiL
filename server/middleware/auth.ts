@@ -1,12 +1,11 @@
 import axios from 'axios';
-import * as dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import {
   CreateNewAccountResponse,
   CreateNewUserObject,
   TokenJwt,
 } from '../types';
-dotenv.config();
+
 import { userController } from './userController';
 
 /*

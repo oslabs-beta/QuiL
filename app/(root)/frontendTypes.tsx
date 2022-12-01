@@ -76,7 +76,7 @@ export type resQL = {
 export type getAllData = {
   nodes: nodeShape[];
   resolvers: ResolverStrings[];
-  schemas: [SchemaType];
+  schemas: SingleSchemaType[];
 };
 
 export type nodes = node[];
@@ -88,6 +88,10 @@ export type node = {
   edges: edge[];
 };
 
+export type edge = {
+  fKey: string;
+  refTable: string;
+};
 export type columns = column[];
 
 export type column = {
@@ -95,10 +99,6 @@ export type column = {
   dataType: string;
 };
 
-export type edge = {
-  fKey: string;
-  refTable: string;
-};
 
 export interface data {
   name: string;
