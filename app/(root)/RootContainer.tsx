@@ -69,7 +69,7 @@ const RootContainer = ({
 
         console.log('Inside login if (code)', 'query:', queryValue);
         
-        const oauthResponse = await fetch('http://localhost:4000/graphql', {
+        const oauthResponse = await fetch('http://quilbackend1-env.eba-52zmdsmp.us-east-1.elasticbeanstalk.com/graphql', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

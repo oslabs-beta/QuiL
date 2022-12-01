@@ -14,7 +14,7 @@ const Register = () => {
       username: e.target.username.value,
       password: e.target.password.value,
     };
-    let data = await fetch('http://localhost:4000/graphql', {
+    let data = await fetch('http://quilbackend1-env.eba-52zmdsmp.us-east-1.elasticbeanstalk.com/graphql', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
