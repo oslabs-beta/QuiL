@@ -7,6 +7,8 @@ import { NavigationBarProps } from '../../../(root)/frontendTypes';
 import test from 'node:test';
 import { setSyntheticLeadingComments } from 'typescript';
 import quil from './quil.png';
+import Image from 'next/image';
+
 const NavigationBar = ({
   userJWT,
   handleSetTheme,
@@ -22,8 +24,11 @@ const NavigationBar = ({
     <div className="navbar" data-cy="nav-bar">
       <div className="navbar bg-base-100">
         <div className="flex-1">
-          <img
-            src="https://cdn.discordapp.com/attachments/1036015925679378457/1047680349406236733/My_project.png"
+          <Image
+            width="1080"
+            height="1080"
+            className="w-28 h-42"
+            src="/logo.png"
             alt=""
           />
         </div>
