@@ -1,14 +1,14 @@
 'use client';
-import React, { useState } from 'react';
-import VisualizeDB from './VisualizeDB';
-import VisualizeSchemaResolver from './VisualizeSchemaResolver';
-import { DisplayContainerProps } from '../../../(root)/frontendTypes';
 import { motion } from 'framer-motion';
-import SaveContainer from './SaveContainer';
+import Link from 'next/link';
+import React, { useState } from 'react';
+import { DisplayContainerProps } from '../../../(root)/frontendTypes';
+import AboutPage from './AboutPage';
 import LoadContainer from './LoadContainer';
 import LoadItem from './LoadItem';
-import AboutPage from './AboutPage';
-import Link from 'next/link';
+import SaveContainer from './SaveContainer';
+import VisualizeDB from './VisualizeDB';
+import VisualizeSchemaResolver from './VisualizeSchemaResolver';
 
 const DisplayContainer = ({
   displayMode,
@@ -42,25 +42,28 @@ const DisplayContainer = ({
 
   const saveURIHandler = async (e: any) => {
     e.preventDefault();
-    let data = await fetch('http://localhost:4000/graphql', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        query: `mutation {
+    let data = await fetch(
+      'http://quilbackend1-env.eba-52zmdsmp.us-east-1.elasticbeanstalk.com/graphql',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: `mutation {
           saveData(projectName: "${e.target.URInickname.value}", projectData: "${e.target.URIstring.value}", userId: ${userJWT.userId}) {
             projectId
             projectName
             success
           }
         }`,
-      }),
-    })
-      .then(data => {
+        }),
+      }
+    )
+      .then((data) => {
         return data.json();
       })
-      .then(data => {
+      .then((data) => {
         console.log('userJWT.userId', userJWT);
         setSaveModalVisible(false);
       });
@@ -100,7 +103,7 @@ const DisplayContainer = ({
               >
                 <input
                   type="text"
-                  onChange={e => userInputURI(e.target.value)}
+                  onChange={(e) => userInputURI(e.target.value)}
                   className="input input-sm  input-bordered w-full mx-1"
                   placeholder="insert URI"
                   data-cy="insert-uri-main"
@@ -146,7 +149,7 @@ const DisplayContainer = ({
                               <h3 className="text-lg font-bold">
                                 Save Your Database
                               </h3>
-                              <form onSubmit={e => saveURIHandler(e)}>
+                              <form onSubmit={(e) => saveURIHandler(e)}>
                                 <label className="label" htmlFor="username">
                                   URI Nickname:{' '}
                                 </label>

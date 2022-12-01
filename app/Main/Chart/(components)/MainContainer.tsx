@@ -1,19 +1,19 @@
 'use client';
 //      postgres://lkdxllvk:GTIkPygxpPOx0ZVNJ3luQHEfApEIJekP@heffalump.db.elephantsql.com/lkdxllvk
-import React, { useEffect, useState } from 'react';
-import DisplayContainer from './DisplayContainer';
-import { Node, Edge } from 'reactflow';
-import createNodes from '../(flow)/Nodes';
-import createEdges from '../(flow)/Edges';
-import NavigationBar from './NavigationBar';
-import jwt_decode from 'jwt-decode';
 import { motion } from 'framer-motion';
+import jwt_decode from 'jwt-decode';
+import React, { useEffect, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
+import { Edge, Node } from 'reactflow';
+import createEdges from '../(flow)/Edges';
+import createNodes from '../(flow)/Nodes';
 import {
   MainContainerProps,
   projectType,
   resQL,
 } from '../../../(root)/frontendTypes';
+import DisplayContainer from './DisplayContainer';
+import NavigationBar from './NavigationBar';
 
 import 'react-toastify/dist/ReactToastify.css';
 const MainContainer = ({
@@ -47,13 +47,15 @@ const MainContainer = ({
         if (!decoded) setUserJWT(null);
         // otherwise decode it and set userJWT object
         if (currJWT) {
-          let data = await fetch('http://localhost:4000/graphql', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              query: `query {
+          let data = await fetch(
+            'http://quilbackend1-env.eba-52zmdsmp.us-east-1.elasticbeanstalk.com/graphql',
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                query: `query {
                 getUserProjects(userId: ${decoded.userId}) {
                   db {
                     name
@@ -64,12 +66,13 @@ const MainContainer = ({
                   success
                 }
               }`,
-            }),
-          })
-            .then(data => {
+              }),
+            }
+          )
+            .then((data) => {
               return data.json();
             })
-            .then(data => {
+            .then((data) => {
               setUserProjects(data.data.getUserProjects.db);
             });
         }
@@ -79,7 +82,7 @@ const MainContainer = ({
   }, []);
 
   const removeDeletedProject = (id: any) => {
-    setUserProjects(oldState => {
+    setUserProjects((oldState) => {
       return oldState.filter((e: any) => e._id === id);
     });
   };
@@ -117,14 +120,16 @@ const MainContainer = ({
   const launchUri = async (loadedUri: string): Promise<void> => {
     const toastLoading = toast.loading('loading content');
     let launchURI = loadedUri || uri;
-    let data = await fetch('http://localhost:4000/graphql', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+    let data = await fetch(
+      'http://quilbackend1-env.eba-52zmdsmp.us-east-1.elasticbeanstalk.com/graphql',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
 
-      body: JSON.stringify({
-        query: `query GetData {
+        body: JSON.stringify({
+          query: `query GetData {
           getAllData(uri: "${launchURI}") {
             nodes {
                 name,
@@ -148,8 +153,9 @@ const MainContainer = ({
               }
           }
         }`,
-      }),
-    });
+        }),
+      }
+    );
     let res = await data.json();
     toast.dismiss(toastLoading);
     if (

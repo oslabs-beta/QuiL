@@ -4,7 +4,8 @@ const nextConfig = {
     return [
       {
         source: '/graphql',
-        destination: 'http://localhost:4000/graphql',
+        destination:
+          'http://quilbackend1-env.eba-52zmdsmp.us-east-1.elasticbeanstalk.com/graphql',
       },
     ];
   },

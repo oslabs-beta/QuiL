@@ -1,8 +1,8 @@
 'use client';
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import jwt_decode from 'jwt-decode';
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { decoded } from './frontendTypes';
@@ -46,7 +46,7 @@ const RootContainer = ({
     toast.dismiss(rootLoading);
   };
   useEffect(() => {
-    console.log('Do we get inside the useEffect?');
+    console.log('ENV', process.env);
 
     const handleLogin = async (code: string) => {
       console.log('Inside login', 'CODE:', code);
@@ -67,17 +67,18 @@ const RootContainer = ({
           }
         }`;
 
-        console.log('Inside login if (code)', 'query:', queryValue);
-        
-        const oauthResponse = await fetch('http://localhost:4000/graphql', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            query: queryValue,
-          }),
-        }).then(res => res.json());
+        const oauthResponse = await fetch(
+          'http://quilbackend1-env.eba-52zmdsmp.us-east-1.elasticbeanstalk.com/graphql',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              query: queryValue,
+            }),
+          }
+        ).then((res) => res.json());
 
         if (oauthResponse.data.postOAuth.token !== null) {
           localStorage.setItem('token', oauthResponse.data.postOAuth.token);
