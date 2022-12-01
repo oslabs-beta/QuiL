@@ -30,7 +30,9 @@ const MainContainer = ({
   const [theme, setTheme] = useState<string>("night");
   const [userJWT, setUserJWT] = useState<any>();
   const [userProjects, setUserProjects] = useState<projectType[]>([]);
-  const [toastTheme, setToastTheme] = useState<string>("dark");
+  const [toastTheme, setToastTheme] = useState<'light' | 'dark' | 'colored'>(
+    'dark'
+  );
 
   useEffect(() => {
     try {
@@ -45,13 +47,15 @@ const MainContainer = ({
         if (!decoded) setUserJWT(null);
         // otherwise decode it and set userJWT object
         if (currJWT) {
-          let data = await fetch("http://localhost:4000/graphql", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              query: `query {
+          let data = await fetch(
+            'http://quilbackend1-env.eba-52zmdsmp.us-east-1.elasticbeanstalk.com/graphql',
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                query: `query {
                 getUserProjects(userId: ${decoded.userId}) {
                   db {
                     name
@@ -62,9 +66,10 @@ const MainContainer = ({
                   success
                 }
               }`,
-            }),
-          })
-            .then((data) => {
+              }),
+            }
+          )
+            .then(data => {
               return data.json();
             })
             .then((data) => {
@@ -103,7 +108,7 @@ const MainContainer = ({
 
   //invoked in visualizeDB.
   // Checks for error in the users before invoking the fetch
-  const uriLaunch = async (e: any, uri: string): Promise<void> => {
+  const uriLaunch = async (e?: any, uri?: string): Promise<void> => {
     // e.preventDefault();
     if (uri.includes("postgres")) {
       launchUri(uri);
@@ -115,14 +120,16 @@ const MainContainer = ({
   const launchUri = async (loadedUri: string): Promise<void> => {
     const toastLoading = toast.loading("loading content");
     let launchURI = loadedUri || uri;
-    let data = await fetch("http://localhost:4000/graphql", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+    let data = await fetch(
+      'http://quilbackend1-env.eba-52zmdsmp.us-east-1.elasticbeanstalk.com/graphql',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
 
-      body: JSON.stringify({
-        query: `query GetData {
+        body: JSON.stringify({
+          query: `query GetData {
           getAllData(uri: "${launchURI}") {
             nodes {
                 name,
@@ -146,8 +153,9 @@ const MainContainer = ({
               }
           }
         }`,
-      }),
-    });
+        }),
+      }
+    );
     let res = await data.json();
     toast.dismiss(toastLoading);
     if (
@@ -180,9 +188,9 @@ const MainContainer = ({
   const handleSetTheme = (value: any): void => {
     console.log("clicked");
     setTheme(value);
-    if (theme !== "light" && theme !== "night") {
-      setToastTheme("colored");
-    } else setToastTheme(value);
+    if (theme !== 'light' && theme !== 'night') {
+      setToastTheme('colored');
+    } else setToastTheme('light');
   };
 
   return (
