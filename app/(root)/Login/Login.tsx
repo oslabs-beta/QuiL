@@ -1,8 +1,9 @@
-import { inputObj, userObj } from '../../(root)/frontendTypes';
-import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { useRouter } from 'next/navigation';
-const randomstring = require('randomstring');
+import { inputObj, userObj } from "../../(root)/frontendTypes";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import AnimationLogin from "./AnimateLogin";
+const randomstring = require("randomstring");
 
 const Login = () => {
   const router = useRouter();
@@ -42,22 +43,14 @@ const Login = () => {
   };
 
   return (
-    <div className="hero min-h-screen bg-base-200">
-      <div className="hero-content flex-col lg:flex-row-reverse">
-        <div className="text-center lg:text-left">
-          <motion.h1
-            className="text-5xl font-bold"
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1 }}
-          >
-            Login into QuiL
-          </motion.h1>
-        </div>
+    <div className='hero min-h-screen bg-base-200'>
+      <div className='hero-content flex-col lg:flex-row-reverse'>
+        <AnimationLogin />
         <motion.div
           className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100"
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
+          whileHover={{ scale: 1.03 }}
           transition={{
             default: {
               duration: 0.3,
@@ -87,11 +80,11 @@ const Login = () => {
               Password:{' '}
             </label>
             <input
-              className="input input-bordered w-5/6 max-w-xs ml-7"
-              name="password"
-              type="text"
-              placeholder="password"
-              data-cy="login-password"
+              className='input input-bordered w-5/6 max-w-xs ml-7'
+              name='password'
+              type='password'
+              placeholder='password'
+              data-cy='login-password'
             ></input>
             <div className="form-control mt-6">
               <button

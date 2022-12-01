@@ -49,9 +49,7 @@ const RootContainer = ({
     console.log('Do we get inside the useEffect?');
 
     const handleLogin = async (code: string) => {
-      console.log('Inside login', 'CODE:', code);
       let currJWT = window.localStorage.getItem('token');
-      console.log('Inside login', 'TOKEN:', code);
 
       let oauthType;
 
@@ -67,17 +65,18 @@ const RootContainer = ({
           }
         }`;
 
-        console.log('Inside login if (code)', 'query:', queryValue);
-        
-        const oauthResponse = await fetch('http://quilbackend1-env.eba-52zmdsmp.us-east-1.elasticbeanstalk.com/graphql', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            query: queryValue,
-          }),
-        }).then(res => res.json());
+        const oauthResponse = await fetch(
+          'http://quilbackend1-env.eba-52zmdsmp.us-east-1.elasticbeanstalk.com/graphql',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              query: queryValue,
+            }),
+          }
+        ).then(res => res.json());
 
         if (oauthResponse.data.postOAuth.token !== null) {
           localStorage.setItem('token', oauthResponse.data.postOAuth.token);
@@ -103,9 +102,9 @@ const RootContainer = ({
       <div className="hero-content flex-col lg:flex-row-reverse">
         {userJWT ? (
           <motion.h1
-            initial={{ opacity: 0, y: -30 }}
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1 }}
+            transition={{ duration: 2, delay: 1 }}
             exit={{ opacity: 0, y: -30 }}
             className="text-5xl font-bold"
             data-cy="root-h1"
@@ -114,12 +113,23 @@ const RootContainer = ({
             <a className="text-primary"> {userJWT.username}</a>
           </motion.h1>
         ) : (
-          <div className="text-center lg:text-left">
+          <motion.div className="text-center lg:text-left">
+            <motion.h2
+              initial={{ x: -300, y: 50 }}
+              animate={{
+                opacity: 0,
+              }}
+              transition={{ duration: 2 }}
+              className="text-5xl font-bold"
+            >
+              Welcome to,
+            </motion.h2>
             <motion.h1
-              initial={{ opacity: 0, y: -30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1 }}
-              exit={{ opacity: 0, y: -30 }}
+              initial={{ opacity: 0 }}
+              animate={{
+                opacity: 1,
+              }}
+              transition={{ duration: 2, delay: 2 }}
               className="text-5xl font-bold"
               data-cy="root-h1"
             >
@@ -128,7 +138,7 @@ const RootContainer = ({
             <motion.p
               initial={{ opacity: 0, y: -30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
+              transition={{ duration: 0.8, delay: 2.75 }}
               exit={{ opacity: 0, y: -30 }}
               className="py-6"
               data-cy="root-p"
@@ -138,16 +148,15 @@ const RootContainer = ({
               data base. This is intended to help developers see how to
               tranisition to GraphQL from a traditional REST API architecture.
             </motion.p>
-          </div>
+          </motion.div>
         )}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 2 }}
-          exit={{ opacity: 0.5, x: 30 }}
+          transition={{ duration: 0.8, delay: 3.25 }}
           className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100"
         >
-          <div className="card-body">
+          <motion.div whileHover={{ scale: 1.03 }} className="card-body">
             <div className="form-control">
               <label className="label">
                 <span className="label-text">URI</span>
@@ -183,7 +192,7 @@ const RootContainer = ({
                 </option>
               </select>
             </div>
-          </div>
+          </motion.div>
           <div className="form-control mt-4">
             <button
               disabled={initialURI || sampleURI ? false : true}
