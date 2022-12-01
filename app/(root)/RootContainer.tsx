@@ -122,7 +122,7 @@ const RootContainer = ({
               transition={{ duration: 2 }}
               className="text-5xl font-bold"
             >
-              Welcome to,
+              Welcome to
             </motion.h2>
             <motion.h1
               initial={{ opacity: 0 }}
@@ -143,10 +143,10 @@ const RootContainer = ({
               className="py-6"
               data-cy="root-p"
             >
-              QuiL is a developer tool used to visualize an exisiting relational
+              QuiL is a developer tool used to visualize an existing relational
               database and generate the GraphQL schemas & resolvers for that
               data base. This is intended to help developers see how to
-              tranisition to GraphQL from a traditional REST API architecture.
+              transition to GraphQL from a traditional REST API architecture.
             </motion.p>
           </motion.div>
         )}
