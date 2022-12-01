@@ -1,11 +1,11 @@
-import { type } from "os";
-import { Node, Edge, NodeChange, EdgeChange } from "reactflow";
-import { StringMappingType } from "typescript";
+import { type } from 'os';
+import { Edge, EdgeChange, Node, NodeChange } from 'reactflow';
+import { StringMappingType } from 'typescript';
 import {
   nodeShape,
   ResolverStrings,
   SingleSchemaType,
-} from "../../server/types";
+} from '../../server/types';
 
 export type DisplayContainerProps = {
   displayMode: string;
@@ -101,7 +101,6 @@ export type column = {
   columnName: string;
   dataType: string;
 };
-
 
 export interface data {
   name: string;
