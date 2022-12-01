@@ -110,7 +110,7 @@ const RootContainer = ({
         ) : (
           <motion.div className='text-center lg:text-left'>
             <motion.h2
-              initial={{x: -300, y: 50}}
+              initial={{ x: -300, y: 50 }}
               animate={{
                 opacity: 0,
               }}
@@ -120,11 +120,11 @@ const RootContainer = ({
               Welcome to,
             </motion.h2>
             <motion.h1
-              initial={{opacity: 0}}
+              initial={{ opacity: 0 }}
               animate={{
                 opacity: 1,
               }}
-              transition={{ duration: 2, delay: 2}}
+              transition={{ duration: 2, delay: 2 }}
               className='text-5xl font-bold'
               data-cy='root-h1'
             >
@@ -149,10 +149,9 @@ const RootContainer = ({
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 3.25 }}
-          exit={{ opacity: 0.5, x: 30 }}
           className='card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100'
         >
-          <div className='card-body'>
+          <motion.div whileHover={{ scale: 1.03 }} className='card-body'>
             <div className='form-control'>
               <label className='label'>
                 <span className='label-text'>URI</span>
@@ -188,7 +187,7 @@ const RootContainer = ({
                 </option>
               </select>
             </div>
-          </div>
+          </motion.div>
           <div className='form-control mt-4'>
             <button
               disabled={initialURI || sampleURI ? false : true}

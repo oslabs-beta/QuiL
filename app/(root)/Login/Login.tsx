@@ -54,6 +54,7 @@ const Login = () => {
           className='card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100'
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
+          whileHover={{ scale: 1.03 }}
           transition={{
             default: {
               duration: 0.3,

@@ -1,9 +1,10 @@
-'use client';
-import { CopyTwoTone } from '@ant-design/icons';
-import { javascript } from '@codemirror/lang-javascript';
-import { dracula } from '@uiw/codemirror-theme-dracula';
-import ReactCodeMirror from '@uiw/react-codemirror';
-import React, { useState } from 'react';
+"use client";
+import { CopyTwoTone } from "@ant-design/icons";
+import { javascript } from "@codemirror/lang-javascript";
+import { dracula } from "@uiw/codemirror-theme-dracula";
+import ReactCodeMirror from "@uiw/react-codemirror";
+import React, { useState } from "react";
+import { motion } from "framer-motion";
 
 type CardProps = {
   tableName: string;
@@ -19,8 +20,8 @@ export const ResolverMirror = ({ value }: ResolverMirrorProps) => {
     <div>
       <ReactCodeMirror
         value={value}
-        height="80%"
-        width="100%"
+        height='80%'
+        width='100%'
         extensions={[javascript({ jsx: true })]}
         theme={dracula}
       />
@@ -29,33 +30,37 @@ export const ResolverMirror = ({ value }: ResolverMirrorProps) => {
 };
 
 export const Card = ({ value, tableName }: CardProps) => {
-  const [copyStatus, setCopyStatus] = useState('Copy');
+  const [copyStatus, setCopyStatus] = useState("Copy");
 
   const onClick = () => {
     navigator.clipboard.writeText(value);
-    setCopyStatus('Copied!');
+    setCopyStatus("Copied!");
     setTimeout(() => {
-      setCopyStatus('Copy');
+      setCopyStatus("Copy");
     }, 5000);
   };
   return (
-    <div className="min-w-full max-w-fit">
-      <div style={{ margin: '25px' }}>
+    <div className='min-w-full max-w-fit'>
+      <div style={{ margin: "25px" }}>
         <div>
-          <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <h3 className="font-bold">
+          <motion.div
+            initial={{ opacity: 0, x: -100 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, delay: 0 }}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <h3 className='font-bold'>
                 {tableName[0].toUpperCase() +
                   tableName.substring(1, tableName.length)}
               </h3>
-              <div className="tooltip" data-tip={copyStatus}>
-                <button className="btn btn-xs sm:btn-sm" onClick={onClick}>
+              <div className='tooltip' data-tip={copyStatus}>
+                <button className='btn btn-xs sm:btn-sm' onClick={onClick}>
                   <CopyTwoTone />
                 </button>
               </div>
             </div>
             <ResolverMirror value={value} />
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>
