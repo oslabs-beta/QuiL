@@ -2,7 +2,8 @@
 
 QuiL is an open source tool that simplfies the process of implementing GraphQL and helps engineers better understand their data base.
 
-Table of Contents
+### Table of Contents
+
   -General Information
   -Technologies Used
   -Screenshots
@@ -19,7 +20,6 @@ Powered by QuiL's database analyzation algorithm, QuiL is able to use a database
   -Next.js 13
   -React.js (React Hooks) - v18.2.0
   -React-flow-renderer - v11.2.0
-  -Node-typescript - v0.1.3
   -Express - v4.18.2
   -jest - v29.3.1
   -Cypress v11.2.0
