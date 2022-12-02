@@ -33,7 +33,6 @@ const MainContainer = ({
   const [toastTheme, setToastTheme] = useState<'light' | 'dark' | 'colored'>(
     'dark'
   );
-
   useEffect(() => {
     try {
       const getUserProjects = async (): Promise<void> => {
@@ -66,10 +65,10 @@ const MainContainer = ({
               }`,
             }),
           })
-            .then(data => {
+            .then((data) => {
               return data.json();
             })
-            .then(data => {
+            .then((data) => {
               setUserProjects(data.data.getUserProjects.db);
             });
         }
@@ -79,7 +78,7 @@ const MainContainer = ({
   }, []);
 
   const removeDeletedProject = (id: any) => {
-    setUserProjects(oldState => {
+    setUserProjects((oldState) => {
       return oldState.filter((e: any) => e._id === id);
     });
   };
@@ -105,7 +104,7 @@ const MainContainer = ({
 
   //invoked in visualizeDB.
   // Checks for error in the users before invoking the fetch
-  const uriLaunch = async (e?: any, uri?: string): Promise<void> => {
+  const uriLaunch = async (e: any): Promise<void> => {
     // e.preventDefault();
     if (uri.includes('postgres')) {
       launchUri(uri);
@@ -174,8 +173,8 @@ const MainContainer = ({
 
   // invoked inside visualizeDB. users input (uri)
   const userInputURI = (e: string): void => {
-    let test = e.trim();
-    setURI(test);
+    let sanitize = e.trim();
+    setURI(sanitize);
   };
 
   // changing the themes for Toast(notifications) and Tailwind/app

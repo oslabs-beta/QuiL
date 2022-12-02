@@ -57,10 +57,10 @@ const DisplayContainer = ({
         }`,
       }),
     })
-      .then(data => {
+      .then((data) => {
         return data.json();
       })
-      .then(data => {
+      .then((data) => {
         setSaveModalVisible(false);
       });
   };
@@ -99,7 +99,7 @@ const DisplayContainer = ({
               >
                 <input
                   type="text"
-                  onChange={e => userInputURI(e.target.value)}
+                  onChange={(e) => userInputURI(e.target.value)}
                   className="input input-sm  input-bordered w-full mx-1"
                   placeholder="insert URI"
                   data-cy="insert-uri-main"
@@ -108,7 +108,7 @@ const DisplayContainer = ({
                 <button
                   className="btn btn-outline btn-warning btn-sm"
                   type="submit"
-                  onClick={() => uriLaunch()}
+                  onClick={(e) => uriLaunch()}
                   data-cy="main-launch-btn"
                 >
                   Launch
@@ -145,7 +145,7 @@ const DisplayContainer = ({
                               <h3 className="text-lg font-bold">
                                 Save Your Database
                               </h3>
-                              <form onSubmit={e => saveURIHandler(e)}>
+                              <form onSubmit={(e) => saveURIHandler(e)}>
                                 <label className="label" htmlFor="username">
                                   URI Nickname:{' '}
                                 </label>
