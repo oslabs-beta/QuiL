@@ -104,7 +104,7 @@ const MainContainer = ({
 
   //invoked in visualizeDB.
   // Checks for error in the users before invoking the fetch
-  const uriLaunch = async (e: any): Promise<void> => {
+  const uriLaunch = async (): Promise<void> => {
     // e.preventDefault();
     if (uri.includes('postgres')) {
       launchUri(uri);
