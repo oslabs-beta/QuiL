@@ -10,7 +10,7 @@ import {
 export type DisplayContainerProps = {
   displayMode: string;
   userInputURI: (e: string) => void;
-  uriLaunch: () => Promise<void>;
+  uriLaunch: (e: string) => Promise<void>;
   resQL: resQL;
   schemaGen: () => void;
   resolverGen: () => void;
