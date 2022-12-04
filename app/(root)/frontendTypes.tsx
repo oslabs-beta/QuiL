@@ -1,16 +1,16 @@
-import { type } from "os";
-import { Node, Edge, NodeChange, EdgeChange } from "reactflow";
-import { StringMappingType } from "typescript";
+import { type } from 'os';
+import { Node, Edge, NodeChange, EdgeChange } from 'reactflow';
+import { StringMappingType } from 'typescript';
 import {
   nodeShape,
   ResolverStrings,
   SingleSchemaType,
-} from "../../server/types";
+} from '../../server/types';
 
 export type DisplayContainerProps = {
   displayMode: string;
   userInputURI: (e: string) => void;
-  uriLaunch: (e: string) => Promise<void>;
+  uriLaunch: (e: any) => Promise<void>;
   resQL: resQL;
   schemaGen: () => void;
   resolverGen: () => void;
@@ -101,7 +101,6 @@ export type column = {
   columnName: string;
   dataType: string;
 };
-
 
 export interface data {
   name: string;
