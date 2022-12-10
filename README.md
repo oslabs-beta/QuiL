@@ -1,6 +1,6 @@
 # QuiL - Writing GraphQL for you
 
-QuiL is an open source tool that simplfies the process of implementing GraphQL and helps engineers better understand their data base.
+QuiL is an open source developer tool that simplfies the process of implementing GraphQL and helps engineers better understand their data base.
 
 ### Table of Contents
 
