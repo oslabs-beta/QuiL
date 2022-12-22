@@ -7,8 +7,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - run: npm i
-      - run: npm run dev
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run
         uses: cypress-io/github-action@v5
+        with:
+          build: npm run build
+          start: npm start
