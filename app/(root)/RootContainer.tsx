@@ -176,12 +176,12 @@ const RootContainer = ({
                 data-cy="select-sample-db"
               >
                 <option value="">Pick one</option>
-                <option
+                {/* <option
                   value="postgres://lkdxllvk:GTIkPygxpPOx0ZVNJ3luQHEfApEIJekP@heffalump.db.elephantsql.com/lkdxllvk"
                   data-cy="sample-starwars"
                 >
                   Star Wars
-                </option>
+                </option> */}
                 <option value="postgres://nsjouiot:4nVVHLiARTADoIiwArtQLG-HfkhQR03k@peanut.db.elephantsql.com/nsjouiot">
                   Quitr
                 </option>
